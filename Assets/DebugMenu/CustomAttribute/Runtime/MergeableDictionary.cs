@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DebugMenu.CustomAttribute.Runtime
+namespace DebugMenu
 {
     public class MergeableDictionary<TKey, TValue> : Dictionary<TKey, TValue>
     {

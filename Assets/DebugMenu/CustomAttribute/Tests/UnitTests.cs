@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using DebugMenu.CustomAttribute.Runtime;
+using DebugMenu;
 
 namespace DebugMenu.CustomAttribute.Tests
 {
@@ -15,7 +15,7 @@ namespace DebugMenu.CustomAttribute.Tests
         [Test]
         public static void ValidateDictionnary()
         {
-            DebugAttributeRegistry.ValidateMethods();
+            DebugAttributeRegistry.Initialize();
         }
         
         /// <summary>

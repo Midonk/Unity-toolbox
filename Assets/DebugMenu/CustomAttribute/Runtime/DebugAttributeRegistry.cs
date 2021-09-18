@@ -4,90 +4,52 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace DebugMenu.CustomAttribute.Runtime
+namespace DebugMenu
 {
     public class DebugAttributeRegistry
     {
         #region Main
 
-        public static void ValidateMethods()
-        {
-            InitializeDictionnary();
-        }
-
-
-        public static void InvokeMethod(string path)
+        /// <summary>
+        ///     Invoke the specific method attached to a path
+        /// <summary>
+        public static void InvokeMethod(string path, object[] parameters = null)
         {
             if (!Methods.ContainsKey(path)) return;
 
             var method = Methods[path];
-            //Debug.Log(method.);
-            try
-            {
-                method.Invoke(method.ReflectedType, null);
-            }
+            Type type = method.ReflectedType;
+            var instances = GameObject.FindObjectsOfType(type);
 
-            catch (Exception e)
+            foreach (var instance in instances)
             {
-                Debug.LogError(e.StackTrace);
+                method.Invoke(instance, parameters);
             }
         }
 
-        public static ReturnType InvokeMethod<ReturnType>(string path)
+        /// <summary>
+        ///     Invoke the specific method attached to a path
+        /// <summary>
+        public static T InvokeMethod<T>(string path, object[] parameters = null)
         {
-            if (!Methods.ContainsKey(path) || Methods[path].IsPrivate) return default(ReturnType);
+            if (!Methods.ContainsKey(path)) return default(T);
 
-            var result = default(ReturnType);
+            var result = default(T);
             var method = Methods[path];
+            Type type = method.ReflectedType;
+            var instances = GameObject.FindObjectsOfType(type);
 
-            try
+            foreach (var instance in instances)
             {
-                result = (ReturnType)method.Invoke(method.ReflectedType, new object[0]);
-            }
-
-            catch (Exception e)
-            {
-                Debug.LogError(e.StackTrace);
+                result = (T)method.Invoke(method.ReflectedType, parameters);
             }
 
             return result;
         }
 
-        public static void InvokeMethod(string path, object[] parameters)
-        {
-            if (!Methods.ContainsKey(path) || Methods[path].IsPrivate) return;
-
-            var method = Methods[path];
-            try
-            {
-                method.Invoke(method.ReflectedType, parameters);
-            }
-
-            catch (Exception e)
-            {
-                Debug.LogError(e.StackTrace);
-            }
-        }
-
-        public static ReturnType InvokeMethod<ReturnType>(string path, object[] parameters)
-        {
-            if (!Methods.ContainsKey(path) || Methods[path].IsPrivate) return default(ReturnType);
-
-            var result = default(ReturnType);
-            var method = Methods[path];
-            try
-            {
-                result = (ReturnType)method.Invoke(method.ReflectedType, parameters);
-            }
-            
-            catch (Exception e)
-            {
-                Debug.LogError(e.StackTrace);
-            }
-
-            return result;
-        }
-
+        /// <summary>
+        ///     Retreive paths marked as quick paths
+        /// <summary>
         public static string[] GetQuickPaths()
         {
             var result = new List<string>();
@@ -107,7 +69,10 @@ namespace DebugMenu.CustomAttribute.Runtime
 
         #region Utils
 
-        private static void InitializeDictionnary()
+        /// <summary>
+        ///     Initialize the debug registry by fetching the attribute references
+        /// <summary>
+        public static void Initialize()
         {
             _methods = new MergeableDictionary<string, MethodInfo>();
 
@@ -157,7 +122,8 @@ namespace DebugMenu.CustomAttribute.Runtime
             {
                 if(_methods == null)
                 {
-                    InitializeDictionnary();
+                    Initialize();
+                    //ValidateDictionary();
                 }
 
                 return _methods;
@@ -167,11 +133,5 @@ namespace DebugMenu.CustomAttribute.Runtime
         public static string[] Paths => Methods.Keys.ToArray();
 
         #endregion
-    
-        private class PathBinding<T>
-        {
-            public string Paths { get; set; }
-            public T Instances { get; set; }
-        }
     }
 }

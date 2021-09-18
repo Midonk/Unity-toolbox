@@ -1,39 +1,26 @@
 using System;
 
-namespace DebugMenu.CustomAttribute.Runtime
+namespace DebugMenu
 {
     [AttributeUsage(AttributeTargets.Method,Inherited = true,AllowMultiple = false)]
     public class DebugMenuAttribute : Attribute
     {
         #region Public
 
-        public string Path { get; set; } /* => _path; */
-
-        public bool IsQuickMenu { get; set; }
+        public string Path { get; private set; }
+        public bool IsQuickMenu { get; private set; }
 
         #endregion 
 
 
         #region Main
-
-        public DebugMenuAttribute(string path)
-        {
-            Path = path;
-        }
         
-        public DebugMenuAttribute(string path, bool quickMenu)
+        public DebugMenuAttribute(string path, bool quickMenu = false)
         {
             Path = path;
             IsQuickMenu = quickMenu;
         }
 
         #endregion Main
-
-
-        /* #region Private
-
-        private string _path;
-
-        #endregion Private */
     }
 }

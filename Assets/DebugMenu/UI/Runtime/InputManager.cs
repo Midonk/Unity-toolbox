@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace DebugMenu.UI.Runtime
+namespace DebugMenu
 {
+
+    //CA SERT FOUTREMENT A RIEN
+
+
     public class InputManager : MonoBehaviour
     {
         #region Exposed

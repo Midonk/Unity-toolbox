@@ -1,39 +1,42 @@
 using UnityEditor;
 using System.Diagnostics;
-using DebugMenu.CustomAttribute.Runtime;
 
-namespace DebugMenu.CustomAttribute.Editor
+namespace DebugMenu
 {
     public class DictionaryValidatorMenuItem
     {
         #region Main
 
-        [MenuItem("Debug Menu/Validate Methods")]
+        /// <summary>
+        ///     Logs various informations relative to the Debug attribute reference
+        /// <summary>
+        [MenuItem("Debug Menu/Log references")]
         [Conditional("DEBUG")]
-        public static void TryValidate()
+        public static void LogAttributeReferences()
         {
-            DebugAttributeRegistry.ValidateMethods();
-            string output = $"Methods found (<color=orange>{DebugAttributeRegistry.Paths.Length}</color>): ";
+            DebugAttributeRegistry.Initialize();
+            string outputMethods = $"Methods found (<color=orange>{DebugAttributeRegistry.Paths.Length}</color>): ";
             if(DebugAttributeRegistry.Paths.Length == 0)
             {
-                output = "No function found...";
-                UnityEngine.Debug.Log(output);
+                outputMethods = "No function found...";
+                UnityEngine.Debug.Log(outputMethods);
                 return;
             }
 
-            output += LogAccumulator(DebugAttributeRegistry.Paths);
+            outputMethods += "\n";
+            outputMethods += LogAccumulator(DebugAttributeRegistry.Paths);
 
             var quickPaths = DebugAttributeRegistry.GetQuickPaths();
-            output += "\n";
-            output += $"Quick methods found (<color=orange>{quickPaths.Length}</color>)";
+            string outputQuick = $"Quick methods found (<color=orange>{quickPaths.Length}</color>)";
+            outputQuick += "\n";
 
             if(quickPaths.Length > 0)
             {
-                output += ": ";
-                output += LogAccumulator(quickPaths);
+                outputQuick += LogAccumulator(quickPaths);
             }
 
-            UnityEngine.Debug.Log(output);
+            UnityEngine.Debug.Log(outputMethods);
+            UnityEngine.Debug.Log(outputQuick);
         }
 
         private static string LogAccumulator(string[] collection)
@@ -45,7 +48,7 @@ namespace DebugMenu.CustomAttribute.Editor
                 accumulation += $"<color=cyan>{path}</color>";
                 if(i == DebugAttributeRegistry.Paths.Length) return accumulation;
                 
-                accumulation += ", ";
+                accumulation += "\n";
             }
 
             return accumulation;

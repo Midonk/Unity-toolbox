@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DebugMenu.UI.Runtime
+namespace DebugMenu
 {
-    public class SceneFacade : MonoBehaviour
+    public class MenuSceneHandler : MonoBehaviour
     {
         #region Main
 
