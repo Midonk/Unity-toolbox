@@ -10,6 +10,9 @@ namespace DebugMenu
         [SerializeField]
         private MenuPanel _menuPanel;
 
+        [SerializeField]
+        private bool _debugMode;
+
         #endregion
     
 
@@ -24,13 +27,15 @@ namespace DebugMenu
 
         private void OnGUI() 
         {
+            if(!_debugMode) return;
+
             foreach (var button in GetCurrentButtons(_currentPath))
             {
                 if(GUILayout.Button($"{button}"))
                 {
                     ChangePanel(button);
                 }
-            }    
+            }
 
             if(string.IsNullOrEmpty(_currentPath)) return;
 
@@ -44,7 +49,7 @@ namespace DebugMenu
         {
             _instance = this;
             var buttons = GetCurrentButtons(_currentPath);
-            //_menuPanel.RebuildPanel(buttons, _currentPath);
+            _menuPanel.RebuildPanel(buttons, _currentPath);
         }
 
         #endregion
@@ -52,6 +57,62 @@ namespace DebugMenu
 
         #region Main
 
+        /// <summary>
+        ///     Return to the previous panel
+        /// <summary>
+        internal void Return()
+        {
+            if (string.IsNullOrEmpty(_currentPath))
+            {
+                HideMenu();
+                return;
+            }
+
+            RevertCurrentPath();            
+            var buttons = GetCurrentButtons(_currentPath);
+            _menuPanel.RebuildPanel(buttons, _currentPath);
+
+            Debug.Log($"Return to '<color=cyan>{(_currentPath.Length > 0 ? _currentPath : "Root")}</color>'");
+        }
+
+        /// <summary>
+        ///     Go further into the panels
+        /// <summary>
+        internal void ChangePanel(string buttonName)
+        {
+            var separator = string.IsNullOrEmpty(_currentPath) ? "" : "/";
+            var buttons = GetCurrentButtons($"{_currentPath}{separator}{buttonName}");
+            if(buttons == null) return;
+
+            _currentPath += $"{separator}{buttonName}";
+            Debug.Log($"Change to <color=cyan>{_currentPath}</color>");
+            if(buttons.Length == 0)
+            {
+                Debug.LogError($"<color=red>Debug menu: Oups ! It seems the path '<color=cyan>{_currentPath}</color>' doesn't exists</color>");
+                return;
+            }
+
+            _menuPanel.RebuildPanel(buttons, _currentPath);
+        }
+
+        internal void DisplayMenu()
+        {
+            _menuPanel.gameObject.SetActive(true);
+        }
+
+        private void HideMenu()
+        {
+            _menuPanel.gameObject.SetActive(false);
+        }
+
+        #endregion 
+
+
+        #region Utils
+
+        /// <summary>
+        ///     Retreive the buttons's name from all paths at its current level
+        /// <summary>
         private string[] GetCurrentButtons(string comparingPath)
         {
             var paths = DebugAttributeRegistry.Paths;
@@ -67,6 +128,11 @@ namespace DebugMenu
                 }
 
                 var charToRemove = comparingPath.Length;
+                if(!string.IsNullOrEmpty(comparingPath))
+                {
+                    charToRemove++;
+                }
+
                 var truncatedPath = path.Remove(0, charToRemove);
                 var name = truncatedPath.Split('/')[0];
                 if(buttonNames.Contains(name)) continue;
@@ -77,51 +143,23 @@ namespace DebugMenu
             return buttonNames.ToArray();
         }
 
-        internal void Return()
-        {
-            RevertCurrentPath();            
-            var buttons = GetCurrentButtons(_currentPath);
-            //_menuPanel.RebuildPanel(buttons, _currentPath);
-
-            Debug.Log($"Return to '<color=cyan>{(_currentPath.Length > 0 ? _currentPath : "Root")}</color>'");
-        }
-
-        public void ChangePanel(string buttonName)
-        {
-            var buttons = GetCurrentButtons(_currentPath + buttonName);
-            if(buttons == null) return;
-
-            _currentPath += $"{buttonName}/";
-            if(buttons.Length == 0)
-            {
-                Debug.LogError($"<color=red>Debug menu: Oups ! It seems the path '<color=cyan>{_currentPath}</color>' doesn't exists</color>");
-                return;
-            }
-
-            //_menuPanel.RebuildPanel(buttons, _currentPath);
-        }
-
+        /// <summary>
+        ///     Go back one level back to the path hierarchy
+        /// <summary>
         private void RevertCurrentPath()
         {
             var splittedPath = _currentPath.Split('/');
             var depth = splittedPath.Length;
-            var charToRemove = splittedPath[depth - 2].Length + 1;
+            var charToRemove = splittedPath[depth - 1].Length;
+            if(depth > 1)
+            {
+                charToRemove++;
+            }
 
             _currentPath = _currentPath.Remove(_currentPath.Length - charToRemove, charToRemove);
         }
-
-        public void DisplayMenu()
-        {
-            _menuPanel.gameObject.SetActive(true);
-        }
-
-        private void HideMenu()
-        {
-            _menuPanel.gameObject.SetActive(false);
-        }
-
-        #endregion 
-
+             
+        #endregion
 
 
         #region Private

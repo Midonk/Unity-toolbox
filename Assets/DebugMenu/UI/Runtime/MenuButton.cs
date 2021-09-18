@@ -6,6 +6,16 @@ namespace DebugMenu
     [RequireComponent(typeof(Button))]
     public class MenuButton : MonoBehaviour
     {
+        #region Exposed
+
+        [SerializeField]
+        private Text _text;
+             
+        #endregion
+
+
+        #region Public Properties
+
         public string ReferenceName {
             get => _referenceName; 
             set
@@ -14,6 +24,14 @@ namespace DebugMenu
                 name = _referenceName;
             }
         }
+
+        public string Text
+        {
+            get => _text.text;
+            set => _text.text = value;
+        }
+             
+        #endregion
 
 
         #region Main

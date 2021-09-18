@@ -99,9 +99,8 @@ namespace DebugMenu
         #endregion
 
 
-        #region Private
+        #region Private Properties
 
-        private static Assembly[] _assemblies;
         private static Assembly[] Assemblies
         {
             get
@@ -115,7 +114,6 @@ namespace DebugMenu
             }
         }
 
-        private static MergeableDictionary<string, MethodInfo> _methods;
         private static MergeableDictionary<string, MethodInfo> Methods
         {
             get
@@ -123,7 +121,6 @@ namespace DebugMenu
                 if(_methods == null)
                 {
                     Initialize();
-                    //ValidateDictionary();
                 }
 
                 return _methods;
@@ -131,6 +128,14 @@ namespace DebugMenu
         }
 
         public static string[] Paths => Methods.Keys.ToArray();
+             
+        #endregion
+
+
+        #region Private Fields
+
+        private static Assembly[] _assemblies;
+        private static MergeableDictionary<string, MethodInfo> _methods;
 
         #endregion
     }

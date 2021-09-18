@@ -5,7 +5,7 @@ namespace DebugMenu
     [AttributeUsage(AttributeTargets.Method,Inherited = true,AllowMultiple = false)]
     public class DebugMenuAttribute : Attribute
     {
-        #region Public
+        #region Public Properties
 
         public string Path { get; private set; }
         public bool IsQuickMenu { get; private set; }

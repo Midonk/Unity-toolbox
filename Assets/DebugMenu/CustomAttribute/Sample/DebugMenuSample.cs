@@ -1,26 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DebugMenu
 {
     public class DebugMenuSample : MonoBehaviour
     {
+        #region Exposed
+
         [SerializeField]
         private string message;
+             
+        #endregion
 
-        [SerializeField]
-        private bool _debugMode;
 
-        private void OnGUI() 
-        {
-            if(!_debugMode) return;
-            if(GUILayout.Button("Invoke"))
-            {
-                DebugAttributeRegistry.Initialize();    
-                DebugAttributeRegistry.InvokeMethod("blabla/machin"); 
-            }   
-        }
+        #region Main
 
         [DebugMenu("Game/Others", true)]
         public void DebugMenuTestingMethod()
@@ -39,15 +31,19 @@ namespace DebugMenu
         {
             Debug.Log(message);
         }
+
         [DebugMenu("Player/Stats/Much/Machin")]
         public void DebugMenuTestingMethod4()
         {
             Debug.Log(message);
         }
+
         [DebugMenu("Player/Stats/Much/Bidule")]
         public void DebugMenuTestingMethod5()
         {
             Debug.Log(message);
         }
+             
+        #endregion
     }
 }

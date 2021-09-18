@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0e76acc819d01499f64f673214844a, type: 3}
   m_Name: NullCheckerSettings
   m_EditorClassIdentifier: 
-  _linePixelSize: 18
-  _linePixelSpacing: 2
+  _linePixelSize: 0
+  _linePixelSpacing: 0
   _validColor: {r: 0, g: 0.91027117, b: 1, a: 0.15686275}
   _errorColor: {r: 1, g: 0.7064719, b: 0, a: 0.25490198}
   _defaultWarning: 

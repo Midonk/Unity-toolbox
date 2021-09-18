@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
 
 namespace DebugMenu
 {
@@ -10,45 +9,45 @@ namespace DebugMenu
     {
         #region Exposed
 
-
         [SerializeField]
         private Text _headerTitle;
+        
+        [SerializeField]
+        private RectTransform _buttonContainer;
 
         [SerializeField]
         private MenuButton _buttonPrefab;
 
-        public string ParentPath
-        {
-            get => _parent;
-            set => _parent = value;
-        }
-
         #endregion  
-
-
-        #region Unity API
-
-        private void OnEnable()
-        {
-            EventSystem.current.SetSelectedGameObject(null);
-        }
-
-        #endregion Unity API
 
 
         #region Main
 
+        /// <summary>
+        ///     Setup the panel and the buttons with the given parameters
+        /// <summary>
         public void RebuildPanel(string[] buttons, string header)
         {
             CheckButtonPool(buttons.Length);
             PrepareButtons(buttons);
+            var headerText = header.Length > 0 ? header : "Root";
+            _headerTitle.text = headerText;
         }
 
+        #endregion
+
+
+        #region Utils
+
+        /// <summary>
+        ///     Configure the panel's buttons
+        /// <summary>
         private void PrepareButtons(string[] buttons)
         {
             for(int i = 0; i < buttons.Length; i++)
             {
                 _menuButtons[i].ReferenceName = buttons[i];
+                _menuButtons[i].Text = buttons[i];
                 _menuButtons[i].gameObject.SetActive(true);
             }
 
@@ -56,8 +55,13 @@ namespace DebugMenu
             {
                 _menuButtons[i].gameObject.SetActive(false);
             }
+
+            EventSystem.current.SetSelectedGameObject(_menuButtons[0].gameObject);
         }
 
+        /// <summary>
+        ///     Make sure there is enough buttons available to welcome the incoming panel
+        /// <summary>
         private void CheckButtonPool(int neededButtons)
         {
             if(_menuButtons.Count >= neededButtons) return;
@@ -66,21 +70,9 @@ namespace DebugMenu
 
             for (int i = 0; i < missingButtons; i++)
             {
-                var newButton = Instantiate<MenuButton>(_buttonPrefab);
+                var newButton = Instantiate<MenuButton>(_buttonPrefab, _buttonContainer);
                 _menuButtons.Add(newButton);
             }
-        }
-
-        #endregion
-
-
-        #region Utils
-
-        public static void RegisterButton(MenuButton button)
-        {
-            if(_menuButtons.Contains(button)) return;
-
-            _menuButtons.Add(button);
         }
 
         #endregion 
@@ -88,9 +80,7 @@ namespace DebugMenu
 
         #region Private
 
-        private string _parent;
-        private bool _isGenerated;
-        private static List<MenuButton> _menuButtons = new List<MenuButton>();
+        private List<MenuButton> _menuButtons = new List<MenuButton>();
 
         #endregion
     }
