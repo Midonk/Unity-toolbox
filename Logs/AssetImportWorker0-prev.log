@@ -1,0 +1,377 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.4f1 (0abb6314276a) revision 703331'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Home; OS build 19043.1165; Version 2009; 64bit' Language: 'fr' Physical Memory: 32720 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.4f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+D:/GIT/ToolBox
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+63686
+Successfully changed project path to: D:/GIT/ToolBox
+D:/GIT/ToolBox
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 28.49 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.4f1 (0abb6314276a)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/GIT/ToolBox/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1060 6GB (ID=0x1c03)
+    Vendor:   
+    VRAM:     6052 MB
+    Driver:   27.21.14.5671
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56952
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.003643 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 27.91 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  3.030 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.000728 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.085 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
+Refreshing native plugins compatible for Editor in 0.27 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1122 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 57.3 MB.
+System memory in use after: 57.3 MB.
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1565.
+Total: 2.253900 ms (FindLiveObjects: 0.187000 ms CreateObjectMapping: 0.033700 ms MarkObjects: 1.922700 ms  DeleteObjects: 0.108600 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/DebugMenu
+  artifactKey: Guid(4d5c5068af7ad9549b5b2c6ed390fac5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu using Guid(4d5c5068af7ad9549b5b2c6ed390fac5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '74ba7d65263978f7e85eb7bb60f4af53') in 0.005184 seconds
+  Import took 0.007529 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000746 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.25 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.050 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1122 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 57.3 MB.
+System memory in use after: 57.4 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1573.
+Total: 1.886800 ms (FindLiveObjects: 0.169800 ms CreateObjectMapping: 0.033500 ms MarkObjects: 1.619400 ms  DeleteObjects: 0.062900 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 108.277989 seconds.
+  path: Assets/DebugMenu/CustomAttribute
+  artifactKey: Guid(84c22d17e96942247b6c915b0bc7b34e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute using Guid(84c22d17e96942247b6c915b0bc7b34e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02d25d0fca6f8011154362d291b6d00b') in 0.005316 seconds
+  Import took 0.007752 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000674 seconds.
+  path: Assets/DebugMenu/CustomAttribute
+  artifactKey: Guid(84c22d17e96942247b6c915b0bc7b34e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute using Guid(84c22d17e96942247b6c915b0bc7b34e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02d25d0fca6f8011154362d291b6d00b') in 0.001711 seconds
+  Import took 0.003383 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.388898 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Editor
+  artifactKey: Guid(abbefb4fe567f634db8a31f5505a9cc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Editor using Guid(abbefb4fe567f634db8a31f5505a9cc4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8912154f28cb0eeb9db87747b0420dbd') in 0.002157 seconds
+  Import took 0.004606 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.087668 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Editor/DebugMenu.CustomAttribute.Editor.asmdef
+  artifactKey: Guid(37f25f542c5caf941b423667408913fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Editor/DebugMenu.CustomAttribute.Editor.asmdef using Guid(37f25f542c5caf941b423667408913fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6cb9deabfa448458bf211dbc27da527c') in 0.033324 seconds
+  Import took 0.036828 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.559390 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Runtime
+  artifactKey: Guid(1f1af38688cb0e8428756b395098440c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Runtime using Guid(1f1af38688cb0e8428756b395098440c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2fc5bbd3c3319adc14554ec70851602e') in 0.001969 seconds
+  Import took 0.004002 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.055232 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Runtime/DebugMenu.CustomAttribute.Runtime.asmdef
+  artifactKey: Guid(24bd51b4ce6b67146acc27473c671194) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Runtime/DebugMenu.CustomAttribute.Runtime.asmdef using Guid(24bd51b4ce6b67146acc27473c671194) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '476cc6546d36c523f5e3e68f5c14bfba') in 0.002240 seconds
+  Import took 0.004387 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.294275 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Runtime/DebugMenu.cs
+  artifactKey: Guid(c50601187f130ee4f8152fbd630e4da2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Runtime/DebugMenu.cs using Guid(c50601187f130ee4f8152fbd630e4da2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ef505623bfa9d389ec5e0ab85a93dd1') in 0.005824 seconds
+  Import took 0.008033 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001979 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Runtime/DebugMenu.cs
+  artifactKey: Guid(c50601187f130ee4f8152fbd630e4da2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Runtime/DebugMenu.cs using Guid(c50601187f130ee4f8152fbd630e4da2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ef505623bfa9d389ec5e0ab85a93dd1') in 0.001676 seconds
+  Import took 0.003331 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.002368 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Runtime/MergeableDictionary.cs
+  artifactKey: Guid(31972fe011bfa7143bb0a22a5cfb02bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Runtime/MergeableDictionary.cs using Guid(31972fe011bfa7143bb0a22a5cfb02bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c6fdd914a3f8a75cfd5200cec72a2f3') in 0.002134 seconds
+  Import took 0.004130 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.005947 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Runtime/MergeableDictionary.cs
+  artifactKey: Guid(31972fe011bfa7143bb0a22a5cfb02bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Runtime/MergeableDictionary.cs using Guid(31972fe011bfa7143bb0a22a5cfb02bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c6fdd914a3f8a75cfd5200cec72a2f3') in 0.001861 seconds
+  Import took 0.003758 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 8.872978 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Runtime/DebugAttributeRegistry.cs
+  artifactKey: Guid(31a88d3d780557441906216d68ed9715) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Runtime/DebugAttributeRegistry.cs using Guid(31a88d3d780557441906216d68ed9715) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a4f084b61dd0f96574425c1a0d9d1163') in 0.002174 seconds
+  Import took 0.004304 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000709 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Runtime/DebugAttributeRegistry.cs
+  artifactKey: Guid(31a88d3d780557441906216d68ed9715) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Runtime/DebugAttributeRegistry.cs using Guid(31a88d3d780557441906216d68ed9715) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a4f084b61dd0f96574425c1a0d9d1163') in 0.001750 seconds
+  Import took 0.003452 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.271287 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Editor/DictionaryValidatorMenuItem.cs
+  artifactKey: Guid(cbc11470d542dab4c9aee5042e8ad99a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Editor/DictionaryValidatorMenuItem.cs using Guid(cbc11470d542dab4c9aee5042e8ad99a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1a788697e255d9be68c45a2d401ee33b') in 0.002173 seconds
+  Import took 0.018875 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000747 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.25 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.022 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1122 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 57.4 MB.
+System memory in use after: 57.5 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1576.
+Total: 2.198300 ms (FindLiveObjects: 0.195500 ms CreateObjectMapping: 0.034000 ms MarkObjects: 1.898200 ms  DeleteObjects: 0.069100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 316.417370 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Editor/DictionaryValidatorMenuItem.cs
+  artifactKey: Guid(cbc11470d542dab4c9aee5042e8ad99a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Editor/DictionaryValidatorMenuItem.cs using Guid(cbc11470d542dab4c9aee5042e8ad99a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b91840d8d7a7bf5bee8fed4f11322032') in 0.005125 seconds
+  Import took 0.007454 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000732 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.000 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1123 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 57.4 MB.
+System memory in use after: 57.5 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1580.
+Total: 1.960800 ms (FindLiveObjects: 0.179600 ms CreateObjectMapping: 0.038200 ms MarkObjects: 1.677800 ms  DeleteObjects: 0.063900 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 987.799771 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Editor/AssemblyRegistry.cs
+  artifactKey: Guid(38272ee7456e34743b955edb7ca8bb0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Editor/AssemblyRegistry.cs using Guid(38272ee7456e34743b955edb7ca8bb0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8d28efcd29a933b5291d82cc7707107c') in 0.004869 seconds
+  Import took 0.007096 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000704 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.019 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1123 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 57.4 MB.
+System memory in use after: 57.5 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1583.
+Total: 3.549400 ms (FindLiveObjects: 0.173500 ms CreateObjectMapping: 0.033400 ms MarkObjects: 3.232300 ms  DeleteObjects: 0.108400 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 401.922198 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Editor/AssemblyRegistry.cs
+  artifactKey: Guid(38272ee7456e34743b955edb7ca8bb0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Editor/AssemblyRegistry.cs using Guid(38272ee7456e34743b955edb7ca8bb0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27577878c316f2b01af7dfd6d35d0815') in 0.004580 seconds
+  Import took 0.006821 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000767 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.25 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.010 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1123 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 57.4 MB.
+System memory in use after: 57.5 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1586.
+Total: 2.028400 ms (FindLiveObjects: 0.207600 ms CreateObjectMapping: 0.041600 ms MarkObjects: 1.712600 ms  DeleteObjects: 0.065100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 1494.863447 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Sample
+  artifactKey: Guid(649617f375a6fa74c9713e41dd19a58a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Sample using Guid(649617f375a6fa74c9713e41dd19a58a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5382071cd84ad52c8e864b51ca14c76c') in 0.004867 seconds
+  Import took 0.007240 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 22.136079 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Sample/DebugMenuSample.cs
+  artifactKey: Guid(e61a2aa33a48a1149821d14df4d4aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Sample/DebugMenuSample.cs using Guid(e61a2aa33a48a1149821d14df4d4aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eefad83e9cf2e6ad34c5bcd73f78d0cc') in 0.002263 seconds
+  Import took 0.004415 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001101 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Sample/DebugMenuSample.cs
+  artifactKey: Guid(e61a2aa33a48a1149821d14df4d4aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Sample/DebugMenuSample.cs using Guid(e61a2aa33a48a1149821d14df4d4aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eefad83e9cf2e6ad34c5bcd73f78d0cc') in 0.002475 seconds
+  Import took 0.004924 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000777 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.27 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.014 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.25 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1124 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 57.5 MB.
+System memory in use after: 57.5 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1590.
+Total: 1.851400 ms (FindLiveObjects: 0.152900 ms CreateObjectMapping: 0.032800 ms MarkObjects: 1.605400 ms  DeleteObjects: 0.058800 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 1044.690436 seconds.
+  path: Assets/DebugMenu/CustomAttribute/Sample/DebugMenuSample.cs
+  artifactKey: Guid(e61a2aa33a48a1149821d14df4d4aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DebugMenu/CustomAttribute/Sample/DebugMenuSample.cs using Guid(e61a2aa33a48a1149821d14df4d4aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3efaac48a61a40b4d5ce441d4eeb6ed3') in 0.005110 seconds
+  Import took 0.007696 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000840 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.26 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.018 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1124 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 57.5 MB.
+System memory in use after: 57.5 MB.
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1593.
+Total: 2.141500 ms (FindLiveObjects: 0.142800 ms CreateObjectMapping: 0.032500 ms MarkObjects: 1.890800 ms  DeleteObjects: 0.074300 ms)
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
