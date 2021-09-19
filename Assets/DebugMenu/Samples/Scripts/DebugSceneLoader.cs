@@ -9,6 +9,7 @@ namespace DebugMenu
 
         public void LoadDebugScene(string sceneName)
         {
+            DisplayMenu();
             if(SceneManager.GetSceneByName(sceneName).isLoaded) return;
 
             SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);

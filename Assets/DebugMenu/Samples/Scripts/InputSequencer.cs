@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace DebugMenu
 {
-    public class InputCombination : MonoBehaviour
+    public class InputSequencer : MonoBehaviour
     {
         #region Exposed
 

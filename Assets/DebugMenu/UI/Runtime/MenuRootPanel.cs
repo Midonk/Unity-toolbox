@@ -71,8 +71,7 @@ namespace DebugMenu
             RevertCurrentPath();            
             var buttons = GetCurrentButtons(_currentPath);
             _menuPanel.RebuildPanel(buttons, _currentPath);
-
-            Debug.Log($"Return to '<color=cyan>{(_currentPath.Length > 0 ? _currentPath : "Root")}</color>'");
+            //Debug.Log($"Return to '<color=cyan>{(_currentPath.Length > 0 ? _currentPath : "Root")}</color>'");
         }
 
         /// <summary>
@@ -85,7 +84,7 @@ namespace DebugMenu
             if(buttons == null) return;
 
             _currentPath += $"{separator}{buttonName}";
-            Debug.Log($"Change to <color=cyan>{_currentPath}</color>");
+            //Debug.Log($"Change to <color=cyan>{_currentPath}</color>");
             if(buttons.Length == 0)
             {
                 Debug.LogError($"<color=red>Debug menu: Oups ! It seems the path '<color=cyan>{_currentPath}</color>' doesn't exists</color>");
