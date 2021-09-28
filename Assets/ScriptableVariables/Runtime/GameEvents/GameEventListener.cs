@@ -1,23 +1,44 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameEventListener : MonoBehaviour
+namespace ScriptableVariables
 {
-    public GameEvent m_event;
-    public UnityEvent m_response;
-
-    private void OnEnable() 
+    public class GameEventListener : MonoBehaviour, IGameEventListener
     {
-        m_event.Register(this);    
-    }
+        #region Exposed
 
-    private void OnDisable() 
-    {
-        m_event.Unregister(this);    
-    }
+        [SerializeField]
+        private GameEvent _event;
+        
+        [SerializeField]
+        private UnityEvent _response;
+             
+        #endregion
 
-    public void OnEventRaised()
-    {
-        m_response?.Invoke();
+        
+        #region Unity API
+
+        private void OnEnable() 
+        {
+            _event.Register(this);    
+        }
+
+        private void OnDisable() 
+        {
+            _event.Unregister(this);    
+        }
+
+             
+        #endregion
+        
+        
+        #region Main
+
+        public void OnEventRaised()
+        {
+            _response?.Invoke();
+        }
+             
+        #endregion
     }
 }

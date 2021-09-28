@@ -10,6 +10,9 @@ namespace ScriptableVaribles
 		private T _defaultValue;
 
 		[SerializeField]
+		private T _value;
+		
+		[SerializeField]
 		private bool _resetValueOnExitPlayMode;
 			 
 		#endregion
@@ -28,6 +31,13 @@ namespace ScriptableVaribles
 		
 		#region Unity API
 
+		private void OnEnable() 
+		{
+			if(!_resetValueOnExitPlayMode) return;
+
+			Value = _defaultValue;		
+		}
+
 		private void OnDisable() 
 		{
 			if(!_resetValueOnExitPlayMode) return;
@@ -35,13 +45,6 @@ namespace ScriptableVaribles
 			Value = _defaultValue;	
 		}
 
-		#endregion
-
-		
-		#region Private Fields
-		
-		private T _value;
-			 
 		#endregion
 	}
 }

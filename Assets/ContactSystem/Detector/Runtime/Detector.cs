@@ -79,6 +79,9 @@ namespace ContactSystem
             OnElementLost?.Invoke(element);
         }
 
+        /// <summary>
+        ///     Clear the detected elements list
+        /// </summary>
         public void Clear()
         {
             _detectedElements.Clear();

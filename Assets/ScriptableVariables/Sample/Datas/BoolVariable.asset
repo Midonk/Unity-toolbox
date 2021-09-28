@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084239a33f69123499dd9ef2349a76dd, type: 3}
   m_Name: BoolVariable
   m_EditorClassIdentifier: 
+  _defaultValue: 0
   _value: 0
-  _resetValueOnExitPlayMode: 1
+  _resetValueOnExitPlayMode: 0

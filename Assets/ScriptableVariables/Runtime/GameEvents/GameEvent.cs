@@ -1,28 +1,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameEvent : ScriptableObject
+namespace ScriptableVariables
 {
-    private List<GameEventListener> _listeners = new List<GameEventListener>();
-    public virtual void Raise()
+    public class GameEvent : ScriptableObject
     {
-        for(int i = _listeners.Count - 1; i >= 0; i--)
+        #region Main
+
+        public virtual void Raise()
         {
-            _listeners[i].OnEventRaised();
+            for(int i = _listeners.Count - 1; i >= 0; i--)
+            {
+                _listeners[i].OnEventRaised();
+            }
         }
-    }
 
-    public void Register(GameEventListener listener)
-    {
-        if(_listeners.Contains(listener)) return;
+        public void Register(IGameEventListener listener)
+        {
+            if(_listeners.Contains(listener)) return;
 
-        _listeners.Add(listener);
-    }
-    
-    public void Unregister(GameEventListener listener)
-    {
-        if(!_listeners.Contains(listener)) return;
+            _listeners.Add(listener);
+        }
+        
+        public void Unregister(IGameEventListener listener)
+        {
+            if(!_listeners.Contains(listener)) return;
 
-        _listeners.Remove(listener);
+            _listeners.Remove(listener);
+        }
+             
+        #endregion
+
+
+        #region Private Fields
+
+        private List<IGameEventListener> _listeners = new List<IGameEventListener>();
+             
+        #endregion        
     }
 }

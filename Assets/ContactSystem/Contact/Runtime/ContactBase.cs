@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ContactSystem
 {
-    public class ContactBase : MonoBehaviour
+    public abstract class ContactBase : MonoBehaviour
     {   
         #region Exposed
 

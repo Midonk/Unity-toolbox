@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70cbf5d09202be043a992f31d42ca81b, type: 3}
   m_Name: StringVariable
   m_EditorClassIdentifier: 
-  _value: truc
+  _defaultValue: 
   _resetValueOnExitPlayMode: 1
+  _value: truc

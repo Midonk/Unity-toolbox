@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1288d18535d5b80479fe285ae8dfd847, type: 3}
   m_Name: FloatVariable
   m_EditorClassIdentifier: 
-  _value: 10
+  _defaultValue: 0
   _resetValueOnExitPlayMode: 1
+  _value: 10

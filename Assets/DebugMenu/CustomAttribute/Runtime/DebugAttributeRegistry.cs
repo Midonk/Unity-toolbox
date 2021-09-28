@@ -89,6 +89,7 @@ namespace DebugMenu
                                                                                     .FirstOrDefault<DebugMenuAttribute>()
                                                                                     .Path);
 
+                // is this needed ? So does the mergeable dictionary ?
                 if (methodDictionary != null)
                 {
                     _methods.Merge(methodDictionary);
