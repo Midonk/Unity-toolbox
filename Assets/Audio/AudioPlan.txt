@@ -1,0 +1,6 @@
+pouvoir mettre en pause les source en cours de lecture	et les replay derrière
+organiser les audio en groupe pour les activer et désactiver en bundle
+
+Jouer un son avec son clip en argument (no oneshot)
+Jouer un son random en classic ou oneshot à l'aide d'une ID
+Jouer un son à l'aide d'une ID

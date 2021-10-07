@@ -1,5 +1,10 @@
 using UnityEngine;
 
+
+/*
+* Add lil button next to the field (propertyDrawer) to allow user to enter a constant value
+*/
+
 namespace ScriptableVaribles
 {
 	public abstract class ScriptableVariable<T> : ScriptableObject

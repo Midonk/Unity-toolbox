@@ -1,9 +1,9 @@
 using UnityEditor;
 
-namespace ScriptableVaribles
+namespace ScriptableVaribles.Editor
 {
     [CustomEditor(typeof(ScriptableVariable<>), true)]
-    public class ScriptableVariableEditor : Editor 
+    public class ScriptableVariableEditor : UnityEditor.Editor 
     {
         private SerializedProperty _defaultValue;
         private SerializedProperty _value;

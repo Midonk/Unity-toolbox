@@ -1,27 +1,26 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DebugMenu;
 
-namespace DebugMenu
+public class DebugSceneLoader : MonoBehaviour
 {
-    public class DebugSceneLoader : MonoBehaviour
+    #region Main
+
+    public void LoadDebugScene(string sceneName)
     {
-        #region Main
+        DisplayMenu();
+        if(SceneManager.GetSceneByName(sceneName).isLoaded) return;
 
-        public void LoadDebugScene(string sceneName)
-        {
-            DisplayMenu();
-            if(SceneManager.GetSceneByName(sceneName).isLoaded) return;
-
-            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        }
-
-        public void DisplayMenu()
-        {
-            if(!MenuRootPanel.Instance) return;
-            
-            MenuRootPanel.Instance.DisplayMenu();
-        }
-             
-        #endregion
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
     }
+
+    public void DisplayMenu()
+    {
+        if(!MenuRootPanel.Instance) return;
+        
+        MenuRootPanel.Instance.DisplayMenu();
+    }
+            
+    #endregion
 }
+
