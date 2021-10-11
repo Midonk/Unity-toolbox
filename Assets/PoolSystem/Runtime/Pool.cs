@@ -16,6 +16,10 @@ namespace PoolSystem
 
 		#region Main
 
+		/// <summary>
+		/// 	Increase the item pool population
+		/// </summary>
+		/// <param name="itemCount">Number of items to add to the pool</param>
 		public void Populate(int itemCount)
 		{
 			for (int i = 0; i < itemCount; i++)
@@ -27,6 +31,10 @@ namespace PoolSystem
 			}
 		}
 
+		/// <summary>
+		/// 	Try to instantiate an item from the pool
+		/// </summary>
+		/// <returns>The istantiated item</returns>
 		public virtual T TryInstantiate(Vector3 position, Quaternion rotation)
 		{
 			if(_availables.Count == 0) return null;

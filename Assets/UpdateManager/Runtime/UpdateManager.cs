@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UpdateManager
 {
-    protected UpdateManager() {}
+    private UpdateManager() {}
 
     public static UpdateManager Instance
     {
@@ -18,6 +18,9 @@ public class UpdateManager
         }
     }
 
+    /// <summary>
+    ///     Update registered updatables based on delta time
+    /// </summary>
     public virtual void Tick()
     {
         for (int i = _updatables.Count - 1; i >= 0; i--)
@@ -25,7 +28,10 @@ public class UpdateManager
             _updatables[i].Tick();
         }
     }
-    
+
+    /// <summary>
+    ///     Update registered fixed updatables based on fixed delta time
+    /// </summary>    
     public virtual void FixedTick()
     {
         for (int i = _fixedUpdatables.Count - 1; i >= 0; i--)
@@ -34,7 +40,11 @@ public class UpdateManager
         }
     }
 
-    public void Add(IUpdatableBehaviour behaviour)
+    /// <summary>
+    ///     Register a behaviour to the appropriates update lists
+    /// </summary>
+    /// <param name="behaviour">Behaviour to register</param>
+    public void Register(IUpdatableBehaviour behaviour)
     {
         if(behaviour is IUpdatable)
         {
@@ -47,7 +57,11 @@ public class UpdateManager
         }
     }
 
-    public void Remove(IUpdatableBehaviour behaviour)
+    /// <summary>
+    ///     Unregister a behaviour from the appropriates update lists
+    /// </summary>
+    /// <param name="behaviour">Behaviour to unregister</param>
+    public void Unregister(IUpdatableBehaviour behaviour)
     {
         if(behaviour is IUpdatable)
         {

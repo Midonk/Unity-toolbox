@@ -48,6 +48,7 @@ namespace ContactSystem
         /// <summary>
         ///     Handle the case where a valid element has been detected
         /// </summary>
+        /// <param name="element">Detected element</param>
         protected virtual void Detect(T element)
         {
             _detectedElements.Add(element);
@@ -57,6 +58,7 @@ namespace ContactSystem
         /// <summary>
         ///     Handle the case where a valid element has been lost
         /// </summary>
+        /// <param name="element">Lost element</param>
         protected virtual void Lose(T element)
         {
             _detectedElements.Remove(element);

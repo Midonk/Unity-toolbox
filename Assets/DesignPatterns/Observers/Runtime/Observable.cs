@@ -29,6 +29,10 @@ namespace Patterns.Observer
             }
         }
 
+        /// <summary>
+        ///     Register a new observer to this observable
+        /// </summary>
+        /// <param name="observer">Registering observer</param>
         public void Register(IObserver<T> observer)
         {
             if(_observers.Contains(observer)) return;
@@ -36,6 +40,10 @@ namespace Patterns.Observer
             _observers.Add(observer);
         }
         
+        /// <summary>
+        ///     Unregister a new observer to this observable
+        /// </summary>
+        /// <param name="observer">Unregistering observer</param>
         public void Unregister(IObserver<T> observer)
         {
             if(!_observers.Contains(observer)) return;

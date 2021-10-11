@@ -4,10 +4,17 @@ public abstract class ManagedBehaviour : MonoBehaviour
 {
     protected virtual void Awake() 
     {
-        var updateManager = UpdateManager.Instance;
         if(this is IUpdatableBehaviour)
         {
-            updateManager.Add((IUpdatableBehaviour)this);
+            UpdateManager.Instance.Register((IUpdatableBehaviour)this);
+        }
+    }
+
+    protected virtual void OnDestroy() 
+    {
+        if(this is IUpdatableBehaviour)
+        {
+            UpdateManager.Instance.Unregister((IUpdatableBehaviour)this);
         }
     }
 }

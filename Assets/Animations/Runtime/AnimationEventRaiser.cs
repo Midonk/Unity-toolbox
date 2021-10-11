@@ -22,6 +22,7 @@ namespace AnimationUtils
 		/// <summary>
 		/// 	Used to raise an event linked on an animation
 		/// </summary>
+		/// <param name="evt">Received event from the animation</param>
 		public void RaiseEvent(AnimationEvent evt)
 		{
 			if(evt.isFiredByLegacy || evt.animatorClipInfo.weight <= _weightTreshold) return;
