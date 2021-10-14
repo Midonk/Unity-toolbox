@@ -5,6 +5,8 @@ public class UpdateManager
 {
     private UpdateManager() {}
 
+    #region Properties
+
     public static UpdateManager Instance
     {
         get
@@ -17,6 +19,11 @@ public class UpdateManager
             return _instance;
         }
     }
+         
+    #endregion
+
+
+    #region Main
 
     /// <summary>
     ///     Update registered updatables based on delta time
@@ -25,7 +32,9 @@ public class UpdateManager
     {
         for (int i = _updatables.Count - 1; i >= 0; i--)
         {
-            _updatables[i].Tick();
+            var behaviour = _updatables[i];
+            if(!CheckSchedule(behaviour)) return;
+            behaviour.Tick();
         }
     }
 
@@ -36,7 +45,9 @@ public class UpdateManager
     {
         for (int i = _fixedUpdatables.Count - 1; i >= 0; i--)
         {
-            _fixedUpdatables[i].FixedTick();
+            var behaviour = _fixedUpdatables[i];
+            if(!CheckSchedule(behaviour)) return;
+            behaviour.FixedTick();
         }
     }
 
@@ -46,14 +57,14 @@ public class UpdateManager
     /// <param name="behaviour">Behaviour to register</param>
     public void Register(IUpdatableBehaviour behaviour)
     {
-        if(behaviour is IUpdatable)
+        if(behaviour is IUpdatable updatable)
         {
-            _updatables.Add((IUpdatable)behaviour);
+            _updatables.Add(updatable);
         }
         
-        if(behaviour is IFixedUpdatable)
+        if(behaviour is IFixedUpdatable fixedUpdatable)
         {
-            _fixedUpdatables.Add((IFixedUpdatable)behaviour);
+            _fixedUpdatables.Add(fixedUpdatable);
         }
     }
 
@@ -63,18 +74,39 @@ public class UpdateManager
     /// <param name="behaviour">Behaviour to unregister</param>
     public void Unregister(IUpdatableBehaviour behaviour)
     {
-        if(behaviour is IUpdatable)
+        if(behaviour is IUpdatable updatable)
         {
-            _updatables.Remove((IUpdatable)behaviour);
+            _updatables.Remove(updatable);
         }
         
-        if(behaviour is IFixedUpdatable)
+        if(behaviour is IFixedUpdatable fixedUpdatable)
         {
-            _fixedUpdatables.Remove((IFixedUpdatable)behaviour);
+            _fixedUpdatables.Remove(fixedUpdatable);
         }
     }
+      
+    #endregion
+
+    
+    #region Utils
+
+    private bool CheckSchedule(IUpdatableBehaviour behaviour)
+    {
+        //maybe cache time.framecount if more optimised ?
+        if(!(behaviour is IScheduledUpdate scheduled)) return true;            
+        if(Time.frameCount % scheduled.Interval != 0) return false;
+
+        return true;    
+    }
+    
+    #endregion
+
+    
+    #region Private Fields
 
     private static UpdateManager _instance;
     private SmartList<IUpdatable> _updatables = new SmartList<IUpdatable>();
     private SmartList<IFixedUpdatable> _fixedUpdatables = new SmartList<IFixedUpdatable>();
+         
+    #endregion
 }

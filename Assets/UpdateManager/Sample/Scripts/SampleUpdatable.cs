@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SampleUpdatable : ManagedBehaviour, IUpdatable
+public class SampleUpdatable : ManagedBehaviour, IUpdatable, IScheduledUpdate
 {
     [SerializeField][Min(0)]
     private float _refreshTime;
@@ -28,4 +28,6 @@ public class SampleUpdatable : ManagedBehaviour, IUpdatable
     private float _previousTime;
     private float _previousRefreshTime;
     private float _delta;
+
+    public int Interval => 100;
 }
