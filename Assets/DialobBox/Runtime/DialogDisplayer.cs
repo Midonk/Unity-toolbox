@@ -5,73 +5,40 @@ using System.Collections;
 
 /*
 * Handles text display into Text UI
+* Receive string
+* Display text following a display mode
 */
 
+//don't like to be a monobehaviour
 public class DialogDisplayer : MonoBehaviour
 {
-    [SerializeField]
-    private Text _textBox;
-
-
     #region Events
 
-    public event System.Action m_onDisplaySuspend;
-    public event System.Action m_onDisplayResume;
+    public event System.Action m_onDisplayStart;
+    public event System.Action m_onDisplayStop;
+         
+    #endregion
+
+
+    #region Public Properties
+
+    public bool IsDisplaying => _displayMode.IsDisplaying(_textToDisplay, _lastDisplayedIndex);
          
     #endregion
     
 
     #region Main
 
-    public void DisplayText()
-    {
-        if(!_isDisplaying)
-        {
-            if(!DialogEnded())
-            {
-                StartCoroutine(SendLines());
-            }
-
-            else
-            {
-                ClearDialogBox();
-            }
-        }
-
-        else
-        {
-            SetDisplayMode(_skipMode);
-        }
-    }
-
     public void DisplayText(string textToDisplay)
     {
-        _charToDisplay.Clear();
-        SplitText(textToDisplay);
-        ResetDisplayMode();
-
-        ClearDialogBox();
+        _textToDisplay = textToDisplay;
+        StopAllCoroutines();
         StartCoroutine(SendLines());
     }
-
-    public void ResetDisplayMode()
-    {
-        SetDisplayMode(_skipMode);
-    }
          
-    #endregion
-
-
-    #region Plumbery
-
-    protected virtual void ClearDialogBox()
+    public void SetDisplaySpeed(float elementPerSecond)
     {
-        _textBox.text = "";
-    }
-
-    private void SetDisplayMode(IDialogDisplayMode mode)
-    {
-        _textDisplayRate = 1 / mode.DisplayTextPortionPerSecond;
+        _displaySpeed = elementPerSecond;
     }
          
     #endregion
@@ -81,42 +48,22 @@ public class DialogDisplayer : MonoBehaviour
 
     protected virtual IEnumerator SendLines()
     {
-        ClearDialogBox();
-        m_onDisplayResume?.Invoke();
+        m_onDisplayStart?.Invoke();
 
-        while (_charToDisplay.Count > 0 /*special parsed characters ?*/)
+        float displayTime = 0;
+
+        while (IsDisplaying)
         {
-            int elementToDisplay = Mathf.FloorToInt(Time.deltaTime / _textDisplayRate);
-            string textToDisplay = "";
+            displayTime += Time.deltaTime * _displaySpeed;
+            _lastDisplayedIndex = Mathf.FloorToInt(displayTime);
+            _lastDisplayedIndex = Mathf.Clamp(_lastDisplayedIndex, 0, _textToDisplay.Length);
 
-            for (int i = 0; i < elementToDisplay; i++)
-            {
-                textToDisplay += _currentDisplayMode.GetNextTextToDisplay(_charToDisplay);
-            }
+            _textBox.text = _displayMode.GetText(_textToDisplay, _lastDisplayedIndex);
 
             yield return null;
         }
 
-        m_onDisplaySuspend?.Invoke();
-    }
-         
-    #endregion
-
-
-    #region Utils
-
-    public virtual bool DialogEnded()
-    {
-        return _charToDisplay.Count == 0;
-    }
-
-    //might depend on the character ? A split method ?
-    protected virtual void SplitText(string textToSplit)
-    {
-        foreach (var character in textToSplit)
-        {
-            _charToDisplay.Enqueue(character);
-        }
+        m_onDisplayStop?.Invoke();
     }
          
     #endregion
@@ -124,14 +71,14 @@ public class DialogDisplayer : MonoBehaviour
     
     #region Private Fields
 
-    private bool _isDisplaying;
-    private Queue<char> _charToDisplay;
+    private Text _textBox;
+    private string _textToDisplay;
     private IDialogDisplayMode _currentDisplayMode;
-    private float _textDisplayRate;
+    private float _displaySpeed;
+    private int _lastDisplayedIndex = 0;
 
     //setup
-    private IDialogDisplayMode _primaryMode;
-    private IDialogDisplayMode _skipMode;
+    private IDialogDisplayMode _displayMode;
 
     #endregion
 }

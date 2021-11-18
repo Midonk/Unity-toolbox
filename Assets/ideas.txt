@@ -9,6 +9,6 @@ Dialg box
 => une methode d'affichage secondaire qui consiste souvent en l'affichage de l'entièreté du dialogue
 => une vitesse d'affichage peu importe la méthode choisie
 => on se focalise sur le texte dans l'optique de laisser le champ libre à l'extension
-=> 
+=> https://www.youtube.com/watch?v=ZvJYb-nxrj8
 
 Drag n drop
