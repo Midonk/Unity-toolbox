@@ -2,3 +2,13 @@ Log system
 Input system ?
 Camera
 Inventory
+Dialg box
+=> besoin d'une interface obligatoire
+=> le dialog displayer aura un setup
+=> en générale le texte s'affiche lettre par lettre mais on peut penser à préparer le terrain pour plusieurs methodes d'affichage
+=> une methode d'affichage secondaire qui consiste souvent en l'affichage de l'entièreté du dialogue
+=> une vitesse d'affichage peu importe la méthode choisie
+=> on se focalise sur le texte dans l'optique de laisser le champ libre à l'extension
+=> 
+
+Drag n drop

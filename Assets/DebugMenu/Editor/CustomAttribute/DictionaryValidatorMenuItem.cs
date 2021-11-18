@@ -1,6 +1,8 @@
 using UnityEditor;
 using System.Diagnostics;
 
+using Debug = UnityEngine.Debug;
+
 namespace DebugMenu.Editor
 {
     public class DictionaryValidatorMenuItem
@@ -19,7 +21,7 @@ namespace DebugMenu.Editor
             if(DebugAttributeRegistry.Paths.Length == 0)
             {
                 outputMethods = "No function found...";
-                UnityEngine.Debug.Log(outputMethods);
+                Debug.Log(outputMethods);
                 return;
             }
 
@@ -35,8 +37,8 @@ namespace DebugMenu.Editor
                 outputQuick += LogAccumulator(quickPaths);
             }
 
-            UnityEngine.Debug.Log(outputMethods);
-            UnityEngine.Debug.Log(outputQuick);
+            Debug.Log(outputMethods);
+            Debug.Log(outputQuick);
         }
 
         private static string LogAccumulator(string[] collection)

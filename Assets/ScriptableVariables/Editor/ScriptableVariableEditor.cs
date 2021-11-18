@@ -1,6 +1,6 @@
 using UnityEditor;
 
-namespace ScriptableVaribles.Editor
+namespace ScriptableVariables.Editor
 {
     [CustomEditor(typeof(ScriptableVariable<>), true)]
     public class ScriptableVariableEditor : UnityEditor.Editor 

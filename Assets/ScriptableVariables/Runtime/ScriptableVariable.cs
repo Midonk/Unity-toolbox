@@ -5,27 +5,27 @@ using UnityEngine;
 * Add lil button next to the field (propertyDrawer) to allow user to enter a constant value
 */
 
-namespace ScriptableVaribles
+namespace ScriptableVariables
 {
 	public abstract class ScriptableVariable<T> : ScriptableObject
 	{
 		#region Exposed
 
 		[SerializeField]
-		private T _defaultValue;
+		protected T _defaultValue;
 
 		[SerializeField]
-		private T _value;
+		protected T _value;
 		
 		[SerializeField]
-		private bool _resetValueOnExitPlayMode;
+		protected bool _resetValueOnExitPlayMode;
 			 
 		#endregion
 
 		
 		#region Properties
 
-		public T Value
+		public virtual T Value
 		{
 			get => _value;
 			set => _value = value;
@@ -36,14 +36,16 @@ namespace ScriptableVaribles
 		
 		#region Unity API
 
-		private void OnEnable() 
+		//may cause problems later because it's on enable
+		protected virtual void OnEnable() 
 		{
 			if(!_resetValueOnExitPlayMode) return;
 
 			Value = _defaultValue;		
 		}
 
-		private void OnDisable() 
+		//basically we only need this in editor right ?
+		protected virtual void OnDisable() 
 		{
 			if(!_resetValueOnExitPlayMode) return;
 

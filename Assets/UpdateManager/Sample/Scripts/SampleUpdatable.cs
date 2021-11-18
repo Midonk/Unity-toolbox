@@ -10,7 +10,7 @@ public class SampleUpdatable : ManagedBehaviour, IUpdatable, IScheduledUpdate
         GUI.Button(
             new Rect(0, 28, 150, 25), 
             $"Delta time: {_delta : #0.0000}"
-            )    ;
+            );
     }
 
     public void Tick()
@@ -29,5 +29,5 @@ public class SampleUpdatable : ManagedBehaviour, IUpdatable, IScheduledUpdate
     private float _previousRefreshTime;
     private float _delta;
 
-    public int Interval => 100;
+    public int FrameInterval => 100;
 }

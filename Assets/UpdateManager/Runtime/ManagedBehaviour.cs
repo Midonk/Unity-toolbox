@@ -1,5 +1,7 @@
 using UnityEngine;
 
+//Base class for custom behaviours
+
 public abstract class ManagedBehaviour : MonoBehaviour
 {
     protected virtual void Awake() 

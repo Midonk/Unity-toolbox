@@ -13,7 +13,7 @@ public class InputSequencer : MonoBehaviour
 
     [SerializeField]
     private UnityEvent _onValidation;
-        
+
     #endregion
 
     
@@ -33,24 +33,19 @@ public class InputSequencer : MonoBehaviour
     {
         if(_sequence.Length == 0) return;
 
-        if (Time.time <= _lastInputTime + _maxInputSpacingTime || _progression == 0 && _progression < _sequence.Length)
+        var canEnterNextInput = Time.time <= _lastInputTime + _maxInputSpacingTime || _progression == 0 && _progression < _sequence.Length;
+        if (canEnterNextInput)
         {
-            var nextInputToPress = _sequence[_progression];
             if (!Input.anyKeyDown) return;
+            
+            var nextInputToPress = _sequence[_progression];
             if (!Input.GetKeyDown(nextInputToPress))
             {
                 ResetProgress();
                 return;
             }
             
-            _lastInputTime = Time.time;
-            _progression++;
-            Debug.Log($"validated {_progression} / {_sequence.Length}");
-            if (_progression < _sequence.Length) return;
-            
-            Debug.Log("Sequence validated");
-            _onValidation.Invoke();
-            ResetProgress();
+            Progress();
         }
 
         else
@@ -58,7 +53,19 @@ public class InputSequencer : MonoBehaviour
             ResetProgress();
         }
     }
+
+    private void Progress()
+    {
+        _lastInputTime = Time.time;
+        _progression++;
+        //Debug.Log($"validated {_progression} / {_sequence.Length}");
+        if (_progression < _sequence.Length) return;
         
+        //Debug.Log("Sequence validated");
+        _onValidation.Invoke();
+        ResetProgress();
+    }
+
     #endregion
 
 
@@ -68,7 +75,7 @@ public class InputSequencer : MonoBehaviour
     {
         if(_progression == 0) return;
 
-        Debug.Log("Reset sequence");
+        //Debug.Log("Reset sequence");
         _progression = 0;
     }
         

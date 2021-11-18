@@ -1,6 +1,8 @@
 using Utils;
 using UnityEngine;
 
+//Handle the differents update methods for the ManagedBehaviours
+
 public class UpdateManager
 {
     private UpdateManager() {}
@@ -94,7 +96,7 @@ public class UpdateManager
     {
         //maybe cache time.framecount if more optimised ?
         if(!(behaviour is IScheduledUpdate scheduled)) return true;            
-        if(Time.frameCount % scheduled.Interval != 0) return false;
+        if(Time.frameCount % scheduled.FrameInterval != 0) return false;
 
         return true;    
     }

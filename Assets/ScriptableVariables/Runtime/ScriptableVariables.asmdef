@@ -1,7 +1,9 @@
 {
     "name": "ScriptableVariables",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:182b5d1f362b65b4da5c518e6bd1cfbc"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

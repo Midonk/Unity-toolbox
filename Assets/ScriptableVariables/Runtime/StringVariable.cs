@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ScriptableVaribles
+namespace ScriptableVariables
 {
 	[CreateAssetMenu(fileName="NewStringVariable", menuName="Scriptable/StringVariable")]
 	public class StringVariable : ScriptableVariable<string>{}

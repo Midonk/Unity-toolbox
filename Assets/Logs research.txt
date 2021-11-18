@@ -1,7 +1,7 @@
 when do I use a log ?
 when debugging
 to get specific information during play
-to visualise invisible actions
+to visualise invisible actions (get data)
 
 What type of logs ?
 classic log
@@ -11,7 +11,7 @@ error log or exceptions
 
 Je veux avoir la possibilité de créer un log spécial qui accepte un message, un contexte et un vector3.
 Quand je clic sur le log, le context se met en surbrillance
-le log aurait un petit bouton qui permettrait de visualiser l'endroit que ce log affiche
+le log aurait un petit bouton qui permettrait de visualiser l'endroit que ce log affiche => impossible sans refaire un system de log complet
 
 Logger => https://docs.unity3d.com/ScriptReference/Logger.html
 ILogHandler => https://docs.unity3d.com/ScriptReference/ILogHandler.html
