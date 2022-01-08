@@ -36,6 +36,7 @@ public class UpdateManager
         {
             var behaviour = _updatables[i];
             if(!CheckSchedule(behaviour)) return;
+
             behaviour.Tick();
         }
     }
@@ -49,6 +50,7 @@ public class UpdateManager
         {
             var behaviour = _fixedUpdatables[i];
             if(!CheckSchedule(behaviour)) return;
+
             behaviour.FixedTick();
         }
     }
@@ -94,8 +96,8 @@ public class UpdateManager
 
     private bool CheckSchedule(IUpdatableBehaviour behaviour)
     {
-        //maybe cache time.framecount if more optimised ?
         if(!(behaviour is IScheduledUpdate scheduled)) return true;            
+        //maybe cache time.framecount if more optimised ?
         if(Time.frameCount % scheduled.FrameInterval != 0) return false;
 
         return true;    

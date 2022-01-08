@@ -2,20 +2,20 @@ using System.Collections.Generic;
 
 namespace Utils
 {
-    public class SmartList<T>
+    public class SmartList<T> : List<T>
     {
         public SmartList()
         {
             _list = new List<T>();
         }
 
-        public T this[int index] 
+        /* public T this[int index] 
         {
             get => _list[index]; 
             set => _list[index] = value; 
         }
 
-        public int Count => _list.Count;
+        public int Count => _list.Count; */
 
         public void Add(T element)
         {
