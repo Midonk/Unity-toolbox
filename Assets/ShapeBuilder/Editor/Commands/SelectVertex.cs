@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Thomas.Test.New
 {
-    [CreateAssetMenu(menuName = "ShapeBuilder/Commands/Select vertex", fileName = "Select vertex", order = 0)]
+    [CreateAssetMenu(menuName = "ShapeBuilder/Commands/Select vertex", fileName = "Select vertex")]
     public class SelectVertex : Command, IShapeBuilderCommand
     {
         public bool Undoable { get; } = true;

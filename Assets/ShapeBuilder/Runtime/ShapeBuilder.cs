@@ -36,6 +36,7 @@ namespace Thomas.Test.New
         }
 
         public void DeleteShape(int index) => _shapes.RemoveAt(index);
+        public void DeleteShape(Shape shape) => _shapes.Remove(shape);
 
         private List<Shape> _shapes = new List<Shape>();
     }

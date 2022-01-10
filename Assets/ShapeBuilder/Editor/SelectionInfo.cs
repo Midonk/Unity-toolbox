@@ -13,10 +13,10 @@ namespace Thomas.Test.New
 
         public bool MouseHoveringVertex => HoveredVertex != null;
         public bool MouseHoveringEdge => HoveredEdge != null;
-        public Shape CurrentShape { get; private set; }
         public Vector2? HoveredVertex { get; private set; }
-        public int SelectedVertex { get; private set; } = -1;
         public Vector2? HoveredEdge { get; private set; }// = vertex that makes the edge with vertex + 1
+        public Shape CurrentShape { get; private set; }
+        public int SelectedVertex { get; private set; } = -1;
 
         public ShapeBuilder Context { get; private set; }
         public bool Changed { get; private set; }
@@ -77,11 +77,43 @@ namespace Thomas.Test.New
             return true;
         }
 
+        /// <summary>
+        /// Select a vertex on any shape
+        /// </summary>
+        /// <param name="vertex"></param>
         public void SelectVertex(Vector2 vertex)
         {
             CurrentShape = Context.RetreiveShapeFromVertex(vertex);
             SelectedVertex = CurrentShape.GetVertexIndex(vertex);
-            Debug.Log(SelectedVertex);
+        }
+        
+        /// <summary>
+        /// Select a vertex on the current shape
+        /// </summary>
+        /// <param name="vertexIndex"></param>
+        public void SelectVertex(int vertexIndex)
+        {
+            var vertexCount = CurrentShape.Vertices.Length;
+            if(vertexCount == 0) return;
+
+            vertexIndex = vertexIndex < 0 ? vertexCount - 1 : vertexIndex % vertexCount;
+            SelectedVertex = vertexIndex;
+        }
+
+        /// <summary>
+        /// Unselect all vertices
+        /// </summary>
+        public void ClearVertexSelection()
+        {
+            SelectedVertex = -1;
+        }
+        
+        /// <summary>
+        /// Unselect all shapes
+        /// </summary>
+        public void ClearShapeSelection()
+        {
+            CurrentShape = null;
         }
     }
 }

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using System;
 
 namespace Thomas.Test.New
 {    
@@ -13,12 +12,6 @@ namespace Thomas.Test.New
         {
             DrawHelpBox();
             base.OnInspectorGUI();
-            if (GUILayout.Button("Bake Navigation"))
-            {
-                //var navShapes = 
-                //_nav.BakeNavigation();
-                //_needsRepaint = true;
-            }
         }
 
         private void OnSceneGUI() 
@@ -45,10 +38,9 @@ namespace Thomas.Test.New
             _builder = (ShapeBuilder)target;
             _inputTrigger = _builder.InputTrigger;
             _selection = new SelectionInfo(_builder); 
+            _info = _inputTrigger.GetInputInfo();
             _needsRepaint = true;
             Tools.hidden = true;
-            /* if (_nav != null && _nav.shapes.Count == 0)
-                _nav.Init();*/
         }
 
         private void OnDisable()
@@ -58,10 +50,8 @@ namespace Thomas.Test.New
              
         #endregion        
 
-
-        private void OnGUI() {
-            if(GUILayout.Button("truc")) return;
-        }
+        
+        #region Main
 
         private void Draw()
         {
@@ -74,14 +64,21 @@ namespace Thomas.Test.New
                     var vertex = shape.Vertices[j];
                     var isCurrentShape = _selection.CurrentShape == shape;
                     var vertexIsHovered = _selection.HoveredVertex == vertex;
-                    var vertexIsSelected = _selection.SelectedVertex == _selection.CurrentShape?.GetVertexIndex(vertex);
-                    Handles.color = vertexIsSelected ? _selectedColor : vertexIsHovered ? _hoveredColor : !isCurrentShape ? _inactiveColor : _vertexColor;
+                    var vertexIsSelected = isCurrentShape && _selection.SelectedVertex == _selection.CurrentShape?.GetVertexIndex(vertex);
+                    Handles.color = vertexIsSelected ? _selectedColor : 
+                                    vertexIsHovered ? _hoveredColor : 
+                                    !isCurrentShape ? _inactiveColor : _vertexColor;
                     Handles.DrawSolidDisc(vertex, Vector3.back, _builder.VertexRadius);
+                    if(isCurrentShape)
+                    {
+                        Handles.Label(vertex + new Vector2(_builder.VertexRadius, -_builder.VertexRadius), j.ToString());
+                    }
 
                     //edges
                     var nextVertex = shape.Vertices[(j + 1) % shape.Vertices.Length];
                     var lineIsHovered = _selection.HoveredEdge == vertex;
-                    Handles.color = lineIsHovered ? _hoveredColor : !isCurrentShape ? _inactiveColor : _lineColor;
+                    Handles.color = lineIsHovered ? _hoveredColor : 
+                                    !isCurrentShape ? _inactiveColor : _lineColor;
                     Handles.DrawDottedLine(vertex, nextVertex, 4);
                 }   
             }
@@ -98,7 +95,7 @@ namespace Thomas.Test.New
             {
                 if(!(commands[i] is IShapeBuilderCommand shapeCommand)) continue;
                 
-                Debug.Log(shapeCommand.ToString());
+                //Debug.Log(shapeCommand.ToString());
                 if(shapeCommand.Undoable)
                 {
                     Undo.RecordObject(_builder, shapeCommand.ToString());
@@ -107,20 +104,16 @@ namespace Thomas.Test.New
                 shapeCommand.Execute(_selection, mousePosition, _builder);
                 _needsRepaint = _needsRepaint || shapeCommand.NeedRepaint;
             }
-
         }
+             
+        #endregion
         
 
         #region Plumbery
 
         private void DrawHelpBox()
         {
-            var helpString = "Shift + Click to start a new shape \n" +
-                             "Click to add a point\n" +
-                             "Tab to cycle through shapes\n" +
-                             "Del to delete current shape";
-
-            EditorGUILayout.HelpBox(helpString, MessageType.Info);
+            EditorGUILayout.HelpBox(_info, MessageType.Info);
         }
              
         private void UpdateSelection(Vector2 mousePosition)
@@ -147,6 +140,7 @@ namespace Thomas.Test.New
         private ShapeBuilder _builder;
         private SelectionInfo _selection;
         private EditorInputTrigger _inputTrigger;
+        private string _info;
         private bool _needsRepaint;
 
         private readonly Color _vertexColor = Color.white;

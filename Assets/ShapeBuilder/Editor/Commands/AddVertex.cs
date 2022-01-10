@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Thomas.Test.New
 {
-    [CreateAssetMenu(menuName = "ShapeBuilder/Commands/Add vertex", fileName = "Add vertex", order = 0)]
+    [CreateAssetMenu(menuName = "ShapeBuilder/Commands/Add vertex", fileName = "Add vertex")]
     public class AddVertex : Command, IShapeBuilderCommand
     {
         public bool Undoable => true;

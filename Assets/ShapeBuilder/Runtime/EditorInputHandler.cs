@@ -1,4 +1,4 @@
-using System;
+using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,13 +21,13 @@ namespace Thomas.Test.New
             {
                 var trigger = _triggers[i];
                 if(trigger.eventType != evt.type) continue;
-
                 if(evt.isKey)
                 {
                     var foundCommands = CheckKey(evt, trigger);
                     if(foundCommands is null) continue;
 
                     commands.AddRange(foundCommands);
+                    evt.Use();
                     break;
                 }
 
@@ -37,13 +37,52 @@ namespace Thomas.Test.New
                     if(foundCommands is null) continue;
                     
                     commands.AddRange(foundCommands);
+                    evt.Use();
                     break;
                 }
-
-                else throw new NotSupportedException($"The EventType {trigger.eventType.ToString()} is not supported yet");
             }
             
             return commands.ToArray();
+        }
+
+        public string GetInputInfo()
+        {
+            var infos = new StringBuilder();
+            for (int i = 0; i < _triggers.Length; i++)
+            {
+                var trigger = _triggers[i];
+                if(trigger.key == KeyCode.None)
+                {
+                    BuildMouseInfo(trigger, infos);
+                }
+
+                else
+                {
+                    BuildKeyInfo(trigger, infos);
+                }
+            }
+            
+            return infos.ToString();
+        }
+
+        private void BuildKeyInfo(InputTrigger trigger, StringBuilder infos)
+        {
+            if(trigger.ExcludeMoifiers)
+            {
+                infos.Append($"{trigger.modifiers.ToString()} + ");
+            }
+
+            infos.AppendLine($"{trigger.key} to {trigger.name}"); 
+        }
+
+        private void BuildMouseInfo(InputTrigger trigger, StringBuilder infos)
+        {
+            if(trigger.ExcludeMoifiers)
+            {
+                infos.Append($"{trigger.modifiers.ToString()} + ");
+            }
+
+            infos.AppendLine($"{trigger.mouseButton} to {trigger.name}"); 
         }
 
         private ICommand[] CheckKey(Event evt, InputTrigger trigger)
@@ -62,6 +101,21 @@ namespace Thomas.Test.New
             return trigger.commands;
         }
 
+        public ICommand[] Commands
+        {
+            get
+            {
+                var commands = new List<ICommand>();
+                for (int i = 0; i < _triggers.Length; i++)
+                {
+                    var trigger = _triggers[i];
+                    commands.AddRange(trigger.commands);
+                }
+
+                return commands.ToArray();
+            }
+        }
+
         
         [System.Serializable]
         private struct InputTrigger
@@ -72,6 +126,8 @@ namespace Thomas.Test.New
             public EventModifiers modifiers;
             public MouseButton mouseButton;
             public Command[] commands;
+
+            public bool ExcludeMoifiers => ((EventModifiers.None | EventModifiers.FunctionKey | EventModifiers.Numeric | EventModifiers.CapsLock) & modifiers) != modifiers;
         }
 
         private enum MouseButton
@@ -80,6 +136,5 @@ namespace Thomas.Test.New
             RightClick = 1,
             MiddleClick = 2,
         }
-
     }
 }
