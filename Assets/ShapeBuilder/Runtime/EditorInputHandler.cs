@@ -2,12 +2,41 @@ using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
 
+//CLOSED
+
 namespace Thomas.Test.New
 {
     [System.Serializable]
     public class EditorInputTrigger
     {
+        #region Exposed
+
         [SerializeField] private InputTrigger[] _triggers;
+
+        #endregion
+
+
+        #region Properties
+
+        public ICommand[] Commands
+        {
+            get
+            {
+                var commands = new List<ICommand>();
+                for (int i = 0; i < _triggers.Length; i++)
+                {
+                    var trigger = _triggers[i];
+                    commands.AddRange(trigger.commands);
+                }
+
+                return commands.ToArray();
+            }
+        }
+
+        #endregion
+
+
+        #region Main
 
         /// <summary>
         ///     Retreive the commands of the first corresponding trigger
@@ -45,6 +74,10 @@ namespace Thomas.Test.New
             return commands.ToArray();
         }
 
+        /// <summary>
+        /// Provide useful informations about which input activate which command
+        /// </summary>
+        /// <returns></returns>
         public string GetInputInfo()
         {
             var infos = new StringBuilder();
@@ -60,10 +93,19 @@ namespace Thomas.Test.New
                 {
                     BuildKeyInfo(trigger, infos);
                 }
+
+                if(i == _triggers.Length - 1) continue;
+
+                infos.AppendLine();
             }
-            
+
             return infos.ToString();
         }
+             
+        #endregion
+
+
+        #region Plumbery
 
         private void BuildKeyInfo(InputTrigger trigger, StringBuilder infos)
         {
@@ -72,7 +114,7 @@ namespace Thomas.Test.New
                 infos.Append($"{trigger.modifiers.ToString()} + ");
             }
 
-            infos.AppendLine($"{trigger.key} to {trigger.name}"); 
+            infos.Append($"{trigger.key} to {trigger.name}"); 
         }
 
         private void BuildMouseInfo(InputTrigger trigger, StringBuilder infos)
@@ -82,7 +124,7 @@ namespace Thomas.Test.New
                 infos.Append($"{trigger.modifiers.ToString()} + ");
             }
 
-            infos.AppendLine($"{trigger.mouseButton} to {trigger.name}"); 
+            infos.Append($"{trigger.mouseButton} to {trigger.name}"); 
         }
 
         private ICommand[] CheckKey(Event evt, InputTrigger trigger)
@@ -100,21 +142,8 @@ namespace Thomas.Test.New
 
             return trigger.commands;
         }
-
-        public ICommand[] Commands
-        {
-            get
-            {
-                var commands = new List<ICommand>();
-                for (int i = 0; i < _triggers.Length; i++)
-                {
-                    var trigger = _triggers[i];
-                    commands.AddRange(trigger.commands);
-                }
-
-                return commands.ToArray();
-            }
-        }
+             
+        #endregion
 
         
         [System.Serializable]

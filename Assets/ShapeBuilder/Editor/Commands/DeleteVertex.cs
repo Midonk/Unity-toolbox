@@ -8,23 +8,24 @@ public class DeleteVertex : Command, IShapeBuilderCommand
 
     public bool NeedRepaint => true;
 
-    public void Execute(SelectionInfo selection, Vector2 mousePosition, ShapeBuilder builder)
+    public void Execute(IShapeSelectionInfo selection, Vector2 mousePosition, IShapeManipulator builder)
     {
         if(selection.SelectedVertex == -1) return;
         
         var vertex = selection.SelectedVertex;
         var shape = selection.CurrentShape;
         shape.RemoveVertex(vertex);
-        if(shape.Vertices.Length > 0)
+        if(shape.Vertices.Count > 0)
         {
             selection.SelectVertex(vertex - 1);
         }
 
         else
         {
+            var shapeIndex = builder.GetShapeIndex(shape);
             builder.DeleteShape(shape);
+            selection.SelectShape(shapeIndex - 1);
             selection.ClearVertexSelection();
-            selection.ClearShapeSelection();
         }
     }
 }

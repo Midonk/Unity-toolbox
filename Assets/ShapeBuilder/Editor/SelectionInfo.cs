@@ -1,49 +1,60 @@
-using System;
 using UnityEngine;
 using UnityEditor;
 
 namespace Thomas.Test.New
 {
-    public class SelectionInfo : ISelectionInfo<ShapeBuilder>
+
+    public class SelectionInfo : IShapeSelectionInfo
     {
-        public SelectionInfo(ShapeBuilder context)
+        public SelectionInfo(IShapeManipulator context)
         {
             Context = context;
         }
 
+
+        #region Properties
+
         public bool MouseHoveringVertex => HoveredVertex != null;
         public bool MouseHoveringEdge => HoveredEdge != null;
         public Vector2? HoveredVertex { get; private set; }
-        public Vector2? HoveredEdge { get; private set; }// = vertex that makes the edge with vertex + 1
-        public Shape CurrentShape { get; private set; }
+        //vertex that makes the edge with vertex + 1
+        public Vector2? HoveredEdge { get; private set; }
+        public IShape CurrentShape { get; private set; }
+        public int CurrentShapeIndex { get; private set; } = -1;
         public int SelectedVertex { get; private set; } = -1;
-
-        public ShapeBuilder Context { get; private set; }
+        public IShapeManipulator Context { get; private set; }
         public bool Changed { get; private set; }
+        public float VertexRadius => 0.1f;
+
+
+        #endregion
+
+
+        #region Main
 
         public void UpdateSelection(Vector2 mousePosition)
         {
-            for (int i = 0; i < Context.Shapes.Length; i++)
+            for (int i = 0; i < Context.Shapes.Count; i++)
             {
                 var vertices = Context.Shapes[i].Vertices;
-            
+
                 //vertex selection
-                for (int j = 0; j < vertices.Length; j++)
+                for (int j = 0; j < vertices.Count; j++)
                 {
                     var vertex = vertices[j];
                     var isVertexSelected = CheckVertexSelection(vertex, mousePosition);
-                    if(isVertexSelected) return;
+                    if (isVertexSelected) return;
                 }
 
                 //edge selection
-                for (int j = 0; j < vertices.Length; j++)
+                for (int j = 0; j < vertices.Count; j++)
                 {
                     var vertex = vertices[j];
-                    var nextVertex = vertices[(j + 1) % vertices.Length];
+                    var nextVertex = vertices[(j + 1) % vertices.Count];
                     var isEdgeSelected = CheckEdgeSelection(vertex, nextVertex, mousePosition);
-                    if(isEdgeSelected) return;
+                    if (isEdgeSelected) return;
                 }
-                
+
                 //nothing selected
                 Changed = HoveredVertex != null || HoveredEdge != null;
                 HoveredVertex = null;
@@ -51,13 +62,18 @@ namespace Thomas.Test.New
             }
         }
 
+        #endregion
+
+
+        #region Plumbery
+
         private bool CheckVertexSelection(Vector2 vertex, Vector2 mousePosition)
         {
             var mouseToVertex = vertex - mousePosition;
-            if(mouseToVertex.sqrMagnitude > Context.VertexRadius * Context.VertexRadius) return false;
-            
+            if (mouseToVertex.sqrMagnitude > VertexRadius * VertexRadius) return false;
+
             Changed = vertex != HoveredVertex;
-            if(!Changed) return true;
+            if (!Changed) return true;
 
             HoveredVertex = vertex;
             HoveredEdge = null;
@@ -67,37 +83,61 @@ namespace Thomas.Test.New
         private bool CheckEdgeSelection(Vector2 vertex, Vector2 nextVertex, Vector2 mousePosition)
         {
             var mouseToEdge = HandleUtility.DistancePointToLineSegment(mousePosition, vertex, nextVertex);
-            if(mouseToEdge > Context.VertexRadius) return false;
+            if (mouseToEdge > VertexRadius) return false;
 
             Changed = HoveredEdge != vertex;
-            if(!Changed) return true;
+            if (!Changed) return true;
 
             HoveredEdge = vertex;
             HoveredVertex = null;
             return true;
         }
 
+        #endregion
+
+
+        #region Utils
+
         /// <summary>
         /// Select a vertex on any shape
         /// </summary>
-        /// <param name="vertex"></param>
+        /// <param name="vertex">Vertex to select</param>
         public void SelectVertex(Vector2 vertex)
         {
             CurrentShape = Context.RetreiveShapeFromVertex(vertex);
+            CurrentShapeIndex = Context.GetShapeIndex(CurrentShape);
             SelectedVertex = CurrentShape.GetVertexIndex(vertex);
         }
-        
+
         /// <summary>
         /// Select a vertex on the current shape
         /// </summary>
-        /// <param name="vertexIndex"></param>
+        /// <param name="vertexIndex">Index of the vertex to select</param>
         public void SelectVertex(int vertexIndex)
         {
-            var vertexCount = CurrentShape.Vertices.Length;
-            if(vertexCount == 0) return;
+            var vertexCount = CurrentShape.Vertices.Count;
+            if (vertexCount == 0) return;
 
-            vertexIndex = vertexIndex < 0 ? vertexCount - 1 : vertexIndex % vertexCount;
+            vertexIndex = (int)Mathf.Repeat(vertexIndex, vertexCount);
+            vertexIndex = Mathf.Max(-1, vertexIndex);
             SelectedVertex = vertexIndex;
+        }
+
+        /// <summary>
+        /// Select a Shape
+        /// </summary>
+        /// <param name="shapeIndex">Index of the shape to select</param>
+        public void SelectShape(int shapeIndex)
+        {
+            var shapeCount = Context.Shapes.Count;
+            CurrentShapeIndex = (int)Mathf.Repeat(shapeIndex, shapeCount);
+            if(CurrentShapeIndex < 0)
+            {
+                ClearShapeSelection();
+                return;
+            }
+            
+            CurrentShape = Context.Shapes[CurrentShapeIndex];
         }
 
         /// <summary>
@@ -107,13 +147,17 @@ namespace Thomas.Test.New
         {
             SelectedVertex = -1;
         }
-        
+
         /// <summary>
         /// Unselect all shapes
         /// </summary>
         public void ClearShapeSelection()
         {
             CurrentShape = null;
+            CurrentShapeIndex = -1;
+            ClearVertexSelection();
         }
+
+        #endregion
     }
 }

@@ -7,7 +7,7 @@ public class DeleteHoveredVertex : Command, IShapeBuilderCommand
     public bool Undoable => true;
     public bool NeedRepaint => true;
 
-    public void Execute(SelectionInfo selection, Vector2 mousePosition, ShapeBuilder builder)
+    public void Execute(IShapeSelectionInfo selection, Vector2 mousePosition, IShapeManipulator builder)
     {
         if(!selection.MouseHoveringVertex) return;
 
@@ -16,15 +16,15 @@ public class DeleteHoveredVertex : Command, IShapeBuilderCommand
         var vertexIndex = shape.GetVertexIndex(vertex);
         
         shape.RemoveVertex(vertexIndex);
-        if(shape.Vertices.Length > 0) return;
-
-        builder.DeleteShape(shape);
-        if(selection.CurrentShape != shape) return;
-
         if(vertexIndex == selection.SelectedVertex)
         {
             selection.ClearVertexSelection();
         }
+
+        if(shape.Vertices.Count > 0) return;
+
+        builder.DeleteShape(shape);
+        if(selection.CurrentShape != shape) return;
         
         selection.ClearShapeSelection();
     }

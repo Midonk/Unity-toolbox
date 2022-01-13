@@ -8,11 +8,11 @@ namespace Thomas.Test.New
         public bool Undoable => true;
         public bool NeedRepaint => true;
 
-        public void Execute(SelectionInfo selection, Vector2 mousePosition, ShapeBuilder builder)
+        public void Execute(IShapeSelectionInfo selection, Vector2 mousePosition, IShapeManipulator builder)
         {
             if (selection.MouseHoveringVertex || selection.MouseHoveringEdge) return;
             
-            if (builder.Shapes.Length == 0 || selection.CurrentShape is null)
+            if (builder.Shapes.Count == 0 || selection.CurrentShape is null)
             {
                 builder.AddShape(mousePosition);
             }
@@ -20,7 +20,7 @@ namespace Thomas.Test.New
             else
             {
                 var selectedVertex = selection.SelectedVertex;
-                selection.CurrentShape.AddVertex(selectedVertex + 1, mousePosition);
+                selection.CurrentShape.InsertVertex(selectedVertex + 1, mousePosition);
             }
 
             selection.SelectVertex(mousePosition);

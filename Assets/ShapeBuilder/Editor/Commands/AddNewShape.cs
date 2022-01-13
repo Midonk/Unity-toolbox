@@ -7,7 +7,7 @@ public class AddNewShape : Command, IShapeBuilderCommand
     public bool Undoable => true;
     public bool NeedRepaint => true;
 
-    public void Execute(SelectionInfo selection, Vector2 mousePosition, ShapeBuilder builder)
+    public void Execute(IShapeSelectionInfo selection, Vector2 mousePosition, IShapeManipulator builder)
     {
         builder.AddShape(mousePosition);
         selection.SelectVertex(mousePosition);

@@ -6,6 +6,6 @@ namespace Thomas.Test.New
     {
         bool Undoable { get; }
         bool NeedRepaint { get; }
-        void Execute(SelectionInfo selection, Vector2 mousePosition, ShapeBuilder builder);
+        void Execute(IShapeSelectionInfo selection, Vector2 mousePosition, IShapeManipulator builder);
     }
 }

@@ -7,6 +7,10 @@ namespace Thomas.Test.New
         T Context { get; }
         bool Changed { get; }
         
-        void UpdateSelection(Vector2 mousePosition);
+        /// <summary>
+        /// Internaly update selection given a position
+        /// </summary>
+        /// <param name="position"></param>
+        void UpdateSelection(Vector2 position);
     }
 }

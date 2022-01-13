@@ -1,13 +1,18 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace Thomas.Test.New
 {
-    public interface IShape<T>
+    public interface IShape
     {
-        T[] Vertices { get; }
+        List<Vector2> Vertices { get; }
 
-        void AddVertex(T position);
+        void AddVertex(Vector2 position);
+        void InsertVertex(int index, Vector2 position);
         void RemoveVertex(int vertexIndex);
-        T GetVertex(int vertexIndex);
-        bool Contains(T vertex);
-        void UpdateVertex(int vertexIndex, T position);
+        Vector2 GetVertex(int vertexIndex);
+        int GetVertexIndex(Vector2 vertex);
+        bool Has(Vector2 vertex);
+        void UpdateVertex(int vertexIndex, Vector2 position);
     }
 }

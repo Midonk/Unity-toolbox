@@ -3,17 +3,12 @@ using UnityEngine;
 
 namespace Thomas.Test.New
 {
-    public class ShapeBuilder : MonoBehaviour 
+    public class ShapeBuilder : MonoBehaviour, IShapeManipulator
     {
         [SerializeField] private EditorInputTrigger _inputTrigger;
 
-        [Header("Visuals")]
-        [Min(0.001f)]
-        [SerializeField] private float _vertexRadius = 0.1f;
-
         public EditorInputTrigger InputTrigger => _inputTrigger;
-        public Shape[] Shapes => _shapes.ToArray();
-        public float VertexRadius => _vertexRadius;
+        public List<IShape> Shapes => _shapes;
 
         public void AddShape(Vector2 position)
         {
@@ -22,12 +17,12 @@ namespace Thomas.Test.New
             _shapes.Add(shape);
         }
 
-        public Shape RetreiveShapeFromVertex(Vector2 vertex)
+        public IShape RetreiveShapeFromVertex(Vector2 vertex)
         {
             for (int i = 0; i < _shapes.Count; i++)
             {
                 var shape = _shapes[i];
-                if(!shape.Contains(vertex)) continue;
+                if (!shape.Has(vertex)) continue;
 
                 return shape;
             }
@@ -35,9 +30,12 @@ namespace Thomas.Test.New
             return null;
         }
 
-        public void DeleteShape(int index) => _shapes.RemoveAt(index);
-        public void DeleteShape(Shape shape) => _shapes.Remove(shape);
+        public int GetShapeIndex(IShape shape) => _shapes.IndexOf(shape);
 
-        private List<Shape> _shapes = new List<Shape>();
+        public void DeleteShape(int index) => _shapes.RemoveAt(index);
+
+        public void DeleteShape(IShape shape) => _shapes.Remove(shape);
+
+        private List<IShape> _shapes = new List<IShape>();
     }
 }

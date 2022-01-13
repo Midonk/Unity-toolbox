@@ -8,8 +8,9 @@ namespace Thomas.Test.New
         public bool Undoable { get; } = false;
         public bool NeedRepaint { get; } = true;
 
-        public void Execute(SelectionInfo selection, Vector2 mousePosition, ShapeBuilder builder)
+        public void Execute(IShapeSelectionInfo selection, Vector2 mousePosition, IShapeManipulator builder)
         {
+            
             var vertex = selection.SelectedVertex;
             if(vertex == -1) return;
             

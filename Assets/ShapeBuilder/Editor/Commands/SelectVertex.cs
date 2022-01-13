@@ -8,13 +8,12 @@ namespace Thomas.Test.New
         public bool Undoable { get; } = true;
         public bool NeedRepaint { get; } = false;
 
-        public void Execute(SelectionInfo selection, Vector2 mousePosition, ShapeBuilder builder)
+        public void Execute(IShapeSelectionInfo selection, Vector2 mousePosition, IShapeManipulator builder)
         {
-            if(selection.MouseHoveringVertex)
-            {
-                var vertex = selection.HoveredVertex ?? Vector2.zero;
-                selection.SelectVertex(vertex);
-            }
+            if(!selection.MouseHoveringVertex) return;
+            
+            var vertex = selection.HoveredVertex ?? Vector2.zero;
+            selection.SelectVertex(vertex);
         }
     }
 }

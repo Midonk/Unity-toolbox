@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 831982221}
   - component: {fileID: 831982219}
   m_Layer: 0
-  m_Name: NavigationNew
+  m_Name: ShapeBuilder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,6 +163,20 @@ MonoBehaviour:
       - {fileID: 11400000, guid: 46c760de6352f854bb2bc39737ecbb93, type: 2}
       - {fileID: 11400000, guid: f802ee944e7130340bb80094e0525d01, type: 2}
       - {fileID: 11400000, guid: 6049d44ccab56bc4791f67277632acfd, type: 2}
+    - name: select next vertex
+      eventType: 4
+      key: 275
+      modifiers: 64
+      mouseButton: 0
+      commands:
+      - {fileID: 11400000, guid: 74b8a818549de7d488e959e8b207c1db, type: 2}
+    - name: select previous vertex
+      eventType: 4
+      key: 276
+      modifiers: 64
+      mouseButton: 0
+      commands:
+      - {fileID: 11400000, guid: 2d4c6f9e7467cbe499191c4374d9ddc8, type: 2}
     - name: move vertex
       eventType: 3
       key: 0
@@ -191,7 +205,13 @@ MonoBehaviour:
       mouseButton: 0
       commands:
       - {fileID: 11400000, guid: ece205c7dcf0e144abf8ca1feee11e7e, type: 2}
-  _vertexRadius: 0.25
+    - name: quick switch shape
+      eventType: 4
+      key: 9
+      modifiers: 0
+      mouseButton: 0
+      commands:
+      - {fileID: 11400000, guid: 6e6fb33929460674eb61fab69cf08159, type: 2}
 --- !u!4 &831982221
 Transform:
   m_ObjectHideFlags: 0
@@ -288,36 +308,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1299436853
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1299436854}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1299436854
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299436853}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!850595691 &1672920164
 LightingSettings:
