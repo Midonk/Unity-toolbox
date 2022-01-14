@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor.EditorTools;
 using UnityEditor;
 
-[EditorTool("Shape builder", typeof(Camera))]
+[EditorTool("Shape builder", typeof(SampleMonobehaviour))]
 public class ShapeBuilderEditorTool : EditorTool
 {
     [SerializeField] private Texture2D _icon;
@@ -25,6 +25,7 @@ public class ShapeBuilderEditorTool : EditorTool
 
     public void OnEnable()
     {
+        _tool.Target = (SampleMonobehaviour)target;
         _tool.OnEnable();
         //ToolManager. .activeToolChanged += ActiveToolDidChange;
         _toolIcon = new GUIContent("Shape builder", _icon, "Build shape...");
@@ -49,5 +50,5 @@ public class ShapeBuilderEditorTool : EditorTool
     }
 
     private GUIContent _toolIcon;
-    private ShapeTool<Camera> _tool = new ShapeTool<Camera>();
+    private ShapeTool<SampleMonobehaviour> _tool = new ShapeTool<SampleMonobehaviour>();
 }
