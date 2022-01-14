@@ -1,4 +1,3 @@
-using Thomas.Test.New;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ShapeBuilder/Commands/Delete hovered vertex", fileName = "Delete hovered vertex")]
@@ -21,7 +20,7 @@ public class DeleteHoveredVertex : Command, IShapeBuilderCommand
             selection.ClearVertexSelection();
         }
 
-        if(shape.Vertices.Count > 0) return;
+        if(shape.VertexCount > 0) return;
 
         builder.DeleteShape(shape);
         if(selection.CurrentShape != shape) return;

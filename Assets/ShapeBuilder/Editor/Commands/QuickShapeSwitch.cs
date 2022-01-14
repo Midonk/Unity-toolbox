@@ -1,6 +1,3 @@
-
-
-using Thomas.Test.New;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ShapeBuilder/Commands/Switch shape", fileName = "Switch shape")]

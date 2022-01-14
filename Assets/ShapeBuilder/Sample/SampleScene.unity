@@ -123,109 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &831982218
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 831982221}
-  - component: {fileID: 831982219}
-  m_Layer: 0
-  m_Name: ShapeBuilder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &831982219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831982218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fb96a950fe8d5d41ba10a905326ebd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputTrigger:
-    _triggers:
-    - name: add or select vertex
-      eventType: 0
-      key: 0
-      modifiers: 0
-      mouseButton: 0
-      commands:
-      - {fileID: 11400000, guid: 46c760de6352f854bb2bc39737ecbb93, type: 2}
-      - {fileID: 11400000, guid: f802ee944e7130340bb80094e0525d01, type: 2}
-      - {fileID: 11400000, guid: 6049d44ccab56bc4791f67277632acfd, type: 2}
-    - name: select next vertex
-      eventType: 4
-      key: 275
-      modifiers: 64
-      mouseButton: 0
-      commands:
-      - {fileID: 11400000, guid: 74b8a818549de7d488e959e8b207c1db, type: 2}
-    - name: select previous vertex
-      eventType: 4
-      key: 276
-      modifiers: 64
-      mouseButton: 0
-      commands:
-      - {fileID: 11400000, guid: 2d4c6f9e7467cbe499191c4374d9ddc8, type: 2}
-    - name: move vertex
-      eventType: 3
-      key: 0
-      modifiers: 0
-      mouseButton: 0
-      commands:
-      - {fileID: 11400000, guid: 54710c2860d27b7488de9de60792f3fb, type: 2}
-    - name: delete selected vertex
-      eventType: 4
-      key: 127
-      modifiers: 64
-      mouseButton: 0
-      commands:
-      - {fileID: 11400000, guid: cdb266ee72b62874aa3e69d63254e960, type: 2}
-    - name: delete hovered vertex
-      eventType: 0
-      key: 0
-      modifiers: 0
-      mouseButton: 1
-      commands:
-      - {fileID: 11400000, guid: 9b8125efb0b66fc4f97eb32e3fe7538a, type: 2}
-    - name: add shape
-      eventType: 0
-      key: 0
-      modifiers: 1
-      mouseButton: 0
-      commands:
-      - {fileID: 11400000, guid: ece205c7dcf0e144abf8ca1feee11e7e, type: 2}
-    - name: quick switch shape
-      eventType: 4
-      key: 9
-      modifiers: 0
-      mouseButton: 0
-      commands:
-      - {fileID: 11400000, guid: 6e6fb33929460674eb61fab69cf08159, type: 2}
---- !u!4 &831982221
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831982218}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.81795, y: 2.1059885, z: -8.3671875}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &974542336
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,3 +267,33 @@ LightingSettings:
   m_PVRFilteringAtrousPositionSigmaDirect: 0.5
   m_PVRFilteringAtrousPositionSigmaIndirect: 2
   m_PVRFilteringAtrousPositionSigmaAO: 1
+--- !u!1 &1993404737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1993404738}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1993404738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993404737}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2, y: -2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

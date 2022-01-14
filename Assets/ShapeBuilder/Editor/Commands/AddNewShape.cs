@@ -1,4 +1,3 @@
-using Thomas.Test.New;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ShapeBuilder/Commands/Add shape", fileName = "Add shape")]

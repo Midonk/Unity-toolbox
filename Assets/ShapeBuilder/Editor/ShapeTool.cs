@@ -1,26 +1,37 @@
 using UnityEngine;
 using UnityEditor;
 
-//CLOSED
-    
-[CustomEditor(typeof(ShapeBuilder))]
-public class ShapeEditor : Editor 
+public class ShapeTool<T> where T : Object
 {
-/*     #region Unity API
+    #region Properties
 
-    public override void OnInspectorGUI() 
+    public T Target { get; set; }
+    public ShapeBuilderSettings Settings => _settings;
+         
+    #endregion
+
+
+    #region Main
+    
+    public void OnEnable()
     {
-        DrawHelpBox();
-        base.OnInspectorGUI();
+        _settings = ShapeBuilderSettings.GetOrCreate();
+        _selection = new SelectionInfo(_settings.Builder);
+        _drawer = new GeometryDrawer();
+        _needsRepaint = true;
     }
 
-    private void OnSceneGUI() 
+    public void OnDisable()
     {
-        Event guiEvent = Event.current;
+
+    }
+
+    public void HandleEvent(Event guiEvent) 
+    {
         switch (guiEvent.type)
         {
             case EventType.Repaint: 
-                Draw();
+                DrawShape();
                 break;
             
             case EventType.Layout:
@@ -33,29 +44,11 @@ public class ShapeEditor : Editor
         }
     }
 
-    private void OnEnable()
+    private void DrawShape()
     {
-        _builder = (ShapeBuilder)target;
-        _inputTrigger = _builder.InputTrigger;
-        _selection = new SelectionInfo(_builder); 
-        _needsRepaint = true;
-        Tools.hidden = true;
-    }
-
-    private void OnDisable()
-    {
-        Tools.hidden = false;
-    }
-            
-    #endregion        
-
-    
-    #region Main
-
-    private void Draw()
-    {
-        var shapes = _builder.Shapes;
-        for (int i = 0; i < _builder.ShapeCount; i++)
+        var builder = _settings.Builder;
+        var shapes = builder.Shapes;
+        for (int i = 0; i < builder.ShapeCount; i++)
         {
             var shape = shapes[i];
             _drawer.DrawSelectableShape(shape, _selection);
@@ -68,17 +61,18 @@ public class ShapeEditor : Editor
         var mousePosition = mouseRay.origin * Vector2.one;
         UpdateSelection(mousePosition);
 
-        var commands = _inputTrigger.GetCommands(guiEvent);
+        var commands = _settings.InputTrigger.GetCommands(guiEvent);
+        var builder = _settings.Builder;
         for (int i = 0; i < commands.Length; i++)
         {
             if(!(commands[i] is IShapeBuilderCommand shapeCommand)) continue;
             
             if(shapeCommand.Undoable)
             {
-                Undo.RecordObject(_builder, shapeCommand.ToString());
+                Undo.RecordObject(Target, shapeCommand.ToString());
             }
 
-            shapeCommand.Execute(_selection, mousePosition, _builder);
+            shapeCommand.Execute(_selection, mousePosition, builder);
             _needsRepaint = _needsRepaint || shapeCommand.NeedRepaint;
         }
     }
@@ -88,15 +82,9 @@ public class ShapeEditor : Editor
 
     #region Plumbery
 
-    private void DrawHelpBox()
-    {
-        var infos = _inputTrigger.GetInputInfo();
-        EditorGUILayout.HelpBox(infos, MessageType.Info);
-    }
-
     private void UpdateSelection(Vector2 mousePosition)
     {
-        if (_builder.ShapeCount == 0) return;
+        if (_settings.Builder.ShapeCount == 0) return;
 
         _selection.UpdateSelection(mousePosition);
         if(!_selection.Changed && !_needsRepaint) return;
@@ -107,7 +95,8 @@ public class ShapeEditor : Editor
 
     private void PreventUnfocus()
     {
-        HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
+        var controlID = GUIUtility.GetControlID(FocusType.Passive);
+        HandleUtility.AddDefaultControl(controlID);
     }
     
     #endregion
@@ -115,11 +104,10 @@ public class ShapeEditor : Editor
 
     #region Private Fields
 
-    private ShapeBuilder _builder;
     private IShapeSelectionInfo _selection;
-    private EditorInputTrigger _inputTrigger;
-    private GeometryDrawer _drawer = new GeometryDrawer();
+    private ShapeBuilderSettings _settings;
+    private GeometryDrawer _drawer;
     private bool _needsRepaint;
-    
-    #endregion */
+
+    #endregion
 }
