@@ -3,6 +3,7 @@ using UnityEngine;
 
 //CLOSED
 
+[System.Serializable]
 public class Shape : IShape
 {
     #region Properties
@@ -39,7 +40,7 @@ public class Shape : IShape
 
     #region Private Fields
 
-    private List<Vector2> _vertices = new List<Vector2>();
+    [SerializeField] private List<Vector2> _vertices = new List<Vector2>();
 
     #endregion
 }

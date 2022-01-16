@@ -25,8 +25,7 @@ public class ShapeBuilderEditorTool : EditorTool
 
     public void OnEnable()
     {
-        _tool.Target = (SampleMonobehaviour)target;
-        _tool.OnEnable();
+        _tool.OnEnable((SampleMonobehaviour)target);
         //ToolManager. .activeToolChanged += ActiveToolDidChange;
         _toolIcon = new GUIContent("Shape builder", _icon, "Build shape...");
         SceneView.duringSceneGui += OnSceneGUI;
@@ -48,5 +47,5 @@ public class ShapeBuilderEditorTool : EditorTool
     }
 
     private GUIContent _toolIcon;
-    private ShapeTool<SampleMonobehaviour> _tool = new ShapeTool<SampleMonobehaviour>();
+    private ShapeTool _tool = new ShapeTool();
 }

@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class ShapeBuilderEditorWindow : EditorWindow 
 {
+    [SerializeField] private Injector _injector;
+
+
     #region Unity API
 
     [MenuItem("Tools/Shape builder")]
@@ -15,8 +19,21 @@ public class ShapeBuilderEditorWindow : EditorWindow
 
     private void OnEnable() 
     {
-        _tool.OnEnable();
+        _tool.OnEnable(this);
+        _injector = new Injector(_shapes, UpdateShapes);
         SceneView.duringSceneGui += OnSceneGUI;
+    }
+
+    private void UpdateShapes()
+    {
+        var builderShapes = _tool.Settings.Builder.Shapes;
+        _shapes = new List<Shape>();
+        for (int i = 0; i < builderShapes.Length; i++)
+        {
+            _shapes.Add((Shape)builderShapes[i]);
+        }
+        
+        _injector.SetSource(_shapes);
     }
 
     private void OnDisable() 
@@ -27,9 +44,9 @@ public class ShapeBuilderEditorWindow : EditorWindow
 
     private void OnGUI() 
     {
-        var target = EditorGUILayout.ObjectField("Target", _target, typeof(SampleMonobehaviour), true);
-        var button = GUILayout.Button("Bake shape");
-        _target = (SampleMonobehaviour)target;
+        var serializedObject = new SerializedObject(this);
+        var property = serializedObject.FindProperty("_injector");
+        EditorGUILayout.PropertyField(property);
     }
          
     #endregion    
@@ -42,8 +59,8 @@ public class ShapeBuilderEditorWindow : EditorWindow
 
     #region Private Fields
 
-    private ShapeTool<SampleMonobehaviour> _tool = new ShapeTool<SampleMonobehaviour>();
-    private SampleMonobehaviour _target;
-    
+    private ShapeTool _tool = new ShapeTool();
+    private List<Shape> _shapes = new List<Shape>();
+
     #endregion
 }

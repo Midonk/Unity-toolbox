@@ -1,20 +1,29 @@
 using UnityEngine;
 using UnityEditor;
+using System;
 
-public class ShapeTool<T> where T : Object
+public class ShapeTool
 {
     #region Properties
 
-    public T Target { get; set; }
+    public UnityEngine.Object Target { get; private set; }
     public ShapeBuilderSettings Settings => _settings;
+         
+    #endregion
+
+
+    #region Event
+
+    public event Action<IShape[]> OnToolActivated;
          
     #endregion
 
 
     #region Main
     
-    public void OnEnable()
+    public void OnEnable(UnityEngine.Object target)
     {
+        Target = target;
         _settings = ShapeBuilderSettings.GetOrCreate();
         _selection = new SelectionInfo(_settings.Builder);
         _drawer = new GeometryDrawer();

@@ -16,8 +16,7 @@ public class ShapeCustomEditor : Editor
 
     private void OnEnable()
     {
-        _tool.Target = (SampleMonobehaviour)target;
-        _tool.OnEnable();
+        _tool.OnEnable((SampleMonobehaviour)target);
     }
 
     private void OnDisable()
@@ -41,7 +40,7 @@ public class ShapeCustomEditor : Editor
 
     #region Private Fields
 
-    private ShapeTool<SampleMonobehaviour> _tool = new ShapeTool<SampleMonobehaviour>();
+    private ShapeTool _tool = new ShapeTool();
     
     #endregion
 }

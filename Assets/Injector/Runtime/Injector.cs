@@ -5,9 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class Injector
 {
-    public Injector(Type sourceType = null)
+    public Injector(object source, Action preprocessInjection = null)
     {
-        SourceType = sourceType;
+        SetSource(source);
+        _preprocessInjection = preprocessInjection;
+    }
+    
+    public Injector()
+    {
+        SourceType = null;
     }
 
 
@@ -23,14 +29,19 @@ public class Injector
 
     public void Inject()
     {
-        Debug.Log("Injection");
+        if(!CanInject) return;
+
+        _preprocessInjection?.Invoke();
+        var sourceValue = _source ?? m_sourceMember.GetValue(_sourceObject);
+        m_targetMember.SetValue(_targetObject, sourceValue);
+        Debug.Log($"Injected {sourceValue} => {m_targetMember.Name}");
     }
 
 
     #region Private Fields
 
-    private MemberInfo _targetProperty;
-    private MemberInfo _sourceProperty;
+    public MemberInfo m_targetMember;
+    public MemberInfo m_sourceMember;
     public bool CanInject
     {
         get
@@ -53,18 +64,21 @@ public class Injector
     public int SelectedSourceIndex
     {
         get => _selectedSourceIndex;
-        set
-        {
-            if(value == _selectedSourceIndex) return;
-
-            SelectedTargetIndex = 0;
-            _selectedSourceIndex = value;
-        }
+        set => _selectedSourceIndex = value;
     }
-    public Type SourceType { get; private set; }
 
-    [SerializeField] private int _selectedSourceIndex;
-    [SerializeField] private int _selectedTargetIndex;
+
+    public Type SourceType { get; private set; }
+    public void SetSource(object source)
+    {
+        _source = source;
+        SourceType = source.GetType();
+    }
+
+    private object _source;
+    private int _selectedSourceIndex;
+    private int _selectedTargetIndex;
+    private Action _preprocessInjection;
          
     #endregion
 }

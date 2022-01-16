@@ -23,7 +23,6 @@ public class SelectionInfo : IShapeSelectionInfo
     public bool Changed { get; private set; }
     public float VertexRadius => 0.1f;
 
-
     #endregion
 
 

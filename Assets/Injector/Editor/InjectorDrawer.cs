@@ -6,19 +6,125 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(Injector))]
 public class InjectorDrawer: PropertyDrawer 
 {
+    #region Unity API
+
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         var targetObject = property.serializedObject.targetObject;
         _injector = (Injector)fieldInfo.GetValue(targetObject);
         _isTypeFree = _injector.SourceType is null;
         _elementCount = 0;
+
+        DrawHeader(position, property.displayName);
         EditorGUI.BeginProperty(position, label, property);
 
         DrawSamplingSource(position, property);
+        DrawSourceType(position);
+        DrawSeparator(position);
         DrawInjectionTarget(position, property);
         DrawInjectionButton(position);
 
         EditorGUI.EndProperty();
+    }
+
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+    {
+        return (EditorGUIUtility.singleLineHeight + PADDING) * _elementCount + MARGIN * 2;
+    }
+
+    #endregion
+
+
+    #region Main
+
+    private void DrawHeader(Rect position, string text)
+    {
+        var headerRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, EditorGUIUtility.singleLineHeight);
+        EditorGUI.LabelField(headerRect, text, EditorStyles.boldLabel);
+    }
+
+    private void DrawSamplingSource(Rect position, SerializedProperty property)
+    {
+        if(!_isTypeFree)
+        {
+            _sourceType = _injector.SourceType;
+            return;
+        }
+        
+        var lineHeight = EditorGUIUtility.singleLineHeight;
+        var samplingSource = property.FindPropertyRelative("_sourceObject");
+
+        FindMembers(samplingSource, ref _currentMembers, ResetSource);
+        GeneratePopupOptions(_currentMembers);
+
+        var samplingSourceRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, lineHeight);
+        var SampledMemberRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, lineHeight);
+
+        EditorGUI.BeginChangeCheck();
+        EditorGUI.PropertyField(samplingSourceRect, samplingSource);
+        if(EditorGUI.EndChangeCheck())
+        {
+            _injector.SelectedSourceIndex = 0;
+            _injector.SelectedTargetIndex = 0;
+            property.serializedObject.ApplyModifiedProperties();
+        }
+
+        EditorGUI.BeginChangeCheck();
+        _injector.SelectedSourceIndex = EditorGUI.Popup(SampledMemberRect, "Source Members", _injector.SelectedSourceIndex, _currentPopupOptions);
+        GUI.enabled = _injector.SelectedSourceIndex > 0;
+        if(!EditorGUI.EndChangeCheck() || _currentMembers is null) return;
+
+        var optionIndex = _injector.SelectedSourceIndex;
+        _injector.m_sourceMember = optionIndex > 0 /* && _currentMembers.Length > 0 */ ? _currentMembers[optionIndex - 1] : null;
+        var type = _injector.m_sourceMember.GetMemberType();
+        if(type is null) return;
+        if(type.Equals(_sourceType)) return;
+        
+        _injector.SelectedTargetIndex = 0;
+        _sourceType = type;
+        property.serializedObject.ApplyModifiedProperties();
+    }
+
+    private void DrawInjectionTarget(Rect position, SerializedProperty property)
+    {
+        var lineHeight = EditorGUIUtility.singleLineHeight;
+        var injectionTarget = property.FindPropertyRelative("_targetObject");
+
+        _targetObject = injectionTarget.objectReferenceValue;
+        FindMembers(injectionTarget, ref _currentMembers, ResetTarget);
+        GeneratePopupOptions(_currentMembers);
+
+        var injectionTargetRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, lineHeight);
+        var injectedMemberRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, lineHeight);
+
+        EditorGUI.BeginChangeCheck();
+        EditorGUI.PropertyField(injectionTargetRect, injectionTarget);
+        if(EditorGUI.EndChangeCheck())
+        {
+            _injector.SelectedTargetIndex = 0;
+            property.serializedObject.ApplyModifiedProperties();
+        }
+
+        _injector.SelectedTargetIndex = EditorGUI.Popup(injectedMemberRect, "Target Members", _injector.SelectedTargetIndex, _currentPopupOptions);
+
+        if(_currentMembers is null) return;
+
+        var optionIndex = _injector.SelectedTargetIndex;
+        _injector.m_targetMember = optionIndex > 0 && _currentMembers.Length > 0 ? _currentMembers[optionIndex - 1] : null;
+    }
+
+    private void DrawSourceType(Rect position)
+    {
+        if(_isTypeFree) return;
+        
+        var typeBoxRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, EditorGUIUtility.singleLineHeight);
+        GUI.Box(typeBoxRect, _injector.SourceType.ToString());
+    }
+    
+    private void DrawSeparator(Rect position)
+    {
+        var separatorRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, EditorGUIUtility.singleLineHeight);
+        GUI.Box(separatorRect, '\u21D3'.ToString());
     }
 
     private void DrawInjectionButton(Rect position)
@@ -27,57 +133,13 @@ public class InjectorDrawer: PropertyDrawer
         GUI.enabled = _injector.CanInject;
         if (GUI.Button(injectButtonRect, "Inject"))
         {
+            Undo.RecordObject(_targetObject, $"Injection ({_sourceType})");
             _injector.Inject();
         }
     }
+         
+    #endregion
 
-    private void DrawSamplingSource(Rect position, SerializedProperty property)
-    {
-        if(!_isTypeFree) return;
-        
-        var lineHeight = EditorGUIUtility.singleLineHeight;
-        var samplingSource = property.FindPropertyRelative("_sourceObject");
-        var sampledMember = property.FindPropertyRelative("_sourceMemberName");
-
-        FindMembers(samplingSource, ref _sourceMembers, ResetSource);
-        GeneratePopupOptions(_sourceMembers);
-
-        var samplingSourceRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, lineHeight);
-        var SampledMemberRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, lineHeight);
-
-        EditorGUI.ObjectField(samplingSourceRect, samplingSource);
-        _injector.SelectedSourceIndex = EditorGUI.Popup(SampledMemberRect, "Source Members", _injector.SelectedSourceIndex, _targetPopupOptions);
-        GUI.enabled = _injector.SelectedSourceIndex > 0;
-
-        if(_sourceMembers is null) return;
-
-        var memberIndex = _injector.SelectedSourceIndex - 1;
-        if(memberIndex < 0) return;
-
-        var selectedSourceMember = _sourceMembers[memberIndex];
-        _sourceType = GetMemberType(selectedSourceMember);
-    }
-
-    private void DrawInjectionTarget(Rect position, SerializedProperty property)
-    {
-        var lineHeight = EditorGUIUtility.singleLineHeight;
-        var injectionTarget = property.FindPropertyRelative("_targetObject");
-        var injectedMember = property.FindPropertyRelative("_targetMemberName");
-
-        FindMembers(injectionTarget, ref _targetMembers, ResetTarget);
-        GeneratePopupOptions(_targetMembers);
-
-        var injectionTargetRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, lineHeight);
-        var injectedMemberRect = new Rect(position.x, GetHeight(position, _elementCount), position.width, lineHeight);
-
-        EditorGUI.ObjectField(injectionTargetRect, injectionTarget);
-        _injector.SelectedTargetIndex = EditorGUI.Popup(injectedMemberRect, "Target Members", _injector.SelectedTargetIndex, _targetPopupOptions);
-    }
-
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
-        return (EditorGUIUtility.singleLineHeight + PADDING) * _elementCount;
-    }
 
     #region Plumbery
      
@@ -85,52 +147,53 @@ public class InjectorDrawer: PropertyDrawer
     {
         var optionCount = members?.Length ?? 0;
         optionCount += 1;
-        _targetPopupOptions = new string[optionCount];
-        _targetPopupOptions[0] = "None";
+        _currentPopupOptions = new string[optionCount];
+        _currentPopupOptions[0] = "None";
         for (int i = 0; i < optionCount - 1; i++)
         {
             var option = members[i].Name;
-            _targetPopupOptions[i + 1] = option;
+            _currentPopupOptions[i + 1] = option;
         }
     }
     
-    private void FindMembers(SerializedProperty source, ref MemberInfo[] members, Action resetCallback)
+    private void FindMembers(SerializedProperty property, ref MemberInfo[] members, Action resetCallback)
     {
-        var sourceObject = source.objectReferenceValue;
-        if(sourceObject is null)
+        var propertyObject = property.objectReferenceValue;
+        if(propertyObject is null)
         {
-            ResetSource();
+            resetCallback.Invoke();
             return;
         }
 
-        var sourceType = sourceObject.GetType();
+        var propertType = propertyObject.GetType();
         var filter = new MemberFilter(SearchMember);
-        members = sourceType.FindMembers(MEMBERTYPES, BINDINGFLAGS, filter, null);
+        members = propertType.FindMembers(MEMBERTYPES, BINDINGFLAGS, filter, null);
     }
 
     private bool SearchMember(MemberInfo member, System.Object objSearch)
     {
-        if(_isTypeFree && _elementCount < 3) return true;
+        if(_isTypeFree && _elementCount == 1) return true;
 
-        Type memberType = GetMemberType(member);
-
+        Type memberType = member.GetMemberType();
+        
         if (_isTypeFree && memberType == _sourceType) return true;
-        else if (memberType == _injector.SourceType) return true;
+        if(_injector.SourceType is null) return false;
+        if (memberType == _injector.SourceType || _injector.SourceType.IsAssignableFrom(memberType)) return true;
 
         return false;
-    }
-
-    private void ResetTarget()
-    {
-        _targetMembers = null;
-        _injector.SelectedTargetIndex = 0;
     }
 
     private void ResetSource()
     {
         _sourceType = null;
-        _sourceMembers = null;
+        _currentMembers = null;
         _injector.SelectedSourceIndex = 0;
+    }
+
+    private void ResetTarget()
+    {
+        _currentMembers = null;
+        _injector.SelectedTargetIndex = 0;
     }
 
     #endregion
@@ -138,41 +201,29 @@ public class InjectorDrawer: PropertyDrawer
 
     #region Utils
 
-    private Type GetMemberType(MemberInfo member)
-    {
-        Type memberType = null;
-        switch (member.MemberType)
-        {
-            case MemberTypes.Field:
-                memberType = ((FieldInfo)member).FieldType;
-                break;
-
-            case MemberTypes.Property:
-                memberType = ((PropertyInfo)member).PropertyType;
-                break;
-        }
-
-        return memberType;
-    }
-
     private float GetHeight(Rect position, int id)
     {
         _elementCount++;
-        return position.y + (EditorGUIUtility.singleLineHeight + PADDING) * id;
+        return position.y + MARGIN + (EditorGUIUtility.singleLineHeight + PADDING) * id;
     }
 
     #endregion
 
+    
+    #region Private Fields
+
     private Injector _injector;
-    private string[] _targetPopupOptions;
-    private string[] _sourcePopupOptions;
-    private MemberInfo[] _targetMembers;
-    private MemberInfo[] _sourceMembers;
+    private string[] _currentPopupOptions;
+    private MemberInfo[] _currentMembers;
     private int _elementCount;
     private bool _isTypeFree;
     private Type _sourceType;
+    private UnityEngine.Object _targetObject;
 
     private const BindingFlags BINDINGFLAGS = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance;
     private const MemberTypes MEMBERTYPES = MemberTypes.Field | MemberTypes.Property;
     private const int PADDING = 2;
+    private const int MARGIN = 12;
+         
+    #endregion
 }
