@@ -1,10 +1,10 @@
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 //CLOSED
     
-[CustomEditor(typeof(SampleMonobehaviour))]
-public class ShapeEditor : Editor 
+[CustomEditor(typeof(Camera))]
+public class ShapeCustomEditor : Editor 
 {
     #region Unity API
 
@@ -18,13 +18,11 @@ public class ShapeEditor : Editor
     {
         _tool.Target = (SampleMonobehaviour)target;
         _tool.OnEnable();
-        Tools.hidden = true;
     }
 
     private void OnDisable()
     {
         _tool.OnDisable();
-        Tools.hidden = false;
     }
             
     #endregion        

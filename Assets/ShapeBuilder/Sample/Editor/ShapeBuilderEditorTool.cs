@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor.EditorTools;
 using UnityEditor;
 
-[EditorTool("Shape builder", typeof(SampleMonobehaviour))]
+[EditorTool("Shape builder", typeof(Camera))]
 public class ShapeBuilderEditorTool : EditorTool
 {
     [SerializeField] private Texture2D _icon;
@@ -30,14 +30,12 @@ public class ShapeBuilderEditorTool : EditorTool
         //ToolManager. .activeToolChanged += ActiveToolDidChange;
         _toolIcon = new GUIContent("Shape builder", _icon, "Build shape...");
         SceneView.duringSceneGui += OnSceneGUI;
-        Tools.hidden = true;
     }
 
     public void OnDisable()
     {
         _tool.OnDisable();
         SceneView.duringSceneGui -= OnSceneGUI;
-        Tools.hidden = false;
     }
 
     private void DrawGUI(EditorWindow window)

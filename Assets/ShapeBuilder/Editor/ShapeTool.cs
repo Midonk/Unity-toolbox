@@ -18,12 +18,13 @@ public class ShapeTool<T> where T : Object
         _settings = ShapeBuilderSettings.GetOrCreate();
         _selection = new SelectionInfo(_settings.Builder);
         _drawer = new GeometryDrawer();
+        Tools.hidden = true;
         _needsRepaint = true;
     }
 
     public void OnDisable()
     {
-
+        Tools.hidden = false;
     }
 
     public void HandleEvent(Event guiEvent) 

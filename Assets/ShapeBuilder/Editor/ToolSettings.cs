@@ -12,7 +12,7 @@ public abstract class ToolSettings<T> : ScriptableObject where T : ScriptableObj
         {
             settings = CreateSettings();            
             Debug.LogWarning($"{typeof(T)} : New settings created for '<color=cyan>{typeof(T)}</color>' tool at \r" +
-                              $"'<color=cyan>{SETTINGSPATH}</color>'");
+                             $"'<color=cyan>{SETTINGSPATH}</color>'");
         }
 
         return settings;
