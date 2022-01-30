@@ -1,56 +1,47 @@
 using UnityEngine;
-using System.Collections.Generic;
+using Utils;
 
-[CreateAssetMenu(menuName = "Audio/Category", fileName = "newAudioCategory")]
-public class AudioCategory : ScriptableObject
+//Allow to controle an entire sound category with a single reference
+
+[CreateAssetMenu(menuName = "Audio/Groups/Category", fileName = "newAudioCategory")]
+public class AudioCategory : ScriptableObject, IAudioGroup<IAudioPlayer>
 {
+    public SmartList<IAudioPlayer> Players { get; private set; } = new SmartList<IAudioPlayer>();
+
+    public void Add(IAudioPlayer audioPlayer)
+    {
+        Players.Add(audioPlayer);
+    }
+    
+    public void Remove(IAudioPlayer audioPlayer)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Pause()
     {
-        var pausedPlayer = new List<AudioPlayer>();
-        foreach (var player in _players)
+        foreach (IAudioPlayer player in Players)
         {
-            if(player.Paused) continue;
-
             player.Pause();
-            pausedPlayer.Add(player);
         }
-
-        _pausedPlayers = pausedPlayer.ToArray();
     }
+
 
     public void Stop()
     {
-        foreach (var source in _players)
+        foreach (IAudioPlayer source in Players)
         {
             source.Stop();
         }
 
-        _players.Clear();
+        Players.Clear();
     }
 
     public void Unpause()
     {
-        foreach (var player in _pausedPlayers)
+        foreach (IAudioPlayer player in Players)
         {
-            player.UnPausePlayer();
+            player.Unpause();
         }
     }
-
-    internal void Add(AudioPlayer player)
-    {
-        if (_players.Contains(player)) return;
-        
-        _players.Add(player);
-    }
-
-    internal void Remove(AudioPlayer player)
-    {
-        if (!_players.Contains(player)) return;
-        
-        _players.Remove(player);
-    }
-
-    [SerializeField]
-    private List<AudioPlayer> _players;
-    private AudioPlayer[] _pausedPlayers;
 }

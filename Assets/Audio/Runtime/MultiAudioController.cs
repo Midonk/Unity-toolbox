@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MultiAudioController : AudioPlayer
+public class MultiAudioController //: AudioPlayer
 {
-    #region Exposed
+    /* #region Exposed
 
     [SerializeField]
     private AudioSource[] _sources;
@@ -162,5 +162,5 @@ public class MultiAudioController : AudioPlayer
 
     private Dictionary<AudioSource, float> _maxVolumeReference = new Dictionary<AudioSource, float>();
          
-    #endregion
+    #endregion */
 }

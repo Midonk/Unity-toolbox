@@ -132,8 +132,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1267529972}
-  - component: {fileID: 1267529971}
   - component: {fileID: 1267529973}
+  - component: {fileID: 1267529971}
+  - component: {fileID: 1267529974}
+  - component: {fileID: 1267529975}
   m_Layer: 0
   m_Name: AudioPlayer
   m_TagString: Untagged
@@ -150,12 +152,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1267529970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d62b5fce3e469944384c1c083a651633, type: 3}
+  m_Script: {fileID: 11500000, guid: ad1487d67c13a5747a11fa6ec6b9d788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _category: {fileID: 0}
-  _group: {fileID: 0}
-  _paused: 0
+  _groups: []
+  _source: {fileID: 1267529973}
+  _audioElements:
+  - _id: Single 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 9da0535249f7a90438d9676be481bba1, type: 3}
 --- !u!4 &1267529972
 Transform:
   m_ObjectHideFlags: 0
@@ -266,6 +271,46 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1267529974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267529970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26658ad3999080949bfe2e4a9468b5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groups: []
+  _source: {fileID: 1267529973}
+  _audioElements:
+  - _id: Loopable 1
+    _volume: 1
+    _clipIn: {fileID: 8300000, guid: 3decfffdf178183499e8fa5997db8855, type: 3}
+    _clipLoop: {fileID: 8300000, guid: 46e2ea2ed57d3194aa1f7e301e1ada46, type: 3}
+    _clipOut: {fileID: 8300000, guid: 1a8b26aefca0ca340bb0919e4aff26c9, type: 3}
+--- !u!114 &1267529975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267529970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25d720e9bec1b444c8ae53d179ed367a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groups: []
+  _source: {fileID: 0}
+  _audioElements:
+  - _id: Random 1
+    _volume: 1
+    _clips:
+    - {fileID: 8300000, guid: 9da0535249f7a90438d9676be481bba1, type: 3}
+    - {fileID: 8300000, guid: 46e2ea2ed57d3194aa1f7e301e1ada46, type: 3}
 --- !u!1 &1598546895
 GameObject:
   m_ObjectHideFlags: 0

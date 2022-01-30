@@ -39,7 +39,7 @@ namespace AnimationUtils
 	
 
 		[System.Serializable]
-		public struct AnimationEventHandler
+		private struct AnimationEventHandler
 		{
 			public string m_eventName;
 			public UnityEvent m_onEventRaised;
