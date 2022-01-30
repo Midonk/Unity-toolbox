@@ -23,9 +23,10 @@ public class ShapeBuilderEditorTool : EditorTool
         _tool.HandleEvent(evt);
     }
 
+
     public void OnEnable()
     {
-        _tool.OnEnable((SampleMonobehaviour)target);
+        _tool.OnEnable((Camera)target);
         //ToolManager. .activeToolChanged += ActiveToolDidChange;
         _toolIcon = new GUIContent("Shape builder", _icon, "Build shape...");
         SceneView.duringSceneGui += OnSceneGUI;

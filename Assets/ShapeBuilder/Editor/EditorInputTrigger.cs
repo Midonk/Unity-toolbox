@@ -145,7 +145,7 @@ public class EditorInputTrigger
 
     
     [System.Serializable]
-    private struct InputTrigger
+    public struct InputTrigger
     {
         public string name;
         public EventType eventType;
@@ -157,7 +157,7 @@ public class EditorInputTrigger
         public bool ExcludeMoifiers => ((EventModifiers.None | EventModifiers.FunctionKey | EventModifiers.Numeric | EventModifiers.CapsLock) & modifiers) != modifiers;
     }
 
-    private enum MouseButton
+    public enum MouseButton
     {
         LeftClick = 0,
         RightClick = 1,

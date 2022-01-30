@@ -1,29 +1,21 @@
 using UnityEngine;
 using UnityEditor;
-using System;
 
 public class ShapeTool
 {
     #region Properties
 
-    public UnityEngine.Object Target { get; private set; }
+    public Object _target;
     public ShapeBuilderSettings Settings => _settings;
-         
-    #endregion
-
-
-    #region Event
-
-    public event Action<IShape[]> OnToolActivated;
          
     #endregion
 
 
     #region Main
     
-    public void OnEnable(UnityEngine.Object target)
+    public void OnEnable(Object target)
     {
-        Target = target;
+        _target = target;
         _settings = ShapeBuilderSettings.GetOrCreate();
         _selection = new SelectionInfo(_settings.Builder);
         _drawer = new GeometryDrawer();
@@ -79,7 +71,7 @@ public class ShapeTool
             
             if(shapeCommand.Undoable)
             {
-                Undo.RecordObject(Target, shapeCommand.ToString());
+                Undo.RecordObject(_target, shapeCommand.ToString());
             }
 
             shapeCommand.Execute(_selection, mousePosition, builder);

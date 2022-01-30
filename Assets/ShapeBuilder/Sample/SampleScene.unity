@@ -343,16 +343,6 @@ MonoBehaviour:
   _injector:
     _targetObject: {fileID: 117302640}
     _sourceObject: {fileID: 11400000, guid: 57780e187519fca4eb4af2005d8e0811, type: 2}
-    _targetMemberName: 
-    _sourceMemberName: 
   _float1: 1
   _float2: 10
-  _points:
-  - _vertices:
-    - {x: -30.711536, y: -111.70431}
-    - {x: -28.402042, y: -111.70431}
-    - {x: -28.884623, y: -109.53269}
-  - _vertices:
-    - {x: -26.9543, y: -112.014534}
-    - {x: -32.53845, y: -112.497116}
-    - {x: -28.919092, y: -107.05085}
+  _shapes: []

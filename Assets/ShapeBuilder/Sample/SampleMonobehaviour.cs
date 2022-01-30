@@ -6,11 +6,5 @@ public class SampleMonobehaviour : MonoBehaviour
     [SerializeField] private Injector _injector = new Injector();
     [SerializeField] private float _float1;
     [SerializeField] private float _float2;
-    
-    [SerializeField] private List<Shape> _points;
-
-    private void OnValidate() 
-    {
-        
-    }
+    [SerializeField] private Shape[] _shapes;
 }

@@ -16,7 +16,7 @@ public class ShapeCustomEditor : Editor
 
     private void OnEnable()
     {
-        _tool.OnEnable((SampleMonobehaviour)target);
+        _tool.OnEnable((Camera)target);
     }
 
     private void OnDisable()

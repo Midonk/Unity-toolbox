@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
 
 public class ShapeBuilderEditorWindow : EditorWindow 
 {
-    [SerializeField] private Injector _injector;
+    [SerializeField] private ProvidedSourceInjector<Shape[]> _injector;
 
 
     #region Unity API
@@ -20,21 +19,21 @@ public class ShapeBuilderEditorWindow : EditorWindow
     private void OnEnable() 
     {
         _tool.OnEnable(this);
-        _injector = new Injector(_shapes, UpdateShapes);
+        _injector = new ProvidedSourceInjector<Shape[]>(_shapes);
         SceneView.duringSceneGui += OnSceneGUI;
     }
 
-    private void UpdateShapes()
+    /* private void UpdateShapes()
     {
         var builderShapes = _tool.Settings.Builder.Shapes;
-        _shapes = new List<Shape>();
+        _shapes = new List<IShape>();
         for (int i = 0; i < builderShapes.Length; i++)
         {
             _shapes.Add((Shape)builderShapes[i]);
         }
         
         _injector.SetSource(_shapes);
-    }
+    } */
 
     private void OnDisable() 
     {
@@ -51,16 +50,22 @@ public class ShapeBuilderEditorWindow : EditorWindow
          
     #endregion    
     
+
+    #region Main
+
     private void OnSceneGUI(SceneView view)
     {
         var evt = Event.current;
         _tool.HandleEvent(evt);
     }
+         
+    #endregion
+
 
     #region Private Fields
 
     private ShapeTool _tool = new ShapeTool();
-    private List<Shape> _shapes = new List<Shape>();
+    private Shape[] _shapes = new Shape[0];
 
     #endregion
 }
