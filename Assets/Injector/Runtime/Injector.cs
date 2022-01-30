@@ -5,12 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class Injector
 {
-    public Injector(object source, Action preprocessInjection = null)
-    {
-        SetSource(source);
-        _preprocessInjection = preprocessInjection;
-    }
-    
     public Injector()
     {
         SourceType = null;
@@ -19,29 +13,30 @@ public class Injector
 
     #region Exposed
 
-    [SerializeField] private UnityEngine.Object _targetObject;
-    [SerializeField] private UnityEngine.Object _sourceObject;
-    [SerializeField] private string _targetMemberName;
-    [SerializeField] private string _sourceMemberName;
+    [SerializeField] protected UnityEngine.Object _targetObject;
+    [SerializeField] protected UnityEngine.Object _sourceObject;
     
     #endregion
 
 
-    public void Inject()
+    public virtual void Inject()
     {
         if(!CanInject) return;
 
-        _preprocessInjection?.Invoke();
-        var sourceValue = _source ?? m_sourceMember.GetValue(_sourceObject);
-        m_targetMember.SetValue(_targetObject, sourceValue);
-        Debug.Log($"Injected {sourceValue} => {m_targetMember.Name}");
+        var sourceValue = sourceMember.GetValue(_sourceObject);
+        targetMember.SetValue(_targetObject, sourceValue);
+        Debug.Log($"Injected {_sourceObject.name} ({sourceMember.Name}) => {_targetObject.name} ({targetMember.Name})");
     }
 
 
     #region Private Fields
 
-    public MemberInfo m_targetMember;
-    public MemberInfo m_sourceMember;
+    public MemberInfo targetMember;
+    public MemberInfo sourceMember;
+
+    public int SelectedTargetIndex { get; set; }
+    public int SelectedSourceIndex { get; set; }
+    public Type SourceType { get; protected set; }
     public bool CanInject
     {
         get
@@ -55,30 +50,5 @@ public class Injector
         }
     }
 
-    public int SelectedTargetIndex
-    {
-        get => _selectedTargetIndex;
-        set =>_selectedTargetIndex = value;
-    }
-
-    public int SelectedSourceIndex
-    {
-        get => _selectedSourceIndex;
-        set => _selectedSourceIndex = value;
-    }
-
-
-    public Type SourceType { get; private set; }
-    public void SetSource(object source)
-    {
-        _source = source;
-        SourceType = source.GetType();
-    }
-
-    private object _source;
-    private int _selectedSourceIndex;
-    private int _selectedTargetIndex;
-    private Action _preprocessInjection;
-         
     #endregion
 }

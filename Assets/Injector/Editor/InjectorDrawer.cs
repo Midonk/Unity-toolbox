@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(Injector))]
+[CustomPropertyDrawer(typeof(Injector), true)]
 public class InjectorDrawer: PropertyDrawer 
 {
     #region Unity API
@@ -75,8 +75,8 @@ public class InjectorDrawer: PropertyDrawer
         if(!EditorGUI.EndChangeCheck() || _currentMembers is null) return;
 
         var optionIndex = _injector.SelectedSourceIndex;
-        _injector.m_sourceMember = optionIndex > 0 /* && _currentMembers.Length > 0 */ ? _currentMembers[optionIndex - 1] : null;
-        var type = _injector.m_sourceMember.GetMemberType();
+        _injector.sourceMember = optionIndex > 0 /* && _currentMembers.Length > 0 */ ? _currentMembers[optionIndex - 1] : null;
+        var type = _injector.sourceMember.GetMemberType();
         if(type is null) return;
         if(type.Equals(_sourceType)) return;
         
@@ -110,7 +110,7 @@ public class InjectorDrawer: PropertyDrawer
         if(_currentMembers is null) return;
 
         var optionIndex = _injector.SelectedTargetIndex;
-        _injector.m_targetMember = optionIndex > 0 && _currentMembers.Length > 0 ? _currentMembers[optionIndex - 1] : null;
+        _injector.targetMember = optionIndex > 0 && _currentMembers.Length > 0 ? _currentMembers[optionIndex - 1] : null;
     }
 
     private void DrawSourceType(Rect position)
