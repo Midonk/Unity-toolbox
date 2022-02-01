@@ -21,6 +21,6 @@ namespace DebugMenu
             IsQuickMenu = quickMenu;
         }
 
-        #endregion Main
+        #endregion
     }
 }

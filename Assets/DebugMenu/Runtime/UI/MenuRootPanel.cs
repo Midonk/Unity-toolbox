@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Internal management of the menu, provides paths to the display and request rebuilds
+
 namespace DebugMenu
 {
     public class MenuRootPanel : MonoBehaviour
     {
         #region Exposed
 
-        [SerializeField]
-        private MenuPanel _menuPanel;
-
-        [SerializeField]
-        private bool _debugMode;
+        [SerializeField] private MenuPanel _menuPanel;
+        [SerializeField] private bool _debugMode;
 
         #endregion
     
@@ -29,7 +28,8 @@ namespace DebugMenu
         {
             if(!_debugMode) return;
 
-            foreach (var button in GetCurrentButtons(_currentPath))
+            var buttons = GetCurrentButtons(_currentPath);
+            foreach (var button in buttons)
             {
                 if(GUILayout.Button($"{button}"))
                 {
@@ -81,7 +81,7 @@ namespace DebugMenu
         {
             var separator = string.IsNullOrEmpty(_currentPath) ? "" : "/";
             var buttons = GetCurrentButtons($"{_currentPath}{separator}{buttonName}");
-            if(buttons == null) return;
+            if(buttons is null) return;
 
             _currentPath += $"{separator}{buttonName}";
             //Debug.Log($"Change to <color=cyan>{_currentPath}</color>");
@@ -120,7 +120,8 @@ namespace DebugMenu
             {
                 if(!path.Contains(comparingPath)) continue;
                 //this means there is a method to invoke here VVVV
-                if(path.Length == comparingPath.Length)
+                var isMethodPath = path.Length == comparingPath.Length;
+                if(isMethodPath)
                 {
                     DebugAttributeRegistry.InvokeMethod(path);
                     return null;

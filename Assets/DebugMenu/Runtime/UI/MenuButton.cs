@@ -16,7 +16,8 @@ namespace DebugMenu
 
         #region Public Properties
 
-        public string ReferenceName {
+        public string ReferenceName 
+        {
             get => _referenceName; 
             set
             {

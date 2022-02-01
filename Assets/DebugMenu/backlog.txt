@@ -1,0 +1,1 @@
+display different type of ui depending of the type of parameter of the methods

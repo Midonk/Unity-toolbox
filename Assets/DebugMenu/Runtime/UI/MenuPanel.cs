@@ -9,14 +9,9 @@ namespace DebugMenu
     {
         #region Exposed
 
-        [SerializeField]
-        private Text _headerTitle;
-        
-        [SerializeField]
-        private RectTransform _buttonContainer;
-
-        [SerializeField]
-        private MenuButton _buttonPrefab;
+        [SerializeField] private Text _headerTitle;
+        [SerializeField] private RectTransform _buttonContainer;
+        [SerializeField] private MenuButton _buttonPrefab;
 
         #endregion  
 
@@ -26,10 +21,10 @@ namespace DebugMenu
         /// <summary>
         ///     Setup the panel and the buttons with the given parameters
         /// <summary>
-        public void RebuildPanel(string[] buttons, string header)
+        public void RebuildPanel(string[] buttonNames, string header)
         {
-            CheckButtonPool(buttons.Length);
-            PrepareButtons(buttons);
+            CheckButtonPool(buttonNames.Length);
+            PrepareButtons(buttonNames);
             var headerText = header.Length > 0 ? header : "Root";
             _headerTitle.text = headerText;
         }
@@ -42,16 +37,16 @@ namespace DebugMenu
         /// <summary>
         ///     Configure the panel's buttons
         /// <summary>
-        private void PrepareButtons(string[] buttons)
+        private void PrepareButtons(string[] buttonNames)
         {
-            for(int i = 0; i < buttons.Length; i++)
+            for (int i = 0; i < buttonNames.Length; i++)
             {
                 _menuButtons[i].ReferenceName = buttons[i];
                 _menuButtons[i].Text = buttons[i];
                 _menuButtons[i].gameObject.SetActive(true);
             }
 
-            for (int i = buttons.Length; i < _menuButtons.Count; i++)
+            for (int i = buttonNames.Length; i < _menuButtons.Count; i++)
             {
                 _menuButtons[i].gameObject.SetActive(false);
             }

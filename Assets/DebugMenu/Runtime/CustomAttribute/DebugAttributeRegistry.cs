@@ -39,7 +39,7 @@ namespace DebugMenu
             Type type = method.ReflectedType;
             var instances = GameObject.FindObjectsOfType(type);
 
-            foreach (var instance in instances)
+            for (int i = 0; i < instances.Length; i++)
             {
                 result = (T)method.Invoke(method.ReflectedType, parameters);
             }
@@ -64,6 +64,19 @@ namespace DebugMenu
             return result.ToArray();
         }
 
+        public static (int, Type) GetParameterType(string methodPath)
+        {
+            var method = Methods[methodPath];
+            var parameters = method.GetParameters();
+            var parameterCount = parameters.Length;
+            return parameterCount switch 
+            {
+                0 => (0, null), 
+                1 => (1, parameters[0]?.ParameterType),
+                _ => (-1, null)
+            };
+        }
+
         #endregion
 
 
@@ -83,13 +96,13 @@ namespace DebugMenu
                 var methods = assemblyTypes.SelectMany(classType => classType.GetMethods())
                                            .Where(classMethod => classMethod.GetCustomAttributes()
                                                                             .OfType<DebugMenuAttribute>()
-                                                                            .Any() && !classMethod.IsPrivate);
+                                                                            .Any() && (!classMethod.IsPrivate || classMethod.GetParameters().Length < 2));
                 var methodDictionary = methods.ToDictionary(methodInfo => methodInfo.GetCustomAttributes()
                                                                                     .OfType<DebugMenuAttribute>()
                                                                                     .FirstOrDefault<DebugMenuAttribute>()
                                                                                     .Path);
 
-                if (methodDictionary == null) return;
+                if (methodDictionary is null) return;
                 
                 _methods.Merge(methodDictionary);
             }
@@ -104,7 +117,7 @@ namespace DebugMenu
         {
             get
             {
-                if (_assemblies == null)
+                if (_assemblies is null)
                 {
                     _assemblies = System.AppDomain.CurrentDomain.GetAssemblies();
                 }
@@ -117,7 +130,7 @@ namespace DebugMenu
         {
             get
             {
-                if(_methods == null)
+                if(_methods is null)
                 {
                     Initialize();
                 }
