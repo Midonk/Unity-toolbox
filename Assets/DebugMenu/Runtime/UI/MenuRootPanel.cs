@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Internal management of the menu, provides paths to the display and request rebuilds
+// Provides paths to the display and request rebuilds
 
 namespace DebugMenu
 {
@@ -24,32 +24,10 @@ namespace DebugMenu
 
         #region Unity API
 
-        private void OnGUI() 
-        {
-            if(!_debugMode) return;
-
-            var buttons = GetCurrentButtons(_currentPath);
-            foreach (var button in buttons)
-            {
-                if(GUILayout.Button($"{button}"))
-                {
-                    ChangePanel(button);
-                }
-            }
-
-            if(string.IsNullOrEmpty(_currentPath)) return;
-
-            if(GUILayout.Button($"Return"))
-            {
-                Return();
-            }
-        }
-
         private void Awake()
         {
             _instance = this;
-            var buttons = GetCurrentButtons(_currentPath);
-            _menuPanel.RebuildPanel(buttons, _currentPath);
+            RefreshPaths(_currentPath);
         }
 
         #endregion
@@ -58,9 +36,9 @@ namespace DebugMenu
         #region Main
 
         /// <summary>
-        ///     Return to the previous panel
+        ///     Return to the previous panel or close it if on root
         /// <summary>
-        internal void Return()
+        public void Return()
         {
             if (string.IsNullOrEmpty(_currentPath))
             {
@@ -68,30 +46,23 @@ namespace DebugMenu
                 return;
             }
 
-            RevertCurrentPath();            
-            var buttons = GetCurrentButtons(_currentPath);
-            _menuPanel.RebuildPanel(buttons, _currentPath);
-            //Debug.Log($"Return to '<color=cyan>{(_currentPath.Length > 0 ? _currentPath : "Root")}</color>'");
+            var nameIndex = _currentPath.LastIndexOf(SEPARATOR);
+            if(nameIndex < 0)
+            {
+                nameIndex = 0; 
+            }
+
+            _currentPath = _currentPath.Remove(nameIndex);
+            RefreshPaths(_currentPath);         
         }
 
         /// <summary>
-        ///     Go further into the panels
+        ///     Go deeper into the panel hierarchy
         /// <summary>
-        internal void ChangePanel(string buttonName)
+        public void ChangePanel(string buttonPath)
         {
-            var separator = string.IsNullOrEmpty(_currentPath) ? "" : "/";
-            var buttons = GetCurrentButtons($"{_currentPath}{separator}{buttonName}");
-            if(buttons is null) return;
-
-            _currentPath += $"{separator}{buttonName}";
-            //Debug.Log($"Change to <color=cyan>{_currentPath}</color>");
-            if(buttons.Length == 0)
-            {
-                Debug.LogError($"<color=red>Debug menu: Oups ! It seems the path '<color=cyan>{_currentPath}</color>' doesn't exists</color>");
-                return;
-            }
-
-            _menuPanel.RebuildPanel(buttons, _currentPath);
+            _currentPath = buttonPath;
+            RefreshPaths(_currentPath);
         }
 
         public void DisplayMenu()
@@ -104,59 +75,44 @@ namespace DebugMenu
             _menuPanel.gameObject.SetActive(false);
         }
 
-        #endregion 
+        #endregion
 
 
         #region Utils
 
-        /// <summary>
-        ///     Retreive the buttons's name from all paths at its current level
-        /// <summary>
-        private string[] GetCurrentButtons(string comparingPath)
+        private void RefreshPaths(string comparingPath)
         {
+            Debug.Log($"comparing path: <color=cyan>{comparingPath}</color>");
+            _methodPaths.Clear();
             var paths = DebugAttributeRegistry.Paths;
-            var buttonNames = new List<string>();
+            var testedRoots = new List<string>();
+            string separator = string.IsNullOrEmpty(_currentPath) ? "" : "/";
             foreach (var path in paths)
             {
-                if(!path.Contains(comparingPath)) continue;
-                //this means there is a method to invoke here VVVV
-                var isMethodPath = path.Length == comparingPath.Length;
-                if(isMethodPath)
-                {
-                    DebugAttributeRegistry.InvokeMethod(path);
-                    return null;
-                }
-
-                var charToRemove = comparingPath.Length;
-                if(!string.IsNullOrEmpty(comparingPath))
-                {
-                    charToRemove++;
-                }
-
-                var truncatedPath = path.Remove(0, charToRemove);
-                var name = truncatedPath.Split('/')[0];
-                if(buttonNames.Contains(name)) continue;
+                if(!path.StartsWith(comparingPath)) continue;
                 
-                buttonNames.Add(name);
+                //"truc/machin"
+                var root = path.Remove(0, comparingPath.Length + separator.Length);
+                var endNameIndex = root.IndexOf(SEPARATOR);
+                if(endNameIndex > -1)
+                {
+                    root = root.Remove(endNameIndex);
+                }
+
+                if(testedRoots.Contains(root)) continue;
+
+                testedRoots.Add(root);
+                _methodPaths.Add($"{comparingPath}{separator}{root}");                
+                Debug.Log($"button path: <color=cyan>{comparingPath}{separator}{root}</color>");
             }
 
-            return buttonNames.ToArray();
-        }
-
-        /// <summary>
-        ///     Go back one level back to the path hierarchy
-        /// <summary>
-        private void RevertCurrentPath()
-        {
-            var splittedPath = _currentPath.Split('/');
-            var depth = splittedPath.Length;
-            var charToRemove = splittedPath[depth - 1].Length;
-            if(depth > 1)
+            if(_methodPaths.Count == 0)
             {
-                charToRemove++;
+                Debug.LogError($"'<color=red>{comparingPath}</color>' doesn't lead to any subfolder.");
+                return;
             }
 
-            _currentPath = _currentPath.Remove(_currentPath.Length - charToRemove, charToRemove);
+            _menuPanel.RebuildPanel(_methodPaths, _currentPath);
         }
              
         #endregion
@@ -166,6 +122,8 @@ namespace DebugMenu
 
         private static MenuRootPanel _instance;
         private string _currentPath = "";
+        private List<string> _methodPaths = new List<string>();
+        private const char SEPARATOR = '/';
 
         #endregion
     }

@@ -1,5 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+
+// Container of multiple plausible displays that will show depending the method parameters
 
 namespace DebugMenu
 {
@@ -23,13 +26,8 @@ namespace DebugMenu
             {
                 _referenceName = value;
                 name = _referenceName;
+                _text.text = _referenceName;
             }
-        }
-
-        public string Text
-        {
-            get => _text.text;
-            set => _text.text = value;
         }
              
         #endregion
@@ -47,13 +45,29 @@ namespace DebugMenu
             MenuRootPanel.Instance.Return();
         }
 
+        public void Prepare(string buttonName, Type buttonType)
+        {
+            ReferenceName = buttonName;
+            var displayedUI = DefineDisplay(buttonType);
+        }
+
+        private DebugButtonDisplay DefineDisplay(Type buttonType) => nameof(buttonType) switch
+        {
+            "int" => null,
+            "float" => null,
+            "bool" => null,
+            "string" => null,
+            "enum" => null,
+            _ => null
+        };
+
         #endregion
 
 
         #region Private
 
         private string _referenceName;
-             
+
         #endregion
     }
 }

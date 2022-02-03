@@ -1,1 +1,15 @@
 display different type of ui depending of the type of parameter of the methods
+
+End usage:
+I want to have multiple input types in my menu:
+- Buttons that invoke a [static] method V
+- Buttons that navigate deeper in arborescence (marked with '>') placed on top of the current panel
+- Toggles that invoke bool method on value changes
+- int input like "< 0 >" that increase with horizontal axis or mouse click or input value directly to invoke number method
+- enum input like "< myEnum >" that loop on enum values with horizontal axis or click to invoke enum method
+- sliders that invoke number method, min value, max value, may have a unit (%, s, ...)
+
+All of this should be stored somewhere to be reminded
+I want to be able to reset everything with a single button
+I want to access some method more easily with quick debug menu
+I want to be able to navigate with my keyboard only

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
+
+// Make link between root panel and menu buttons
 
 namespace DebugMenu
 {
@@ -9,9 +10,17 @@ namespace DebugMenu
     {
         #region Exposed
 
+        [Header("Config")]
         [SerializeField] private Text _headerTitle;
-        [SerializeField] private RectTransform _buttonContainer;
-        [SerializeField] private MenuButton _buttonPrefab;
+        [SerializeField] private Transform _uiContainer;
+        
+        [Header("Buton types")]
+        [SerializeField] private MenuNavigationButton _navigationButton;
+        [SerializeField] private MenuVoidButton _voidButton;
+        [SerializeField] private MenuBoolButton _boolButton;
+        [SerializeField] private MenuNumverButton _numberButton;
+        [SerializeField] private MenuSliderButton _sliderButton;
+        [SerializeField] private MenuEnumButton _enumButton;
 
         #endregion  
 
@@ -21,61 +30,54 @@ namespace DebugMenu
         /// <summary>
         ///     Setup the panel and the buttons with the given parameters
         /// <summary>
-        public void RebuildPanel(string[] buttonNames, string header)
+        public void RebuildPanel(List<string> buttonPaths, string header)
         {
-            CheckButtonPool(buttonNames.Length);
-            PrepareButtons(buttonNames);
             var headerText = header.Length > 0 ? header : "Root";
             _headerTitle.text = headerText;
+            foreach (Transform child in _uiContainer.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            for (int i = 0; i < buttonPaths.Count; i++)
+            {
+                var button = BuildButton(buttonPaths[i]);
+                _menuButtons.Add(button);
+                if(i > 0) continue;
+
+                Selectable selection = _uiContainer.GetChild(_uiContainer.childCount - 1).GetComponent<Selectable>();
+                selection.Select();
+            }
+        }
+
+        private MenuButtonBase BuildButton(string path)
+        {
+            var buttonPrefab = !DebugAttributeRegistry.HasKey(path) ? _navigationButton : DefineDisplay(path);
+            var button = Instantiate(buttonPrefab, _uiContainer);
+            button.Build(path);
+
+            return button;
+        }
+
+        private MenuButtonBase DefineDisplay(string path)
+        {
+            var buttonType = DebugAttributeRegistry.GetParameterType(path);
+            return nameof(buttonType) switch
+            {
+                /* "int" => _numberButton,
+                "float" => _numberButton,
+                "bool" => _boolButton,
+                "enum" => _enumButton, */
+                _ => _voidButton
+            };
         }
 
         #endregion
 
 
-        #region Utils
-
-        /// <summary>
-        ///     Configure the panel's buttons
-        /// <summary>
-        private void PrepareButtons(string[] buttonNames)
-        {
-            for (int i = 0; i < buttonNames.Length; i++)
-            {
-                _menuButtons[i].ReferenceName = buttons[i];
-                _menuButtons[i].Text = buttons[i];
-                _menuButtons[i].gameObject.SetActive(true);
-            }
-
-            for (int i = buttonNames.Length; i < _menuButtons.Count; i++)
-            {
-                _menuButtons[i].gameObject.SetActive(false);
-            }
-
-            EventSystem.current.SetSelectedGameObject(_menuButtons[0].gameObject);
-        }
-
-        /// <summary>
-        ///     Make sure there is enough buttons available to welcome the incoming panel
-        /// <summary>
-        private void CheckButtonPool(int neededButtons)
-        {
-            if(_menuButtons.Count >= neededButtons) return;
-            
-            var missingButtons = neededButtons - _menuButtons.Count;
-
-            for (int i = 0; i < missingButtons; i++)
-            {
-                var newButton = Instantiate<MenuButton>(_buttonPrefab, _buttonContainer);
-                _menuButtons.Add(newButton);
-            }
-        }
-
-        #endregion 
-
-
         #region Private
 
-        private List<MenuButton> _menuButtons = new List<MenuButton>();
+        private List<MenuButtonBase> _menuButtons = new List<MenuButtonBase>();
 
         #endregion
     }

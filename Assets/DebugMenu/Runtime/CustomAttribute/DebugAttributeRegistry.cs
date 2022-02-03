@@ -48,6 +48,37 @@ namespace DebugMenu
         }
 
         /// <summary>
+        ///     Initialize the debug registry by fetching the attribute references
+        /// <summary>
+        public static void Initialize()
+        {
+            _methods = new MergeableDictionary<string, MethodInfo>();
+
+            for (int i = 0; i < Assemblies.Length; i++)
+            {
+                var assembly = Assemblies[i];
+                var assemblyTypes = assembly.GetTypes();
+                var methods = assemblyTypes.SelectMany(classType => classType.GetMethods())
+                                           .Where(classMethod => classMethod.GetCustomAttributes(typeof(DebugMenuAttribute), true)
+                                                                            .Any() 
+                                                                            && !classMethod.IsPrivate 
+                                                                            && classMethod.GetParameters().Length < 2);
+                                                                            
+                var methodDictionary = methods.ToDictionary(methodInfo => methodInfo.GetCustomAttribute<DebugMenuAttribute>()
+                                                                                    .Path);
+
+                if (methodDictionary is null) return;
+                
+                _methods.Merge(methodDictionary);
+            }
+        }
+
+        #endregion
+
+
+        #region Utils
+
+        /// <summary>
         ///     Retreive paths marked as quick paths
         /// <summary>
         public static string[] GetQuickPaths()
@@ -64,49 +95,21 @@ namespace DebugMenu
             return result.ToArray();
         }
 
-        public static (int, Type) GetParameterType(string methodPath)
+        public static Type GetParameterType(string methodPath)
         {
             var method = Methods[methodPath];
             var parameters = method.GetParameters();
-            var parameterCount = parameters.Length;
-            return parameterCount switch 
-            {
-                0 => (0, null), 
-                1 => (1, parameters[0]?.ParameterType),
-                _ => (-1, null)
-            };
+            if(parameters.Length == 0) return null;
+            return parameters[0].ParameterType;
         }
 
-        #endregion
-
-
-        #region Utils
-
-        /// <summary>
-        ///     Initialize the debug registry by fetching the attribute references
-        /// <summary>
-        public static void Initialize()
+        public static DebugMenuAttribute GetAttribute(string methodPath)
         {
-            _methods = new MergeableDictionary<string, MethodInfo>();
-
-            for (int i = 0; i < Assemblies.Length; i++)
-            {
-                var assembly = Assemblies[i];
-                var assemblyTypes = assembly.GetTypes();
-                var methods = assemblyTypes.SelectMany(classType => classType.GetMethods())
-                                           .Where(classMethod => classMethod.GetCustomAttributes()
-                                                                            .OfType<DebugMenuAttribute>()
-                                                                            .Any() && (!classMethod.IsPrivate || classMethod.GetParameters().Length < 2));
-                var methodDictionary = methods.ToDictionary(methodInfo => methodInfo.GetCustomAttributes()
-                                                                                    .OfType<DebugMenuAttribute>()
-                                                                                    .FirstOrDefault<DebugMenuAttribute>()
-                                                                                    .Path);
-
-                if (methodDictionary is null) return;
-                
-                _methods.Merge(methodDictionary);
-            }
+            var method = Methods[methodPath];
+            return method.GetCustomAttribute<DebugMenuAttribute>();
         }
+
+        public static bool HasKey(string path) => _methods.ContainsKey(path);
 
         #endregion
 
