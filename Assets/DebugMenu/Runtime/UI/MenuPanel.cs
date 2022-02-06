@@ -18,7 +18,7 @@ namespace DebugMenu
         [SerializeField] private MenuNavigationButton _navigationButton;
         [SerializeField] private MenuVoidButton _voidButton;
         [SerializeField] private MenuBoolButton _boolButton;
-        [SerializeField] private MenuNumverButton _numberButton;
+        [SerializeField] private MenuNumberButton _numberButton;
         [SerializeField] private MenuSliderButton _sliderButton;
         [SerializeField] private MenuEnumButton _enumButton;
 
@@ -61,15 +61,11 @@ namespace DebugMenu
 
         private MenuButtonBase DefineDisplay(string path)
         {
-            var buttonType = DebugAttributeRegistry.GetParameterType(path);
-            return nameof(buttonType) switch
-            {
-                /* "int" => _numberButton,
-                "float" => _numberButton,
-                "bool" => _boolButton,
-                "enum" => _enumButton, */
-                _ => _voidButton
-            };
+            var buttonType = $"{DebugAttributeRegistry.GetParameterType(path)}";
+            if(buttonType.Contains("Int") || buttonType.Contains("Single")) return _numberButton;
+            if(buttonType.Contains("Bool")) return _boolButton;
+            if(string.IsNullOrEmpty(buttonType)) return _voidButton;
+            return _enumButton;
         }
 
         #endregion

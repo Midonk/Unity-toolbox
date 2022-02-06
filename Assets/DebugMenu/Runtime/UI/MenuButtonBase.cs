@@ -19,8 +19,7 @@ namespace DebugMenu
             _textUI.text = Name;
         }
 
-        public abstract void OnUpdateSelected(BaseEventData eventData);
-        protected abstract void Execute();
+        public abstract void Execute();
 
         public void OnCancel(BaseEventData eventData)
         {

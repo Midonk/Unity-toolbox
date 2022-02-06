@@ -13,10 +13,28 @@ public class DebugMenuSample : MonoBehaviour
 
     #region Main
 
-    [DebugMenu("Game/Others", true)]
+    [DebugMenu("Game/Reset", true)]
     public void DebugMenuTestingMethod()
     {
         Debug.Log(message);
+    }
+
+    [DebugMenu("Level/Reload current")]
+    public void ReloadLevel()
+    {
+        Debug.Log("Level reloading");
+    }
+    
+    [DebugMenu("Game/Auto save", false, true)]
+    public void DebugMenuTestingMethodBool(bool value)
+    {
+        Debug.Log(value);
+    }
+    
+    [DebugMenu("Game/Option/MSAA", 0, true)]
+    public void DebugMenuTestingMethodInt(int value)
+    {
+        Debug.Log(value);
     }
     
     [DebugMenu("Player/Stats/Yei")]
@@ -42,6 +60,20 @@ public class DebugMenuSample : MonoBehaviour
     {
         Debug.Log(message);
     }
+    
+    [DebugMenu("Game/Difficulty", typeof(Difficulty), (int)Difficulty.Harcore, false)]
+    public void DebugMenuTestingEnum(Difficulty dessert)
+    {
+        Debug.Log(dessert.ToString());
+    }
             
     #endregion
+}
+
+public enum Difficulty
+{
+    Peaceful,
+    Normal,
+    Hard,
+    Harcore
 }

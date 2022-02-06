@@ -16,6 +16,7 @@ namespace DebugMenu
         public static void InvokeMethod(string path, object[] parameters = null)
         {
             if (!Methods.ContainsKey(path)) return;
+            //could register the passed value here
 
             var method = Methods[path];
             Type type = method.ReflectedType;
@@ -67,9 +68,13 @@ namespace DebugMenu
                 var methodDictionary = methods.ToDictionary(methodInfo => methodInfo.GetCustomAttribute<DebugMenuAttribute>()
                                                                                     .Path);
 
-                if (methodDictionary is null) return;
-                
-                _methods.Merge(methodDictionary);
+                //if (methodDictionary is null) return;
+                foreach (var item in methodDictionary)
+                {
+                    if(_methods.ContainsKey(item.Key)) continue;
+                    
+                    _methods.Add(item.Key, item.Value);
+                }
             }
         }
 
@@ -129,7 +134,7 @@ namespace DebugMenu
             }
         }
 
-        private static MergeableDictionary<string, MethodInfo> Methods
+        private static Dictionary<string, MethodInfo> Methods
         {
             get
             {
@@ -150,7 +155,7 @@ namespace DebugMenu
         #region Private Fields
 
         private static Assembly[] _assemblies;
-        private static MergeableDictionary<string, MethodInfo> _methods;
+        private static Dictionary<string, MethodInfo> _methods;
 
         #endregion
     }

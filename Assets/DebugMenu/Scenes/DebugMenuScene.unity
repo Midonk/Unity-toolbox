@@ -130,6 +130,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4610596710665615552, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -26.999817
+      objectReference: {fileID: 0}
+    - target: {fileID: 5744102579841151417, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: m_Spacing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5744102579841151417, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5744102579841151417, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: m_ChildScaleHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5840666195053748765, guid: e4d805f1061aac247875757f01701b14, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -219,6 +235,14 @@ PrefabInstance:
       value: DebugMenu
       objectReference: {fileID: 0}
     - target: {fileID: 5840666196125926861, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: _boolButton
+      value: 
+      objectReference: {fileID: 6022774407454021007, guid: b3c6fc4f804c04c4e95151a8242c13e7, type: 3}
+    - target: {fileID: 5840666196125926861, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: _enumButton
+      value: 
+      objectReference: {fileID: 702772634, guid: f6af2fcc879a2ed4e970a9c8536e8d19, type: 3}
+    - target: {fileID: 5840666196125926861, guid: e4d805f1061aac247875757f01701b14, type: 3}
       propertyPath: _voidButton
       value: 
       objectReference: {fileID: 7129544776555050697, guid: f48994aef62a2804bba10d288284c2c6, type: 3}
@@ -226,6 +250,10 @@ PrefabInstance:
       propertyPath: _uiContainer
       value: 
       objectReference: {fileID: 5840666196840743644}
+    - target: {fileID: 5840666196125926861, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: _numberButton
+      value: 
+      objectReference: {fileID: 334532414010918166, guid: 9b941dfc4c2a3cc488d554bca653134d, type: 3}
     - target: {fileID: 5840666196125926861, guid: e4d805f1061aac247875757f01701b14, type: 3}
       propertyPath: _navigationButton
       value: 

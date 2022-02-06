@@ -47,6 +47,11 @@ namespace DebugMenu
             IntDefault = defaultValue;
         }
         
+        public DebugMenuAttribute(string path, bool defaultValue, bool quickMenu = false) : this(path, quickMenu)
+        {
+            BoolDefault = defaultValue;
+        }
+        
         //Constructor for enums type
         public DebugMenuAttribute(string path, Type enumType, int defaultValue, bool quickMenu = false) : this(path, quickMenu)
         {
