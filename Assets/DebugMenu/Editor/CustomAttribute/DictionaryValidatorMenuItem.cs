@@ -1,6 +1,5 @@
 using UnityEditor;
 using System.Diagnostics;
-using DebugMenu;
 
 using Debug = UnityEngine.Debug;
 
@@ -17,7 +16,7 @@ namespace DebugMenu.Editor
         [Conditional("DEBUG")]
         public static void LogAttributeReferences()
         {
-            DebugAttributeRegistry.Initialize();
+            DebugAttributeRegistry.RetreivePaths();
             string outputMethods = $"Methods found (<color=orange>{DebugAttributeRegistry.Paths.Length}</color>): ";
             if(DebugAttributeRegistry.Paths.Length == 0)
             {

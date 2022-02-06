@@ -24,30 +24,78 @@ namespace DebugMenu
 
         #endregion  
 
+        private string CurrentPath
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(_currentPath)) return ROOTPATH;
+
+                return _currentPath;
+            }
+
+            set => _currentPath = value;
+        }
 
         #region Main
 
         /// <summary>
         ///     Setup the panel and the buttons with the given parameters
         /// <summary>
-        public void RebuildPanel(List<string> buttonPaths, string header)
+        public void BuildPanel(string[] buttonPaths)
         {
-            var headerText = header.Length > 0 ? header : "Root";
-            _headerTitle.text = headerText;
-            foreach (Transform child in _uiContainer.transform)
+            HidePanelButtons();
+            var parentPath = StringUtils.GetParentPath(buttonPaths[0], '/');
+            if(_buttons.ContainsKey(parentPath))
             {
-                Destroy(child.gameObject);
+                Debug.LogWarning($"Something is wrong, the buttons for <color=orange>{parentPath}</color> exists but a build for this same path has been requested");
+                DisplayPanelButtons(parentPath);
+                return;
             }
 
-            for (int i = 0; i < buttonPaths.Count; i++)
+            var buttons = new MenuButtonBase[buttonPaths.Length];
+            for (int i = 0; i < buttonPaths.Length; i++)
             {
-                var button = BuildButton(buttonPaths[i]);
-                _menuButtons.Add(button);
-                if(i > 0) continue;
-
-                Selectable selection = _uiContainer.GetChild(_uiContainer.childCount - 1).GetComponent<Selectable>();
-                selection.Select();
+                buttons[i] = BuildButton(buttonPaths[i]);
             }
+
+            _buttons.Add(parentPath, buttons);
+            
+            CurrentPath = parentPath;
+            _headerTitle.text = CurrentPath;
+            SelectButton();
+        }
+
+        private void SelectButton()
+        {
+            Selectable buttonToSelect = _buttons[_currentPath][0];
+            buttonToSelect.Select();
+        }
+
+        private void HidePanelButtons()
+        {
+            if(_buttons.Count == 0) return;
+
+            var buttons = _buttons[_currentPath];
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].gameObject.SetActive(false);
+            }
+        }
+
+        public void DisplayPanelButtons(string path)
+        {
+            if(_buttons.Count == 0) return;
+
+            HidePanelButtons();
+            var buttons = _buttons[path];
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].gameObject.SetActive(true);
+            }
+
+            CurrentPath = path;
+            _headerTitle.text = CurrentPath;
+            SelectButton();
         }
 
         private MenuButtonBase BuildButton(string path)
@@ -71,9 +119,19 @@ namespace DebugMenu
         #endregion
 
 
+        #region Utils
+
+        public bool HasButtons(string path) => _buttons.ContainsKey(path);
+            
+        #endregion
+
+
         #region Private
 
         private List<MenuButtonBase> _menuButtons = new List<MenuButtonBase>();
+        private string _currentPath;
+        private Dictionary<string, MenuButtonBase[]> _buttons = new Dictionary<string, MenuButtonBase[]>();
+        private const string ROOTPATH = "Root";
 
         #endregion
     }

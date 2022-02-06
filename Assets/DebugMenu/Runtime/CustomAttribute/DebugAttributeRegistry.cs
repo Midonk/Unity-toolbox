@@ -51,10 +51,8 @@ namespace DebugMenu
         /// <summary>
         ///     Initialize the debug registry by fetching the attribute references
         /// <summary>
-        public static void Initialize()
+        public static void RetreivePaths()
         {
-            _methods = new MergeableDictionary<string, MethodInfo>();
-
             for (int i = 0; i < Assemblies.Length; i++)
             {
                 var assembly = Assemblies[i];
@@ -63,17 +61,16 @@ namespace DebugMenu
                                            .Where(classMethod => classMethod.GetCustomAttributes(typeof(DebugMenuAttribute), true)
                                                                             .Any() 
                                                                             && !classMethod.IsPrivate 
-                                                                            && classMethod.GetParameters().Length < 2);
+                                                                            && classMethod.GetParameters().Length < 2);//may be extended later
                                                                             
                 var methodDictionary = methods.ToDictionary(methodInfo => methodInfo.GetCustomAttribute<DebugMenuAttribute>()
                                                                                     .Path);
 
-                //if (methodDictionary is null) return;
                 foreach (var item in methodDictionary)
                 {
-                    if(_methods.ContainsKey(item.Key)) continue;
+                    if(Methods.ContainsKey(item.Key)) continue;
                     
-                    _methods.Add(item.Key, item.Value);
+                    Methods.Add(item.Key, item.Value);
                 }
             }
         }
@@ -114,7 +111,7 @@ namespace DebugMenu
             return method.GetCustomAttribute<DebugMenuAttribute>();
         }
 
-        public static bool HasKey(string path) => _methods.ContainsKey(path);
+        public static bool HasKey(string path) => Methods.ContainsKey(path);
 
         #endregion
 
@@ -140,7 +137,8 @@ namespace DebugMenu
             {
                 if(_methods is null)
                 {
-                    Initialize();
+                    _methods = new Dictionary<string, MethodInfo>();
+                    RetreivePaths();
                 }
 
                 return _methods;

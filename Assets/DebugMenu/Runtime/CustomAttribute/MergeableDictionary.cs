@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 
+// Unused
+
 namespace DebugMenu
 {
     public class MergeableDictionary<TKey, TValue> : Dictionary<TKey, TValue>

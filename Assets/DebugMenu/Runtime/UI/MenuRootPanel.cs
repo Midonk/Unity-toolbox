@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Provides paths to the display and request rebuilds
+// Provides paths to the display
 
 namespace DebugMenu
 {
@@ -10,7 +10,6 @@ namespace DebugMenu
         #region Exposed
 
         [SerializeField] private MenuPanel _menuPanel;
-        [SerializeField] private bool _debugMode;
 
         #endregion
     
@@ -18,7 +17,7 @@ namespace DebugMenu
         #region Public Properties
 
         public static MenuRootPanel Instance => _instance;
-             
+        
         #endregion
 
 
@@ -46,33 +45,33 @@ namespace DebugMenu
                 return;
             }
 
-            var nameIndex = _currentPath.LastIndexOf(SEPARATOR);
-            if(nameIndex < 0)
-            {
-                nameIndex = 0; 
-            }
-
-            _currentPath = _currentPath.Remove(nameIndex);
-            RefreshPaths(_currentPath);         
+            var path = StringUtils.GetParentPath(_currentPath, SEPARATOR);
+            ChangePanel(path);
         }
 
         /// <summary>
         ///     Go deeper into the panel hierarchy
         /// <summary>
-        public void ChangePanel(string buttonPath)
+        public void ChangePanel(string path)
         {
-            _currentPath = buttonPath;
+            _currentPath = path;
+            if(_menuPanel.HasButtons(_currentPath))
+            {
+                _menuPanel.DisplayPanelButtons(_currentPath);
+                return;
+            }
+
             RefreshPaths(_currentPath);
         }
 
         public void DisplayMenu()
         {
-            _menuPanel.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
 
         private void HideMenu()
         {
-            _menuPanel.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         #endregion
@@ -82,7 +81,6 @@ namespace DebugMenu
 
         private void RefreshPaths(string comparingPath)
         {
-            Debug.Log($"comparing path: <color=cyan>{comparingPath}</color>");
             _methodPaths.Clear();
             var paths = DebugAttributeRegistry.Paths;
             var testedRoots = new List<string>();
@@ -93,17 +91,16 @@ namespace DebugMenu
                 
                 //"truc/machin"
                 var root = path.Remove(0, comparingPath.Length + separator.Length);
-                var endNameIndex = root.IndexOf(SEPARATOR);
-                if(endNameIndex > -1)
+                var separatorIndex = root.IndexOf(SEPARATOR);
+                if(separatorIndex > -1)
                 {
-                    root = root.Remove(endNameIndex);
+                    root = root.Remove(separatorIndex);
                 }
 
                 if(testedRoots.Contains(root)) continue;
 
                 testedRoots.Add(root);
                 _methodPaths.Add($"{comparingPath}{separator}{root}");                
-                Debug.Log($"button path: <color=cyan>{comparingPath}{separator}{root}</color>");
             }
 
             if(_methodPaths.Count == 0)
@@ -112,7 +109,7 @@ namespace DebugMenu
                 return;
             }
 
-            _menuPanel.RebuildPanel(_methodPaths, _currentPath);
+            _menuPanel.BuildPanel(_methodPaths.ToArray());
         }
              
         #endregion
@@ -121,7 +118,7 @@ namespace DebugMenu
         #region Private
 
         private static MenuRootPanel _instance;
-        private string _currentPath = "";
+        private string _currentPath = string.Empty;
         private List<string> _methodPaths = new List<string>();
         private const char SEPARATOR = '/';
 
