@@ -1,33 +1,35 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class InLoopOutAudioPlayer : AudioPlayer<LoopableAudioElement>, IAudioPlayer
 {
-	#region Main
+    #region Main
 
-	public override void Play()
+    public override void Play()
 	{
 		var element = (ILoopableAudioElement)_currentElement;
-		element.SetupSource(_source);
 		
 		switch (element.Phase)
 		{
 			case LoopPhase.In:
-				PlayInLoop();
-				break;
-			
-			case LoopPhase.Loop:
 				PlayLoop();
 				break;
 			
-			case LoopPhase.Out:
+			case LoopPhase.Loop:
 				PlayLoopOut();
+				break;
+			
+			case LoopPhase.Out:
+				PlayInLoop();
 				break;
 		}
 	}
 
 	public void PlayLoopOut(bool oneShot = false)
 	{
+		_currentElement.SetupSource(_source);
+
 		if(oneShot)
 		{
 			PlayOneShot(_currentElement);
@@ -42,12 +44,15 @@ public class InLoopOutAudioPlayer : AudioPlayer<LoopableAudioElement>, IAudioPla
 
 	private void PlayInLoop()
 	{
+		_currentElement.SetupSource(_source);
+		_onTrackEnded += Play;
 		StartCoroutine(TrackEndOfAudio(_source.clip));
 		_source.Play();
 	}
 
 	private void PlayLoop()
 	{
+		_currentElement.SetupSource(_source);
 		_source.Play();
 	}
 	
@@ -72,7 +77,11 @@ public class InLoopOutAudioPlayer : AudioPlayer<LoopableAudioElement>, IAudioPla
 	private IEnumerator TrackEndOfAudio(AudioClip trackedClip)
 	{
 		yield return new WaitForSeconds(trackedClip.length);
+		_onTrackEnded?.Invoke();
+		_onTrackEnded = null;
 	}
 
     #endregion
+
+    private Action _onTrackEnded;
 }

@@ -11,14 +11,14 @@ namespace Utils
             _list = new List<T>();
         }
 
-        public new void Add(T element)
+        public void Add(T element)
         {
             if(_list.Contains(element)) return;
 
             _list.Add(element);
         }
 
-        public new void Remove(T element)
+        public void Remove(T element)
         {
             if(!_list.Contains(element)) return;
 

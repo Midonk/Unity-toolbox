@@ -33,7 +33,7 @@ public class LoopableAudioElement : AudioElementBase, ILoopableAudioElement
             {
                 case LoopPhase.In: return _clipLoop;
                 case LoopPhase.Loop: return _clipOut;
-                default: return _clipIn;
+                default: return _clipIn ?? _clipLoop;
             }
         }
     }

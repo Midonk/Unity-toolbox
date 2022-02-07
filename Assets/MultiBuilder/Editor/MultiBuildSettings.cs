@@ -6,7 +6,7 @@ using UnityEditor;
 namespace MultiBuild
 {
     [CreateAssetMenu(fileName = "Settings", menuName = "MultiBuild/Settings")]
-    public class MultiBuildToolSetting : ScriptableObject 
+    public class MultiBuildSettings : ToolSettings<MultiBuildSettings> 
     {
         #region Exposed
         
@@ -33,39 +33,11 @@ namespace MultiBuild
         #endregion
 
 
-        #region Main
-
-        internal static MultiBuildToolSetting GetOrCreate()
-        {
-            var settings = GetSettings();
-
-            if (settings == null)
-            {
-                settings = CreateSettings();
-                Debug.LogWarning($"MultiBuild : New settings created for 'MultiBuilt' tool at {SETTINGSPATH}'");
-            }
-
-            return settings;
-        }
-
-        #endregion
-
-
         #region Utils
             
-        private static MultiBuildToolSetting GetSettings()
+        private static MultiBuildSettings GetSettings()
         {
-            return AssetDatabase.LoadAssetAtPath<MultiBuildToolSetting>(SETTINGSPATH);
-        }
-
-        private static MultiBuildToolSetting CreateSettings()
-        {
-            var settings = ScriptableObject.CreateInstance<MultiBuildToolSetting>();
-            //TODO: setup default parameters
-            AssetDatabase.CreateAsset(settings, SETTINGSPATH);
-            AssetDatabase.SaveAssets();
-
-            return settings;
+            return AssetDatabase.LoadAssetAtPath<MultiBuildSettings>(SETTINGSPATH);
         }
 
         private void ConvertThreads()
@@ -105,7 +77,7 @@ namespace MultiBuild
 
         #region Private Fields
 
-        private const string SETTINGSPATH = "Assets/Tools/MultiBuild_Tool/Settings/Settings.asset";
+        private const string SETTINGSPATH = "Assets/Settings/MultiBuild_Tool/Settings/Settings.asset";
 
         #endregion
     }

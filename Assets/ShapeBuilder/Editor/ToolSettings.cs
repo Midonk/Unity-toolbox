@@ -11,7 +11,7 @@ public abstract class ToolSettings<T> : ScriptableObject where T : ScriptableObj
         if (settings is null)
         {
             settings = CreateSettings();            
-            Debug.LogWarning($"{typeof(T)} : New settings created for '<color=cyan>{typeof(T)}</color>' tool at \r" +
+            Debug.LogWarning($"{typeof(T)} : New settings created for '<color=cyan>{typeof(T).Name}</color>' tool at \r" +
                              $"'<color=cyan>{SETTINGSPATH}</color>'");
         }
 
@@ -20,7 +20,7 @@ public abstract class ToolSettings<T> : ScriptableObject where T : ScriptableObj
 
     private static T GetSettings()
     {
-        return AssetDatabase.LoadAssetAtPath<T>($"{SETTINGSPATH}/{typeof(T)}.asset");
+        return AssetDatabase.LoadAssetAtPath<T>($"{SETTINGSPATH}/{typeof(T).Name}.asset");
     }
 
     private static T CreateSettings()
@@ -34,7 +34,7 @@ public abstract class ToolSettings<T> : ScriptableObject where T : ScriptableObj
 
         Debug.Log("Create settings");
         var settings = ScriptableObject.CreateInstance<T>();
-        AssetDatabase.CreateAsset(settings, $"{SETTINGSPATH}/{typeof(T)}.asset");
+        AssetDatabase.CreateAsset(settings, $"{SETTINGSPATH}/{typeof(T).Name}.asset");
         AssetDatabase.SaveAssets();
 
         return settings;

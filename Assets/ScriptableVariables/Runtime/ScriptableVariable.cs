@@ -36,14 +36,7 @@ namespace ScriptableVariables
 		
 		#region Unity API
 
-		//may cause problems later because it's on enable
-		protected virtual void OnEnable() 
-		{
-			if(!_resetValueOnExitPlayMode) return;
-
-			Value = _defaultValue;		
-		}
-
+#if UNITY_EDITOR
 		//basically we only need this in editor right ?
 		protected virtual void OnDisable() 
 		{
@@ -51,6 +44,7 @@ namespace ScriptableVariables
 
 			Value = _defaultValue;	
 		}
+#endif
 
 		#endregion
 	}

@@ -9,18 +9,25 @@ namespace MultiBuild
     {
         #region Main
             
-        [MenuItem("Build/Multibuild tool")]
+        [MenuItem("Tools/Multibuild tool")]
         public static void MultiBuildProcess()
         {
-            MultiBuildToolSetting buildSettings = MultiBuildToolSetting.GetOrCreate();
+            Debug.Log($"MultiBuild : Start processing");
+            MultiBuildSettings buildSettings = MultiBuildSettings.GetOrCreate();
+            var processedTreads = 0;
+            if(buildSettings.threads is null) return;
 
             foreach (var thread in buildSettings.threads)
             {
                 if(!thread.activeThread) continue;
+                if(thread.scenesToBuild.Length == 0) continue;
+
                 Build(thread);
+                processedTreads ++;
             }
 
-            Debug.Log($"MultiBuild : End of process");
+            Debug.Log($"MultiBuild : End of process \n"
+                    + $"Processed => <color=cyan>{processedTreads}</color> threads");
         }
 
         private static void Build(InternalBuildThread thread)
@@ -36,14 +43,14 @@ namespace MultiBuild
 
             if (summary.result == BuildResult.Succeeded)
             {
-                var buildTime = summary.totalTime.TotalSeconds;
-                Debug.Log($"Build succeeded: '{thread.buildPath}' built in {buildTime : #0.##} seconds");
+                //var buildTime = (summary.buildEndedAt - summary.buildStartedAt).Milliseconds / 1000f;
+                //Debug.Log($"Build succeeded: '{thread.buildPath}' built in {buildTime : #0.##} seconds");
             }
 
             if (summary.result == BuildResult.Failed)
             {
                 var errorCount = summary.totalErrors;
-                Debug.Log($"Build failed: {summary.totalErrors} error{(errorCount > 1 ? "s" : "")} have been raized");
+                Debug.Log($"Build failed: <color=red>{summary.totalErrors}</color> error{(errorCount > 1 ? "s" : "")} have been raized");
             }
         }
 

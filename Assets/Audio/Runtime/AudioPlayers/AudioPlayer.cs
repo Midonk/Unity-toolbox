@@ -81,7 +81,7 @@ public abstract class AudioPlayer<T> : AudioGroupItem, IAudioPlayer where T : IA
             }
         }
 
-        throw new System.ArgumentException($"ID '<color=cyan>{id}</color>' not found in the <color=cyan>{name}'s AudioPlayer</color>");
+        throw new System.ArgumentException($"ID '<color=cyan>{id}</color>' not found in the <color=cyan>{name}'s ({this.GetType()})</color> AudioPlayer");
     } 
 
     #endregion
