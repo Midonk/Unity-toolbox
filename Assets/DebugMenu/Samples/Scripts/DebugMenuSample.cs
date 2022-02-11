@@ -25,13 +25,13 @@ public class DebugMenuSample : MonoBehaviour
         Debug.Log("Level reloading");
     }
     
-    [DebugMenu("Game/Auto save", false, true)]
+    [DebugMenuToggle("Game/Auto save", false, true)]
     public void DebugMenuTestingMethodBool(bool value)
     {
         Debug.Log(value);
     }
     
-    [DebugMenu("Game/Option/MSAA", 0, true)]
+    [DebugMenuInt("Game/Option/MSAA", 0, true)]
     public void DebugMenuTestingMethodInt(int value)
     {
         Debug.Log(value);
@@ -61,7 +61,7 @@ public class DebugMenuSample : MonoBehaviour
         Debug.Log(message);
     }
     
-    [DebugMenu("Game/Difficulty", typeof(Difficulty), (int)Difficulty.Harcore, false)]
+    [DebugMenuState("Game/Difficulty", typeof(Difficulty), (int)Difficulty.Harcore, false)]
     public void DebugMenuTestingEnum(Difficulty dessert)
     {
         Debug.Log(dessert.ToString());

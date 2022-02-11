@@ -6,23 +6,19 @@ using UnityEngine.UI;
 
 namespace DebugMenu
 {
-    public class MenuPanel : MonoBehaviour
+    public partial class MenuPanel : MonoBehaviour
     {
         #region Exposed
 
         [Header("Config")]
-        [SerializeField] private Text _headerTitle;
-        [SerializeField] private Transform _uiContainer;
+        [SerializeField] private Text _headerText;
+        [SerializeField] private Transform _buttonContainer;
         
         [Header("Buton types")]
+        [SerializeField] private MenuButtonLink[] _buttonLinks;
         [SerializeField] private MenuNavigationButton _navigationButton;
-        [SerializeField] private MenuVoidButton _voidButton;
-        [SerializeField] private MenuBoolButton _boolButton;
-        [SerializeField] private MenuNumberButton _numberButton;
-        [SerializeField] private MenuSliderButton _sliderButton;
-        [SerializeField] private MenuEnumButton _enumButton;
 
-        #endregion  
+        #endregion
 
         private string CurrentPath
         {
@@ -34,6 +30,15 @@ namespace DebugMenu
             }
 
             set => _currentPath = value;
+        }
+
+        private void Awake() 
+        {
+            for (int i = 0; i < _buttonLinks.Length; i++)
+            {
+                var button = _buttonLinks[i];
+                _buttonDisplays.Add(button.ButtonType, button.ButtonDisplay);
+            }    
         }
 
         #region Main
@@ -61,7 +66,7 @@ namespace DebugMenu
             _buttons.Add(parentPath, buttons);
             
             CurrentPath = parentPath;
-            _headerTitle.text = CurrentPath;
+            _headerText.text = CurrentPath;
             SelectButton();
         }
 
@@ -94,14 +99,14 @@ namespace DebugMenu
             }
 
             CurrentPath = path;
-            _headerTitle.text = CurrentPath;
+            _headerText.text = CurrentPath;
             SelectButton();
         }
 
         private MenuButtonBase BuildButton(string path)
         {
             var buttonPrefab = !DebugAttributeRegistry.HasKey(path) ? _navigationButton : DefineDisplay(path);
-            var button = Instantiate(buttonPrefab, _uiContainer);
+            var button = Instantiate(buttonPrefab, _buttonContainer);
             button.Build(path);
 
             return button;
@@ -109,11 +114,17 @@ namespace DebugMenu
 
         private MenuButtonBase DefineDisplay(string path)
         {
-            var buttonType = $"{DebugAttributeRegistry.GetParameterType(path)}";
-            if(buttonType.Contains("Int") || buttonType.Contains("Single")) return _numberButton;
-            if(buttonType.Contains("Bool")) return _boolButton;
-            if(string.IsNullOrEmpty(buttonType)) return _voidButton;
-            return _enumButton;
+            var buttonType = $"{DebugAttributeRegistry.GetAttribute(path).GetType().Name}";
+            foreach (var button in _buttonDisplays)
+            {
+                var linkedType = button.Key;
+                if(!buttonType.Equals(linkedType)) continue;
+
+                return button.Value;
+            }
+
+            Debug.LogError($"It seems you forgot to provide the <color=red>{buttonType}</color> type a display to build your <color=red>Debug Menu</color>", this);
+            throw new System.NotSupportedException();
         }
 
         #endregion
@@ -131,8 +142,10 @@ namespace DebugMenu
         private List<MenuButtonBase> _menuButtons = new List<MenuButtonBase>();
         private string _currentPath;
         private Dictionary<string, MenuButtonBase[]> _buttons = new Dictionary<string, MenuButtonBase[]>();
+        private Dictionary<string, MenuButtonBase> _buttonDisplays = new Dictionary<string, MenuButtonBase>();
         private const string ROOTPATH = "Root";
 
         #endregion
     }
+
 }

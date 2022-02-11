@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // Container of multiple plausible displays that will show depending the method parameters
+// Unused
 
 namespace DebugMenu
 {

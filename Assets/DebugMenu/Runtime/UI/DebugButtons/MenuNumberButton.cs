@@ -8,7 +8,7 @@ namespace DebugMenu
         public override void Build(string path)
         {
             base.Build(path);
-            var attribute = DebugAttributeRegistry.GetAttribute(path);
+            var attribute = (DebugMenuIntAttribute)DebugAttributeRegistry.GetAttribute(path);
             _handle.Number = attribute.IntDefault;
         }
 
@@ -22,6 +22,7 @@ namespace DebugMenu
             var evt = Event.current;
             if(currentSelectionState != SelectionState.Selected) return;
             if(evt.type != EventType.KeyDown) return;
+            if(evt.numeric) Debug.Log("Foo");
             if(evt.keyCode != KeyCode.LeftArrow && evt.keyCode != KeyCode.RightArrow) return;
 
             _handle.Select();

@@ -118,7 +118,7 @@ namespace DebugMenu
 
         #region Private Properties
 
-        private static Assembly[] Assemblies
+        public static Assembly[] Assemblies
         {
             get
             {

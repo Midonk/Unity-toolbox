@@ -9,7 +9,7 @@ namespace DebugMenu
         public override void Build(string path)
         {
             base.Build(path);
-            var attribute = DebugAttributeRegistry.GetAttribute(path);
+            var attribute = (DebugMenuStateAttribute)DebugAttributeRegistry.GetAttribute(path);
             _handle.SetType(attribute.EnumType);
             _handle.EnumValue = attribute.IntDefault;
         }
