@@ -1,0 +1,19 @@
+{
+    "name": "TF.DebugMenu.Editor",
+    "rootNamespace": "TF",
+    "references": [
+        "GUID:871ca82dab2b7404ba70485626c5454a",
+        "GUID:8e208df4c6bc0a24bbd4c7168404aca0"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,5 +1,5 @@
 using UnityEngine;
-using DebugMenu;
+using TF.DebugMenu.Attributes;
 
 public class DebugMenuSample : MonoBehaviour
 {

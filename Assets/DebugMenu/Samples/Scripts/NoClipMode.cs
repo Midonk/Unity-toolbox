@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
-using DebugMenu;
+using TF.DebugMenu.Attributes;
 
 public class NoClipMode : MonoBehaviour
 {

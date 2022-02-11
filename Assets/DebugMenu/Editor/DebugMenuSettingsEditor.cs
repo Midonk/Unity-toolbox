@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Text;
 
-namespace DebugMenu
+namespace TF.DebugMenu.Editor
 {
     
     [CustomEditor(typeof(DebugMenuSettings))]

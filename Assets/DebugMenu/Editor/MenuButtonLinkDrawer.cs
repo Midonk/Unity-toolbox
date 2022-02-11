@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEditor;
+using TF.DebugMenu.Core;
 
-namespace DebugMenu
+namespace TF.DebugMenu.Editor
 {
     [CustomPropertyDrawer(typeof(MenuButtonLink))]
     public class MenuButtonLinkDrawer : PropertyDrawer 

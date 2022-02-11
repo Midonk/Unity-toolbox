@@ -302,7 +302,9 @@ PrefabInstance:
       propertyPath: _buttonLinks.Array.data[3].ButtonDisplay
       value: 
       objectReference: {fileID: 702772634, guid: f6af2fcc879a2ed4e970a9c8536e8d19, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5840666195053748753, guid: e4d805f1061aac247875757f01701b14, type: 3}
+    - {fileID: 5840666196125926861, guid: e4d805f1061aac247875757f01701b14, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e4d805f1061aac247875757f01701b14, type: 3}
 --- !u!224 &5840666196840743644 stripped
 RectTransform:
@@ -320,3 +322,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5840666196840743646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5840666195053748766, guid: e4d805f1061aac247875757f01701b14, type: 3}
+  m_PrefabInstance: {fileID: 5840666196840743643}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5840666196840743647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5840666196840743646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa294d4e1d72a3d439a9140648d5418f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _headerText: {fileID: 5840666196840743645}
+  _buttonContainer: {fileID: 5840666196840743644}
+  _buttonLinks:
+  - ButtonType: DebugMenuAttribute
+    ButtonDisplay: {fileID: 7129544776555050697, guid: f48994aef62a2804bba10d288284c2c6, type: 3}
+  - ButtonType: DebugMenuIntAttribute
+    ButtonDisplay: {fileID: 334532414010918166, guid: 9b941dfc4c2a3cc488d554bca653134d, type: 3}
+  - ButtonType: DebugMenuStateAttribute
+    ButtonDisplay: {fileID: 702772634, guid: f6af2fcc879a2ed4e970a9c8536e8d19, type: 3}
+  - ButtonType: DebugMenuToggleAttribute
+    ButtonDisplay: {fileID: 6022774407454021007, guid: b3c6fc4f804c04c4e95151a8242c13e7, type: 3}
+  _navigationButton: {fileID: 6812051002761804080, guid: e4d691b828faef346ae477c61ce8e11b, type: 3}
