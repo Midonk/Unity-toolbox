@@ -6,20 +6,21 @@ namespace TF.DebugMenu.Core
 {
     public abstract class MenuButtonBase : Selectable, ICancelHandler, ISubmitHandler, IPointerClickHandler
     {
+        #region Exposed
+
         [SerializeField] protected Text _textUI;
 
-        protected string Name { get; private set; }
-        
-        public virtual void Build(string path)
-        {
-            _path = path;
-            var nameIndex = path.LastIndexOf('/');
-            Name = nameIndex < 0 ? path : path.Remove(0, nameIndex + 1);
-            name = Name;
-            _textUI.text = Name;
-        }
+        #endregion
 
-        public abstract void Execute();
+
+        #region Properties
+
+        protected string Name { get; private set; }
+
+        #endregion
+
+
+        #region Unity API
 
         public void OnCancel(BaseEventData eventData)
         {
@@ -38,6 +39,35 @@ namespace TF.DebugMenu.Core
             eventData.Use();
         }
 
+        #endregion
+
+        
+        #region Main
+
+        /// <summary>
+        /// Setup the button behaviour
+        /// </summary>
+        public virtual void Build(string path)
+        {
+            _path = path;
+            var nameIndex = path.LastIndexOf('/');
+            Name = nameIndex < 0 ? path : path.Remove(0, nameIndex + 1);
+            name = Name;
+            _textUI.text = Name;
+        }
+
+        /// <summary>
+        /// Function supposed to preprocess the debug method call
+        /// </summary>
+        public abstract void Execute();
+
+        #endregion
+
+
+        #region Private Fields
+
         protected string _path;
+            
+        #endregion
     }
 }

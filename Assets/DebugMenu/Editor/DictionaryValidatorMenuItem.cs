@@ -1,8 +1,8 @@
 using UnityEditor;
-using System.Diagnostics;
+using UnityEngine;
 using TF.DebugMenu.Core;
 
-using Debug = UnityEngine.Debug;
+using System.Text;
 
 namespace TF.DebugMenu.Editor
 {
@@ -11,31 +11,29 @@ namespace TF.DebugMenu.Editor
         #region Main
 
         /// <summary>
-        ///     Logs various informations relative to the Debug attribute reference
+        /// Logs various informations relative to the Debug attribute references
         /// <summary>
-        [MenuItem("Debug Menu/Log references")]
-        [Conditional("DEBUG")]
+        [MenuItem("Tools/Debug Menu/Log references")]
         public static void LogAttributeReferences()
         {
             DebugAttributeRegistry.RetreivePaths();
-            string outputMethods = $"Methods found (<color=orange>{DebugAttributeRegistry.Paths.Length}</color>): ";
             if(DebugAttributeRegistry.Paths.Length == 0)
             {
-                outputMethods = "No function found...";
-                Debug.Log(outputMethods);
+                Debug.Log("No function found...");
                 return;
             }
 
-            outputMethods += "\n";
-            outputMethods += LogAccumulator(DebugAttributeRegistry.Paths);
+            var outputMethods = new StringBuilder();
+            outputMethods.AppendLine($"Methods found (<color=orange>{DebugAttributeRegistry.Paths.Length}</color>):");
+            outputMethods.AppendLine(LogAccumulator(DebugAttributeRegistry.Paths));
 
             var quickPaths = DebugAttributeRegistry.GetQuickPaths();
-            string outputQuick = $"Quick methods found (<color=orange>{quickPaths.Length}</color>)";
-            outputQuick += "\n";
+            var outputQuick = new StringBuilder();
+            outputQuick.AppendLine($"Quick methods found (<color=orange>{quickPaths.Length}</color>)");
 
             if(quickPaths.Length > 0)
             {
-                outputQuick += LogAccumulator(quickPaths);
+                outputQuick.AppendLine(LogAccumulator(quickPaths));
             }
 
             Debug.Log(outputMethods);
@@ -44,17 +42,15 @@ namespace TF.DebugMenu.Editor
 
         private static string LogAccumulator(string[] collection)
         {
-            var accumulation = "";
+            var accumulator = new StringBuilder();
             for (int i = 0; i < collection.Length; i++)
             {
                 var path = DebugAttributeRegistry.Paths[i];
-                accumulation += $"<color=cyan>{path}</color>";
-                if(i == DebugAttributeRegistry.Paths.Length) return accumulation;
-                
-                accumulation += "\n";
+                var method = DebugAttributeRegistry.GetMethodName(path);
+                accumulator.AppendLine($"Path: <color=cyan>{path}</color>\tMethod: <color=cyan>{method}</color>");
             }
 
-            return accumulation;
+            return accumulator.ToString();
         }
 
         #endregion

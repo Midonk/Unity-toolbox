@@ -14,10 +14,9 @@ namespace TF.DebugMenu.Attributes
 
         #endregion 
 
-        
-        //Constructor for void type
+        //Base Debug attribute
         /// <summary>
-        /// 
+        /// Use this attribute to reference a method that take no parameter to the Debug Menu
         /// </summary>
         /// <param name="path">Ex: "my/custom/debug/path"</param>
         /// <param name="quickMenu">Register this path to a quick access menu</param>

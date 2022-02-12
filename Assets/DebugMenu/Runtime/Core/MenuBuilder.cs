@@ -23,6 +23,9 @@ namespace TF.DebugMenu.Core
             }
         }
 
+        
+        #region Properties
+
         private string CurrentPath
         {
             get
@@ -34,6 +37,8 @@ namespace TF.DebugMenu.Core
 
             set => _currentPath = value;
         }
+
+        #endregion
 
 
         #region Main
@@ -58,23 +63,6 @@ namespace TF.DebugMenu.Core
             SelectButton();
         }
 
-        private void SelectButton()
-        {
-            Selectable buttonToSelect = _buttons[_currentPath][0];
-            buttonToSelect.Select();
-        }
-
-        private void HidePanelButtons()
-        {
-            if (_buttons.Count == 0) return;
-
-            var buttons = _buttons[_currentPath];
-            for (int i = 0; i < buttons.Length; i++)
-            {
-                buttons[i].gameObject.SetActive(false);
-            }
-        }
-
         public void DisplayPanelButtons(string path)
         {
             if (_buttons.Count == 0) return;
@@ -91,6 +79,11 @@ namespace TF.DebugMenu.Core
             SelectButton();
         }
 
+        #endregion
+
+
+        #region Plumbery
+
         private MenuButtonBase BuildButton(string path)
         {
             var buttonPrefab = !DebugAttributeRegistry.HasKey(path) ? _navigationButton : DefineDisplay(path);
@@ -98,6 +91,23 @@ namespace TF.DebugMenu.Core
             button.Build(path);
 
             return button;
+        }
+
+        private void SelectButton()
+        {
+            Selectable buttonToSelect = _buttons[_currentPath][0];
+            buttonToSelect.Select();
+        }
+
+        private void HidePanelButtons()
+        {
+            if (_buttons.Count == 0) return;
+
+            var buttons = _buttons[_currentPath];
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                buttons[i].gameObject.SetActive(false);
+            }
         }
 
         private MenuButtonBase DefineDisplay(string path)
@@ -129,7 +139,6 @@ namespace TF.DebugMenu.Core
         private Text _headerText;
         private Transform _buttonContainer;
         private MenuNavigationButton _navigationButton;
-        private List<MenuButtonBase> _menuButtons = new List<MenuButtonBase>();
         private string _currentPath;
         private Dictionary<string, MenuButtonBase[]> _buttons = new Dictionary<string, MenuButtonBase[]>();
         private Dictionary<string, MenuButtonBase> _buttonDisplays = new Dictionary<string, MenuButtonBase>();

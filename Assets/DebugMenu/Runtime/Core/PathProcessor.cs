@@ -41,12 +41,17 @@ namespace TF.DebugMenu.Core
 
             return _methodPaths.ToArray();
         }
+             
+        #endregion
+
+
+        #region Utils
 
         public string GetParentPath(string path)
         {
             return StringUtils.GetParentPath(path, SEPARATOR);
         }
-             
+            
         #endregion
 
 

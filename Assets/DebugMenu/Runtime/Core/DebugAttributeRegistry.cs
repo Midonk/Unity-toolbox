@@ -50,7 +50,7 @@ namespace TF.DebugMenu.Core
         }
 
         /// <summary>
-        ///     Initialize the debug registry by fetching the attribute references
+        /// Initialize the debug registry by fetching the attribute references
         /// <summary>
         public static void RetreivePaths()
         {
@@ -82,29 +82,28 @@ namespace TF.DebugMenu.Core
         #region Utils
 
         /// <summary>
-        ///     Retreive paths marked as quick paths
+        /// Retreive paths marked as quick paths
         /// <summary>
         public static string[] GetQuickPaths()
         {
             var result = new List<string>();
             foreach (var method in Methods)
             {
-                if (method.Value.GetCustomAttribute<DebugMenuAttribute>().IsQuickMenu)
-                {
-                    result.Add(method.Key);
-                }
+                if (!method.Value.GetCustomAttribute<DebugMenuAttribute>().IsQuickMenu) continue;
+                
+                result.Add(method.Key);
             }
 
             return result.ToArray();
         }
 
-        public static Type GetParameterType(string methodPath)
+        /* public static Type GetParameterType(string methodPath)
         {
             var method = Methods[methodPath];
             var parameters = method.GetParameters();
             if(parameters.Length == 0) return null;
             return parameters[0].ParameterType;
-        }
+        } */
 
         public static DebugMenuAttribute GetAttribute(string methodPath)
         {
@@ -113,6 +112,11 @@ namespace TF.DebugMenu.Core
         }
 
         public static bool HasKey(string path) => Methods.ContainsKey(path);
+
+        public static string GetMethodName(string methodPath)
+        {
+            return _methods[methodPath].Name;
+        }
 
         #endregion
 

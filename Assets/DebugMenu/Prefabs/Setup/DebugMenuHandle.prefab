@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4341672310503822259}
   - component: {fileID: 4341672310503822256}
   m_Layer: 0
-  m_Name: DebugMenuHandler
+  m_Name: DebugMenuHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

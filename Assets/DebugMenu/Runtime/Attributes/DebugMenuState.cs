@@ -14,7 +14,13 @@ namespace TF.DebugMenu.Attributes
         #endregion 
 
 
-        //Constructor for enums type
+        /// <summary>
+        /// Use this attribute to reference a method that take an enum parameter to the Debug Menu and display it as an handle
+        /// </summary>
+        /// <param name="path">Ex: "my/custom/debug/path"</param>
+        /// <param name="enumType">Type of the enum to use</param>
+        /// <param name="defaultValue">Default value</param>
+        /// <param name="quickMenu">Register this path to a quick access menu</param>
         public DebugMenuStateAttribute(string path, Type enumType, int defaultValue, bool quickMenu = false) : base(path, quickMenu)
         {
             EnumType = enumType;

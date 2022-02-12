@@ -7,6 +7,8 @@ namespace TF.DebugMenu.Editor
     [CustomPropertyDrawer(typeof(MenuButtonLink))]
     public class MenuButtonLinkDrawer : PropertyDrawer 
     {
+        #region Unity API
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) 
         {
             EditorGUI.BeginProperty(position, label, property);
@@ -32,10 +34,12 @@ namespace TF.DebugMenu.Editor
 
             EditorGUI.EndProperty();
         }
-
+            
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return EditorGUIUtility.singleLineHeight;
+            return EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
         }
+
+        #endregion
     }
 }

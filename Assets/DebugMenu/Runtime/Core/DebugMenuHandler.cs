@@ -37,7 +37,7 @@ namespace TF.DebugMenu.Core
         #endregion
 
 
-        #region Public Properties
+        #region Properties
 
         public static DebugMenuHandler Instance => _instance;
         
@@ -47,7 +47,7 @@ namespace TF.DebugMenu.Core
         #region Main            
 
         /// <summary>
-        /// Return to the previous panel or close it if on root
+        /// Return to the previous panel or close the menu if on root
         /// <summary>
         public void Return()
         {
@@ -76,22 +76,32 @@ namespace TF.DebugMenu.Core
             RequestBuild();
         }
 
+        #endregion
+
+        
+        #region Plumbery
+
         private void RequestBuild()
         {
              var paths = _pathProcessor.FetchPaths(_currentPath);
              _menuBuilder.BuildPanel(paths);
         }
+        
+        private void HideMenu()
+        {
+            gameObject.SetActive(false);
+        }
+            
+        #endregion
+
+
+        #region Utils
 
         public void DisplayMenu()
         {
             gameObject.SetActive(true);
         }
-
-        private void HideMenu()
-        {
-            gameObject.SetActive(false);
-        }
-
+            
         #endregion
 
 
@@ -101,7 +111,6 @@ namespace TF.DebugMenu.Core
         private PathProcessor _pathProcessor;
         private string _currentPath = string.Empty;
         private static DebugMenuHandler _instance;
-
 
         #endregion
     }

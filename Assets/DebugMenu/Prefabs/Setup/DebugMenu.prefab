@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 5840666195053748754}
   - component: {fileID: 5840666195053748755}
   - component: {fileID: 5840666195053748764}
-  - component: {fileID: 5840666195053748753}
+  - component: {fileID: 5840666196840743647}
   m_Layer: 5
   m_Name: DebugMenu
   m_TagString: Untagged
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5840666195053748753
+--- !u!114 &5840666196840743647
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,11 +190,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5840666195053748766}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfdb0a79d78fed84dbd063525acb4ce8, type: 3}
+  m_Script: {fileID: 11500000, guid: fa294d4e1d72a3d439a9140648d5418f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuPanel: {fileID: 5840666196125926861}
-  _debugMode: 0
+  _headerText: {fileID: 6652184381001262702}
+  _buttonContainer: {fileID: 4610596710665615552}
+  _buttonLinks:
+  - ButtonType: DebugMenuAttribute
+    ButtonDisplay: {fileID: 7129544776555050697, guid: f48994aef62a2804bba10d288284c2c6, type: 3}
+  - ButtonType: DebugMenuIntAttribute
+    ButtonDisplay: {fileID: 334532414010918166, guid: 9b941dfc4c2a3cc488d554bca653134d, type: 3}
+  - ButtonType: DebugMenuStateAttribute
+    ButtonDisplay: {fileID: 702772634, guid: f6af2fcc879a2ed4e970a9c8536e8d19, type: 3}
+  - ButtonType: DebugMenuToggleAttribute
+    ButtonDisplay: {fileID: 6022774407454021007, guid: b3c6fc4f804c04c4e95151a8242c13e7, type: 3}
+  _navigationButton: {fileID: 6812051002761804080, guid: e4d691b828faef346ae477c61ce8e11b, type: 3}
 --- !u!1 &5840666196125926863
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +216,6 @@ GameObject:
   - component: {fileID: 5840666196125926862}
   - component: {fileID: 6222264045368596183}
   - component: {fileID: 4333908525633336867}
-  - component: {fileID: 5840666196125926861}
   m_Layer: 5
   m_Name: MenuPanel
   m_TagString: Untagged
@@ -273,25 +282,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5840666196125926861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5840666196125926863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e395ebb18a4362499e093b56a60d6ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _headerTitle: {fileID: 6652184381001262702}
-  _navigationButton: {fileID: -5993209494171874495, guid: e4d691b828faef346ae477c61ce8e11b, type: 3}
-  _voidButton: {fileID: 0}
-  _boolButton: {fileID: 0}
-  _numberButton: {fileID: 0}
-  _sliderButton: {fileID: 0}
-  _enumButton: {fileID: 0}
 --- !u!1 &6042481669653977299
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,8 +315,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -27}
-  m_SizeDelta: {x: -12, y: -66}
+  m_AnchoredPosition: {x: 0, y: -27.000061}
+  m_SizeDelta: {x: -12, y: -66.00018}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5744102579841151417
 MonoBehaviour:
@@ -346,13 +336,13 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 6
+  m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 1
+  m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
 --- !u!1 &6675310031045613146
 GameObject:

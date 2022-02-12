@@ -7,7 +7,14 @@ namespace TF.DebugMenu.Buttons
 {
     internal class MenuBoolButton : MenuButtonBase
     {
+        #region Exposed
+
         [SerializeField] private Toggle _toggle;
+
+        #endregion
+
+        
+        #region Main
 
         public override void Build(string path)
         {
@@ -21,5 +28,7 @@ namespace TF.DebugMenu.Buttons
             _toggle.isOn = !_toggle.isOn;
             DebugAttributeRegistry.InvokeMethod(_path, new object[]{_toggle.isOn});
         }
+
+        #endregion
     }
 }

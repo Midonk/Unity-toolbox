@@ -4,49 +4,73 @@ using System;
 
 namespace TF.DebugMenu.Components
 {
-    public class EnumHandle : Selectable
-    {
+    public class EnumHandle : UIHandle<int>
+    {   
+        #region Exposed
+
         [SerializeField] private Text _enumUI;
 
-        public int EnumValue
+        #endregion
+
+        
+        #region Properties
+
+        public override int CurrentValue
         {
-            get => _enumValue;
+            get => _currentValue;
             set
             {
-                _enumValue = value;
-                _enumUI.text = Enum.ToObject(_enumType, _enumValue).ToString();
+                _currentValue = value;
+                _enumUI.text = Enum.ToObject(_enumType, _currentValue).ToString();
             }
         }
 
-        private void OnGUI() 
+        #endregion
+
+        
+        #region Unity API
+
+        private void OnGUI()
         {
             var evt = Event.current;
-            if(currentSelectionState != SelectionState.Selected) return;
-            if(!evt.isKey) return;
-            if(evt.type != EventType.KeyDown) return;
-            
-            if(evt.keyCode == KeyCode.LeftArrow)
+            if (currentSelectionState != SelectionState.Selected) return;
+            if (!evt.isKey) return;
+            if (evt.type != EventType.KeyDown) return;
+
+            if (evt.keyCode == KeyCode.LeftArrow)
             {
                 Decrement();
                 Event.current.Use();
             }
 
-            else if(evt.keyCode == KeyCode.RightArrow)
+            else if (evt.keyCode == KeyCode.RightArrow)
             {
                 Increment();
                 Event.current.Use();
             }
         }
 
-        public void Decrement()
-        {
-            EnumValue = (int)Mathf.Repeat(EnumValue - 1, _enumLength);
-        }
+        #endregion
+
         
-        public void Increment()
+        #region Main
+
+        public override void Decrement(int step = 1)
         {
-            EnumValue = (int)Mathf.Repeat(EnumValue + 1, _enumLength);
+            BufferValue();
+            CurrentValue = (int)Mathf.Repeat(CurrentValue - 1, _enumLength);
         }
+
+        public override void Increment(int step = 1)
+        {
+            BufferValue();
+            CurrentValue = (int)Mathf.Repeat(CurrentValue + 1, _enumLength);
+        }
+            
+        #endregion
+
+        
+        #region Utils
 
         public void SetType(Type enumType)
         {
@@ -54,8 +78,14 @@ namespace TF.DebugMenu.Components
             _enumLength = Enum.GetNames(_enumType).Length;
         }
 
-        private int _enumValue;
+        #endregion
+
+        
+        #region Private Fields
+
         private Type _enumType;
         private int _enumLength;
+
+        #endregion
     }
 }

@@ -9,6 +9,8 @@ namespace TF.DebugMenu.Editor
 {
     public class DebugMenuSettings : ToolSettings<DebugMenuSettings>
     {
+        #region Properties
+
         public string[] KnownAttributes
         {
             get
@@ -22,12 +24,10 @@ namespace TF.DebugMenu.Editor
             }
         }
 
-        public int GetAttributeIndex(string name)
-        {
-            return _attributeNames.IndexOf(name);
-        }
+        #endregion
 
-        [SerializeField] private List<string> _attributeNames;
+        
+        #region Main
 
         private void FetchAttributeNames()
         {
@@ -41,9 +41,36 @@ namespace TF.DebugMenu.Editor
                                                                         .ToList();
         }
 
+        #endregion
+
+        
+        #region Utils
+
+        /// <summary>
+        /// Retreive the attribute index by searching its name in the references
+        /// </summary>
+        /// <param name="name">Attribute type name</param>
+        /// <returns></returns>
+        public int GetAttributeIndex(string name)
+        {
+            return _attributeNames.IndexOf(name);
+        }
+
+        /// <summary>
+        /// Refresh the attribute reference list
+        /// </summary>
         public void RefreshAttributeList()
         {
             FetchAttributeNames();
         }
+            
+        #endregion
+
+
+        #region Private Fields
+
+        [SerializeField] private List<string> _attributeNames = new List<string>();
+            
+        #endregion
     }
 }

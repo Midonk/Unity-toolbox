@@ -8,6 +8,8 @@ namespace TF.DebugMenu.Editor
     [CustomEditor(typeof(DebugMenuSettings))]
     public class DebugMenuSettingsEditor : UnityEditor.Editor 
     {
+        #region Unity API
+
         private void OnEnable() 
         {
             _names.Clear();
@@ -29,10 +31,16 @@ namespace TF.DebugMenu.Editor
             if(!GUILayout.Button("Refresh")) return;
 
             _settings.RefreshAttributeList(); 
-
         }
+
+        #endregion
+
+        
+        #region Private Fields
 
         private StringBuilder _names = new StringBuilder();
         private DebugMenuSettings _settings;
+            
+        #endregion
     }
 }
