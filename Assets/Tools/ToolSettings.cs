@@ -6,6 +6,13 @@ namespace TF.Tool
 {
     public abstract class ToolSettings<T> : ScriptableObject where T : ScriptableObject
     {    
+        #region Properties
+
+        public static string SettingAssetPath => $"{SETTINGSPATH}/{typeof(T).Name}.asset";
+            
+        #endregion
+
+
         #region Main
 
         public static T GetOrCreate()
@@ -15,7 +22,7 @@ namespace TF.Tool
             if (settings is null)
             {
                 settings = CreateSettings();            
-                Debug.LogWarning($"{typeof(T)} : New settings created for '<color=cyan>{typeof(T).Name}</color>' tool at \r" +
+                Debug.LogWarning($"New settings created '<color=cyan>{typeof(T).Name}</color>' at \n" +
                                 $"'<color=cyan>{SETTINGSPATH}</color>'");
             }
 
@@ -29,21 +36,21 @@ namespace TF.Tool
 
         private static T GetSettings()
         {
-            return AssetDatabase.LoadAssetAtPath<T>($"{SETTINGSPATH}/{typeof(T).Name}.asset");
+            return AssetDatabase.LoadAssetAtPath<T>(SettingAssetPath);
         }
 
         private static T CreateSettings()
         {
             if (!Directory.Exists(SETTINGSPATH))
             {
-                Debug.Log("Create directory");
+                //Debug.Log("Create directory");
                 Directory.CreateDirectory(SETTINGSPATH);
                 AssetDatabase.Refresh();
             }
 
-            Debug.Log("Create settings");
+            //Debug.Log("Create settings");
             var settings = ScriptableObject.CreateInstance<T>();
-            AssetDatabase.CreateAsset(settings, $"{SETTINGSPATH}/{typeof(T).Name}.asset");
+            AssetDatabase.CreateAsset(settings, SettingAssetPath);
             AssetDatabase.SaveAssets();
 
             return settings;

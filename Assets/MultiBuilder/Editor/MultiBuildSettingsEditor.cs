@@ -1,17 +1,17 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace MultiBuild
+namespace TF.MultiBuilder.Editor
 {
     [CustomEditor(typeof(MultiBuildSettings))]
-    public class MultiBuildSettingsEditor : Editor 
+    public class MultiBuildSettingsEditor : UnityEditor.Editor 
     {
         public override void OnInspectorGUI() 
         {
             base.OnInspectorGUI();
             if(!GUILayout.Button("Build threads")) return;
             
-            MultiBuild.BuildManager.MultiBuildProcess();
+            BuildManager.MultiBuildProcess();
         }
     }
 }

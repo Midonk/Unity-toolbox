@@ -4,17 +4,21 @@ using UnityEditor.Build.Reporting;
 using System.Text;
 using System;
 
-namespace MultiBuild
+namespace TF.MultiBuilder.Editor
 {
     public class BuildManager
     {
         #region Main
         
-        [MenuItem("Tools/Multibuild tool")]
+        [MenuItem("Tools/Multibuilder")]
         public static void MultiBuildProcess()
         {
             MultiBuildSettings buildSettings = MultiBuildSettings.GetOrCreate();
-            if (buildSettings.Threads.Length == 0) return;
+            if (buildSettings.Threads.Length == 0)
+            {
+                Debug.Log($"There is actually <color=orange>no thread to build</color>. To add a thread, go to the settings asset (<color=orange>{MultiBuildSettings.SettingAssetPath}</color>)");
+                return;
+            }
 
             _totalBuildTime = 0;
             _initialProductName = PlayerSettings.productName;
@@ -31,11 +35,22 @@ namespace MultiBuild
         {
             Debug.Log($"MultiBuild : Start processing");
             var processedTreads = 0;
-            foreach (var thread in buildSettings.Threads)
+            var threads = buildSettings.Threads;
+            for (int i = 0; i < threads.Length; i++)
             {
+                var thread = threads[i];
                 if (!thread.activeThread) continue;
-                if (thread.scenesToBuild.Length == 0) continue;
-                if (string.IsNullOrWhiteSpace(thread.localPathName)) continue;
+                if (thread.scenesToBuild.Length == 0)
+                {
+                    Debug.LogWarning($"Thread n° <color=orange>{i}</color> has <color=orange>no scene</color> referenced. This thread will be ignored", buildSettings);
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(thread.localBuildPath))
+                {
+                    Debug.LogWarning($"Thread n° <color=orange>{i}</color> has <color=orange>no build path</color>. This thread will be ignored", buildSettings);
+                    continue;
+                }
 
                 try
                 {
@@ -61,7 +76,7 @@ namespace MultiBuild
             BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
             var scenesToBuild = settings.GetScenesPath(thread.scenesToBuild);
             buildPlayerOptions.scenes = scenesToBuild;
-            var buildPath = $"{thread.localPathName}/{thread.productName}";
+            var buildPath = $"{thread.localBuildPath}/{thread.productName}";
             buildPlayerOptions.locationPathName = buildPath;
             buildPlayerOptions.target = thread.buildTarget;
             buildPlayerOptions.options = thread.buildOptions;
@@ -89,7 +104,7 @@ namespace MultiBuild
         {
             PlayerSettings.productName = _initialProductName;
             Debug.Log($"MultiBuild : End of process\n"
-                    + $"Processed => <color=cyan>{processedTreads}</color> threads. See below for more infos\n"
+                    + $"Processed <color=cyan>{processedTreads}</color> threads. See below for more infos\n"
                     + $"{_outputMessage.ToString()}"
                     + $"All threads built in <color=cyan>{_totalBuildTime / 1000f : #0.##}</color> seconds\n");
         }

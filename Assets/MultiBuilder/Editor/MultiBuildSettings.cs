@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEditor;
+using TF.Tool;
 
-namespace MultiBuild
+namespace TF.MultiBuilder.Editor
 {
     public class MultiBuildSettings : ToolSettings<MultiBuildSettings> 
     {
         #region Exposed
         
         [Header("Build options")]
-        [SerializeField] private BuildThread[] _threads;
+        [SerializeField] private BuildThread[] _threads = new BuildThread[0];
 
         #endregion
 
