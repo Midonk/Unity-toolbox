@@ -1,21 +1,15 @@
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace Utils
 {
-    public class SmartList<T>
+    [System.Serializable]
+    public class SmartList<T> : List<T>
     {
         public SmartList()
         {
             _list = new List<T>();
         }
-
-        public T this[int index] 
-        {
-            get => _list[index]; 
-            set => _list[index] = value; 
-        }
-
-        public int Count => _list.Count;
 
         public void Add(T element)
         {
@@ -31,6 +25,6 @@ namespace Utils
             _list.Remove(element);
         }
 
-        private List<T> _list;
+        [SerializeField] private List<T> _list;
     }
 }

@@ -7,6 +7,8 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 ProjectSettings/HDRPProjectSettings.asset
+Assets/Smart
+Assets/**/backlog.*
 
 # Visual Studio cache directory
 .vs/

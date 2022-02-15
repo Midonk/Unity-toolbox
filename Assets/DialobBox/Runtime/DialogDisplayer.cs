@@ -3,12 +3,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
 
-/*
-* Handles text display into Text UI
-* Receive string
-* Display text following a display mode
-*/
-
 //don't like to be a monobehaviour
 public class DialogDisplayer : MonoBehaviour
 {
@@ -76,12 +70,7 @@ public class DialogDisplayer : MonoBehaviour
     private IDialogDisplayMode _currentDisplayMode;
     private float _displaySpeed;
     private int _lastDisplayedIndex = 0;
-
-    //setup
     private IDialogDisplayMode _displayMode;
 
     #endregion
 }
-
-//quand on appuie sur une touche pour accélérer / passer un dialogue, il y a consultation de la méthode de skip
-//quand on relache le bouton de skip, retour à la méthode d'affichage classique 

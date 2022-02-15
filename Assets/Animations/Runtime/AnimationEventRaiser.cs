@@ -7,11 +7,9 @@ namespace AnimationUtils
 	{
 		#region Exposed
 
-		[SerializeField]
-		private AnimationEventHandler[] _animationEventHandlers;
-
-		[SerializeField][Range(0, 0.999f)]
-		private float _weightTreshold = 0.5f;
+		[SerializeField] private AnimationEventHandler[] _animationEventHandlers;
+		[Range(0, 0.999f), Tooltip("If used with an Animator, minimal weight the animation clip should have to be allowed to raise events")]
+		[SerializeField] private float _weightTreshold = 0.5f;
 			 
 		#endregion
 
@@ -41,7 +39,7 @@ namespace AnimationUtils
 	
 
 		[System.Serializable]
-		public struct AnimationEventHandler
+		private struct AnimationEventHandler
 		{
 			public string m_eventName;
 			public UnityEvent m_onEventRaised;

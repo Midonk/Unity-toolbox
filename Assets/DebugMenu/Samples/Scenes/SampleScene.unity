@@ -633,7 +633,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4341672310503822257, guid: 04f96650407b0b743ac0996954c73b0b, type: 3}
       propertyPath: m_Name
-      value: DebugMenuHandler
+      value: DebugMenuHandle
       objectReference: {fileID: 0}
     - target: {fileID: 4341672310503822258, guid: 04f96650407b0b743ac0996954c73b0b, type: 3}
       propertyPath: m_RootOrder

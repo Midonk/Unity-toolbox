@@ -1,6 +1,19 @@
-pouvoir mettre en pause les source en cours de lecture	et les replay derrière
-organiser les audio en groupe pour les activer et désactiver en bundle
 
-Jouer un son avec son clip en argument (no oneshot)
-Jouer un son random en classic ou oneshot à l'aide d'une ID
-Jouer un son à l'aide d'une ID
+Type de son:
+Sfx ponctuel (spatialisé ou pas)
+Sfx random
+Sfx loop (in/loop/out)
+
+amb loop (fade in/out)
+amb random
+
+music loop (fade in/out)
+
+
+IDEA: why not convert players into scriptable and only have kind of...sockets on the gameobject that have a source and a player ?
+This way a player become a kind of library
+
+The current system only cares about how the sound plays not when the sound plays (that may be too complex to implement)
+An AudioPlayer is an handle that register a list of AudioElements of the same type (sharing a common logic)
+An AudioElement is a piece of logic handling sound(s) behaviour. [Two AudioElements of the same type may differ in some aspect like the way the play or stop via outter logic]
+An AudioGroup is an handle allowing to manage a list of AudioPlayer with a single reference.
