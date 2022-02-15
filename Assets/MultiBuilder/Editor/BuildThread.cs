@@ -11,7 +11,7 @@ namespace TF.MultiBuilder.Editor
         [Tooltip("Name of your build, this will appears as the title of your player's window")]
         public string productName;
         [Tooltip("Path from the project root where your build will end up")]
-        public string localBuildPath;
+        public string buildPath;
         [Tooltip("Platform settings that will be used to build your project")]
         public BuildTarget buildTarget;
         [Tooltip("Additional options to make your build match your purpose")]

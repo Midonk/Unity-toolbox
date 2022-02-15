@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Text;
+using System.IO;
 
 namespace TF.MultiBuilder.Editor
 {
@@ -11,22 +12,58 @@ namespace TF.MultiBuilder.Editor
         {
             position.height = 0;
             var playerName = property.FindPropertyRelative("productName");
-            var buildPath = property.FindPropertyRelative("localBuildPath");
+            var buildPath = property.FindPropertyRelative("buildPath");
             var buildTarget = property.FindPropertyRelative("buildTarget");
             var buildOptions = property.FindPropertyRelative("buildOptions");
             var scenes = property.FindPropertyRelative("scenesToBuild");
 
             var validThread = ValidateThread(playerName.stringValue, buildPath.stringValue, scenes.arraySize);
-            
+            EditorGUI.BeginProperty(position, label, property);
+            var indent = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = 0;
+
             CreateLabel(property, label, playerName);
             position = DrawFoldout(position, property, label, validThread);
             if (property.isExpanded)
             {
-                position = DrawProperties(position, property, playerName, buildPath, buildTarget, buildOptions);
+                position = DrawProperties(position, property, playerName);
+                position = DrawBuildPath(position, property, buildPath);
+                position = DrawProperties(position, property, buildTarget, buildOptions);
                 position = DrawScenesToBuild(position, property, scenes);
             }
 
             EditorGUI.EndDisabledGroup();
+            EditorGUI.indentLevel = indent;
+            EditorGUI.EndProperty();
+        }
+
+        private Rect DrawBuildPath(Rect position, SerializedProperty property, SerializedProperty buildPath)
+        {
+            var style = new GUIStyle(GUI.skin.button);
+            var buttonLabel = new GUIContent("Browse");
+            var buttonSize = style.CalcSize(buttonLabel);
+            var buildPathString = buildPath.stringValue;
+            var validFolder = Directory.Exists(buildPathString);
+            var baseBuildPath = validFolder ? buildPathString : Application.dataPath;
+            var buttonRect = new Rect(position.xMax - buttonSize.x, position.y + position.height, buttonSize.x, buttonSize.y);
+            var fieldRect = new Rect(position.x, position.y + position.height, position.width - buttonSize.x, buttonSize.y);
+            position.height += buttonSize.y + EditorGUIUtility.standardVerticalSpacing;
+            
+            if(GUI.Button(buttonRect, "Browse"))
+            {
+                var newPath = EditorUtility.OpenFolderPanel("Browse", baseBuildPath, "");
+                if(!string.IsNullOrWhiteSpace(newPath))
+                {
+                    buildPath.stringValue = newPath;
+                }
+                
+                property.serializedObject.ApplyModifiedProperties();
+                GUIUtility.ExitGUI();
+            }
+
+            buildPath.stringValue = EditorGUI.TextField(fieldRect, buildPath.displayName, buildPath.stringValue);
+
+            return position;
         }
 
         private static void CreateLabel(SerializedProperty property, GUIContent label, SerializedProperty playerName)
@@ -45,7 +82,7 @@ namespace TF.MultiBuilder.Editor
         {
             if(sceneCount == 0) return false;
             if(string.IsNullOrWhiteSpace(playerName)) return false;
-            if(string.IsNullOrWhiteSpace(buildPath)) return false;
+            if(!Directory.Exists(buildPath)) return false;
             return true;
         }
 

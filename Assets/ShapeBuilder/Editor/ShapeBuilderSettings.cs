@@ -1,4 +1,5 @@
 using UnityEngine;
+using TF.Tool;
 
 [CreateAssetMenu(menuName = "Settings/Shape builder", fileName = "New shape builder settings")]
 public class ShapeBuilderSettings : ToolSettings<ShapeBuilderSettings>

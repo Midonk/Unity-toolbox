@@ -1,6 +1,6 @@
 {
     "name": "TF.Multibuilder.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "TF",
     "references": [
         "GUID:871ca82dab2b7404ba70485626c5454a"
     ],
