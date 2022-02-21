@@ -1,50 +1,38 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using TF.Utils;
 
 public class AudioMixerController : MonoBehaviour
 {
-    [SerializeField] private AudioMixer _mainMixer;
+    [SerializeField] protected AudioMixer _mixer;
+    [SerializeField] protected string _generalVolume;
+    [SerializeField] protected string _musicVolume;
+    [SerializeField] protected string _ambianceVolume;
+    [SerializeField] protected string _sfxVolume;
+    [SerializeField] protected string _voiceVolume;
 
-    private void Awake()
+    public void SetGeneralVolume(float volume)
     {
-        if(!_mainMixer)
-        {
-            throw new System.NullReferenceException("Missing AudioMixer reference on the AudioController");
-        }
+        AudioUtils.SetVolume(_mixer, _generalVolume, volume);
     }
 
-    public void SetVolume(string mixerName, float volume)
+    public void SetMusicVolume(float volume)
     {
-        volume = Mathf.Clamp(volume, 0.0001f, 1);
-        volume = float2dB(volume);
-        var mixerExists = _mainMixer.SetFloat(mixerName, volume);
-        if(mixerExists) return;
-        
-        Debug.LogWarning($"Mixer <color=orange>{mixerName}</color> doesn't exists, Unable to set its volume", this);        
+        AudioUtils.SetVolume(_mixer, _musicVolume, volume);
     }
-
-    public float GetVolume(string mixerName)
-    { 
-        var mixerExists = _mainMixer.GetFloat(mixerName, out float volume);
-        if(!mixerExists)
-        {
-            Debug.LogWarning($"Mixer <color=orange>{mixerName}</color> doesn't exists, Unable to get its volume", this);
-            return 0;
-        }
-
-        volume = dB2Float(volume);
-        return volume;
-    }
-
-    public static float float2dB(float value)
+    
+    public void SetAmbianceVolume(float volume)
     {
-        return Mathf.Log10(value) * 20f;
+        AudioUtils.SetVolume(_mixer, _ambianceVolume, volume);
     }
-
-    public static float dB2Float(float value)
+    
+    public void SetSFXVolume(float volume)
     {
-        value /= 20f;
-        return Mathf.Pow(10, value);
+        AudioUtils.SetVolume(_mixer, _sfxVolume, volume);
+    }
+    
+    public void SetVoicesVolume(float volume)
+    {
+        AudioUtils.SetVolume(_mixer, _voiceVolume, volume);
     }
 }

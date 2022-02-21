@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4610596710665615552, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -27.000122
+      objectReference: {fileID: 0}
     - target: {fileID: 5840666195053748765, guid: e4d805f1061aac247875757f01701b14, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -218,5 +222,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: DebugMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 5840666196840743647, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: _buttonLinks.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840666196840743647, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: _buttonLinks.Array.data[4].ButtonType
+      value: DebugMenuSliderAttribute
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840666196840743647, guid: e4d805f1061aac247875757f01701b14, type: 3}
+      propertyPath: _buttonLinks.Array.data[4].ButtonDisplay
+      value: 
+      objectReference: {fileID: 1236877744, guid: dffde190754e5d8429e6a27182affccf, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4d805f1061aac247875757f01701b14, type: 3}

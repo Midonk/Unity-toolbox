@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '['
+  m_Text: '[999]'
 --- !u!1 &4229236838923471935
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,7 +375,7 @@ PrefabInstance:
     - target: {fileID: 1202929524, guid: 249e2f557abc0094b836969bd2999e1f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 869971239492195734}
     - target: {fileID: 1202929524, guid: 249e2f557abc0094b836969bd2999e1f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -386,7 +386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1202929524, guid: 249e2f557abc0094b836969bd2999e1f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: NumberHandle, Assembly-CSharp
+      value: TF.DebugMenu.Components.NumberHandle, TF.DebugMenu
       objectReference: {fileID: 0}
     - target: {fileID: 1202929524, guid: 249e2f557abc0094b836969bd2999e1f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
@@ -466,7 +466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8806550807448325651, guid: 249e2f557abc0094b836969bd2999e1f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0000076293945
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8806550807448325651, guid: 249e2f557abc0094b836969bd2999e1f, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -553,7 +553,7 @@ PrefabInstance:
     - target: {fileID: 1202929524, guid: 249e2f557abc0094b836969bd2999e1f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 869971239492195734}
     - target: {fileID: 1202929524, guid: 249e2f557abc0094b836969bd2999e1f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -564,7 +564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1202929524, guid: 249e2f557abc0094b836969bd2999e1f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: NumberHandle, Assembly-CSharp
+      value: TF.DebugMenu.Components.NumberHandle, TF.DebugMenu
       objectReference: {fileID: 0}
     - target: {fileID: 1202929524, guid: 249e2f557abc0094b836969bd2999e1f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument

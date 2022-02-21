@@ -134,9 +134,33 @@ PrefabInstance:
     m_TransformParent: {fileID: 6051794636208715849}
     m_Modifications:
     - target: {fileID: 534451012955969972, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 534451012955969972, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 534451012955969972, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 702772634}
+    - target: {fileID: 534451012955969972, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 534451012955969972, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Execute
+      objectReference: {fileID: 0}
+    - target: {fileID: 534451012955969972, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TF.DebugMenu.Buttons.MenuEnumButton, TF.DebugMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 534451012955969972, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2533696486232137790, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
       propertyPath: _onCancel.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -222,9 +246,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6781482976195928899, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781482976195928899, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781482976195928899, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 702772634}
+    - target: {fileID: 6781482976195928899, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781482976195928899, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Execute
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781482976195928899, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TF.DebugMenu.Buttons.MenuEnumButton, TF.DebugMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781482976195928899, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 9033630490827829513, guid: 9bcb98be925547841b3787ad9e39e955, type: 3}
       propertyPath: m_Name
       value: EnumHandle

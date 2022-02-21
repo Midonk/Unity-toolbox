@@ -18,6 +18,23 @@ public class DebugMenuSample : MonoBehaviour
     {
         Debug.Log(message);
     }
+    
+    [DebugMenuSlider("Game/Sound/SFX", 1, 0, 1)]
+    public void SFXVolume(float value)
+    {
+        Debug.Log(value);
+    }
+    [DebugMenuSlider("Game/Sound/Musics", 1, 0, 1)]
+    public void MusicVolume(float value)
+    {
+        Debug.Log(value);
+    }
+    
+    [DebugMenuSlider("Game/Sound/Voices", 1, 0, 1)]
+    public void VoiceVolume(float value)
+    {
+        Debug.Log(value);
+    }
 
     [DebugMenu("Level/Reload current")]
     public void ReloadLevel()
