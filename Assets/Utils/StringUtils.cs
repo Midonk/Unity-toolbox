@@ -2,13 +2,8 @@ using UnityEngine;
 
 namespace TF.Utils
 {
-    public class StringUtils
+    public static class StringUtils
     {
-        public static string Colorize(Object str, string color)
-        {
-            return $"<color={color}>{str}</color>";
-        }
-
         public static string GetFirstElementOfPath(string path, params char[] separators)
         {
             for (int i = 0; i < separators.Length; i++)
