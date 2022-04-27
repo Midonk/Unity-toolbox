@@ -1,7 +1,9 @@
 {
     "name": "ContactSystem.Runtime",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:c1a98d082d9f17d4eba892773bf320fd"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

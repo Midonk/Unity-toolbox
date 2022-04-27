@@ -1,6 +1,6 @@
 {
     "name": "ContactSystem.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "ContactSystem.Editor",
     "references": [
         "GUID:585d0065aee2c6a4b917b334b8e82050"
     ],

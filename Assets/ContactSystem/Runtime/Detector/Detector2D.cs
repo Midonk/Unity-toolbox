@@ -2,25 +2,25 @@ using UnityEngine;
 
 namespace ContactSystem
 {
-    [RequireComponent(typeof(Collider))]
-    public class Detector : DetectorBase
+    [RequireComponent(typeof(Collider2D))]
+    public class Detector2D : DetectorBase
     {
         #region Unity API
-        
-        private void OnTriggerEnter(Collider other) 
+
+        private void OnTriggerEnter2D(Collider2D other) 
         {
             var gameObject = other.gameObject;
             if(!_filter.Pass(gameObject)) return;
 
-            TryAdd(gameObject);
+            TryAdd(gameObject);    
         }
         
-        private void OnTriggerExit(Collider other) 
+        private void OnTriggerExit2D(Collider2D other) 
         {
             var gameObject = other.gameObject;
             if(!_filter.Pass(gameObject)) return;
 
-            TryRemove(gameObject);
+            TryRemove(gameObject);    
         }
 
         #endregion
