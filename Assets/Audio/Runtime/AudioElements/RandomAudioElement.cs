@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class RandomAudiElement : AudioElementBase, IMultiAudioElement
+public class RandomAudioElement : AudioElementBase, IMultiAudioElement
 {
     [SerializeField] private AudioClip[] _clips;
 
@@ -21,6 +21,4 @@ public class RandomAudiElement : AudioElementBase, IMultiAudioElement
         source.clip = GetClip();
         source.volume = _volume;
     }
-
-
 }

@@ -1,5 +1,5 @@
 
-public class RandomAudioPlayer : AudioPlayer<RandomAudiElement>, IAudioPlayer
+public class RandomAudioPlayer : AudioPlayer<RandomAudioElement>, IAudioPlayer
 {
     public override void Play()
     {

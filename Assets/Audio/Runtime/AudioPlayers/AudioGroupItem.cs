@@ -20,12 +20,12 @@ public abstract class AudioGroupItem : MonoBehaviour, IAudioGroupItem
 
     #region Unity API
 
-    protected void OnEnable() 
+    protected virtual void OnEnable() 
     { 
         RegisterToGroups();
     }
 
-    protected void OnDisable() 
+    protected virtual void OnDisable() 
     {
         UnregisterToGroups();
     }
@@ -33,22 +33,37 @@ public abstract class AudioGroupItem : MonoBehaviour, IAudioGroupItem
     #endregion
 
 
-    #region Utils
+    #region Plumbery
 
-    public void RegisterToGroups()
+    private void RegisterToGroups()
     {
         for (int i = 0; i < _groups.Length; i++)
         {
-            _groups[i].Add(this);
+            RegisterToGroup(_groups[i]);
         }
     }
 
-    public void UnregisterToGroups()
+    private void UnregisterToGroups()
     {
         for (int i = 0; i < _groups.Length; i++)
         {
-            _groups[i].Remove(this);
+            UnregisterToGroup(_groups[i]);
         }
+    }
+        
+    #endregion
+
+
+    #region Utils
+
+    public void RegisterToGroup(IAudioGroup<IAudioGroupItem> group)
+    {
+        group.Add(this);
+    }
+
+    public void UnregisterToGroup(IAudioGroup<IAudioGroupItem> group)
+    {
+        group.Remove(this);
     }
 
     #endregion

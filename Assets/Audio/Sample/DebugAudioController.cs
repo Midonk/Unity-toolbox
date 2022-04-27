@@ -15,7 +15,7 @@ public class DebugAudioController : AudioMixerController
         AudioUtils.SetVolume(_mixer, _musicVolume, volume);
     }
     
-    [DebugMenuSlider("Options/Sound/Ambiance", 1, 0.0001f, 1)]
+    [DebugMenuSlider("Options/Sound/Ambiances", 1, 0.0001f, 1)]
     public new void SetAmbianceVolume(float volume)
     {
         AudioUtils.SetVolume(_mixer, _ambianceVolume, volume);

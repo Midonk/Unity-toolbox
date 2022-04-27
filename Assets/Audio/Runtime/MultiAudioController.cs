@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//This should be some kind of AudioGroup crossed with an IFadable
+
 public class MultiAudioController //: AudioPlayer
 {
     /* #region Exposed

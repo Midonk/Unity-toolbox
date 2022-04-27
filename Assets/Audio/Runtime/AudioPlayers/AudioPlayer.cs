@@ -4,21 +4,26 @@ using UnityEngine;
 
 public abstract class AudioPlayer<T> : AudioGroupItem, IAudioPlayer where T : IAudioElement
 {
+    #region Exposed
+
     [SerializeField] protected AudioSource _source;
     [SerializeField] protected T[] _audioElements;
+        
+    #endregion
 
+
+    #region Properties
 
     public AudioSource Source => _source;
-    
+
+    #endregion
+
 
     #region Main
 
-    public abstract void Play();
-
-    public void Play(IAudioElement element)
+    public void Play(AudioClip clip)
     {
-        _currentElement = element;
-        Play();
+        Play(clip.name);
     }
 
     public void Play(string elementId)
@@ -27,16 +32,17 @@ public abstract class AudioPlayer<T> : AudioGroupItem, IAudioPlayer where T : IA
         Play(element);
     }
 
-    public void Play(AudioClip clip)
+    public void Play(IAudioElement element)
     {
-        Play(clip.name);
+        _currentElement = element;
+        Play();
     }
+    
+    public abstract void Play();
 
-    public virtual void PlayOneShot(IAudioElement element)
+    public void PlayOneShot(AudioClip clip)
     {
-        var volume = Mathf.Min(element.Volume, 1);
-        var clip = element.GetClip();
-        _source.PlayOneShot(clip, volume);
+        PlayOneShot(clip.name);
     }
 
     public void PlayOneShot(string elementId)
@@ -45,9 +51,11 @@ public abstract class AudioPlayer<T> : AudioGroupItem, IAudioPlayer where T : IA
         PlayOneShot(element);
     }
 
-    public void PlayOneShot(AudioClip clip)
+    public virtual void PlayOneShot(IAudioElement element)
     {
-        PlayOneShot(clip.name);
+        var volume = Mathf.Min(element.Volume, 1);
+        var clip = element.GetClip();
+        _source.PlayOneShot(clip, volume);
     }
 
     public virtual void Pause()
@@ -70,6 +78,11 @@ public abstract class AudioPlayer<T> : AudioGroupItem, IAudioPlayer where T : IA
 
     #region Utils
 
+    /// <summary>
+    ///     Get an AudioElement by its ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public IAudioElement GetElement(string id)
     {
         for (int i = 0; i < _audioElements.Length; i++)
